@@ -1,7 +1,0 @@
-1 – Falta de clareza na expressão "realizar baixa". O que significa para o grupo?
-
-2 – Na seção "opções do funcionário",  sub-seção "Adicionar/remover veículo", sub-sub-seção "Remover", o que eles quiseram dizer?
-
-3 – No diagrama de casos de uso, tanto o funcionário quanto o cliente têm a opção de "Retirar veículo". Isso está certo? Além disso, qual a diferença entre "Agendar", "Locar" ou "Retirar veículo"? 
-
-4 – Se apenas o funcionário pode cadastrar um cliente (especificado no começo do relatório do grupo), por que o cliente tem uma ligação com o caso de uso de cadastro?
