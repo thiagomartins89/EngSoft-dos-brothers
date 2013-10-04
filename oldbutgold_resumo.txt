@@ -1,0 +1,43 @@
+Cliente:
+
+old but gold
+
+aluguel carros antigos
+
+mais de 100 veículos
+cadastro de clientes
+
+caixas eletrônicos (lol)
+cliente faz login (cadastrado previamente por um func)
+
+menu usuário:
+
+locação
+	escolher entre os veículos
+	efetuar pagamento proporcional
+	imprimir comprovante (que será levado na garagem onde será feita a retirada do veículo)
+agendamento
+	cliente informa o período desejado e daí o sistema informa os veículos disponíveis
+	cliente escolhe o veículo e depois a data para agendar (sistema informa a partir de qual data o veículo está disponível)
+verificar histórico
+	lista com todos os aluguéis feitos
+		infos do carro
+		data de locação
+		km rodados
+		custo do aluguel
+logoff
+
+menu funcionários:
+
+mesmo software - mesmas opções do cliente, mais:
+
+devolução
+	atualizar km rodados e realizar a baixa
+	gera comprovante entregur ao cliente
+	se realizada com atraso, gerar boleto para pagamento de multa, cadastro bloqueado até o pgto da multa
+bloqueio
+desbloqueio
+cadastro novo cliente
+add/ver/rem veículo:
+	ano, km atual, modelo, marca, placa
+	na verif: informar se está alugado, data saída/devolução cliente que alugou
