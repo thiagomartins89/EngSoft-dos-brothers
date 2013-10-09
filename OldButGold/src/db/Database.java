@@ -1,18 +1,20 @@
 package db;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import person.*;
 import userslist.UsersList;
 
 public class Database {
-
-	public UsersList list;	//mudar para private após testes
-
+	
+	private ArrayList<Person> list;
+	
 	public Database()
 	{
 		//criar clientes para a base de dados de exemplo
-		list = new UsersList(null);
+		list = new ArrayList<Person>();
 		
 		Client client1 = new Client();
 		
@@ -46,33 +48,15 @@ public class Database {
 	
 	public Person getUser(String login)
 	{
-		UsersList auxList = list;
-		
-		while(auxList != null)
-		{
-			if(auxList.getData().getId().equals(login))
-				return auxList.getData();
-			else
-				auxList = auxList.getNext();
-		}
+		for(int i = 0; i < list.size(); i++)
+			if(list.get(i).getId().equals(login))
+				return list.get(i);
 		
 		return null;
 	}
 	
 	public void addUser(Person person)
 	{
-		if(list.getData() == null)
-			list.setData(person);
-		
-		else
-		{
-			UsersList auxList = list;
-			UsersList newNode = new UsersList(person);
-			
-			while(auxList.getNext() != null)
-				auxList = auxList.getNext();
-			
-			auxList.setNext(newNode);
-		}
+		list.add(person);
 	}
 }

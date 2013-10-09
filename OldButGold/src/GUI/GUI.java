@@ -7,6 +7,7 @@ import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import person.Person;
 
 import db.Database;
+import org.eclipse.swt.layout.GridLayout;
 
 public class GUI extends ApplicationWindow {
 	private Text guiLogin;
@@ -39,9 +41,21 @@ public class GUI extends ApplicationWindow {
 
 	@Override
 	protected Control createContents(Composite parent) {
-		Composite container = new Composite(parent, SWT.NONE);
+		Composite fundo = new Composite(parent, SWT.NONE);
+		fundo.setLayout(new GridLayout(2, false));
 		
-		Button btnLogar = new Button(container, SWT.NONE);
+		Label lblNomeDeUsurio = new Label(fundo, SWT.NONE);
+		lblNomeDeUsurio.setText("Login");
+		
+		guiLogin = new Text(fundo, SWT.BORDER);
+		
+		Label lblSenha = new Label(fundo, SWT.NONE);
+		lblSenha.setText("Senha");
+		
+		guiPassword = new Text(fundo, SWT.BORDER | SWT.PASSWORD);
+		new Label(fundo, SWT.NONE);
+		
+		Button btnLogar = new Button(fundo, SWT.NONE);
 		
 		btnLogar.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -65,24 +79,9 @@ public class GUI extends ApplicationWindow {
 					JOptionPane.showMessageDialog(null, "Usuario não existe!");
 			}
 		});
-		btnLogar.setBounds(204, 154, 75, 25);
 		btnLogar.setText("Logar");
-		
-		guiLogin = new Text(container, SWT.BORDER);
-		guiLogin.setBounds(179, 90, 125, 21);
-		
-		guiPassword = new Text(container, SWT.BORDER | SWT.PASSWORD);
-		guiPassword.setBounds(179, 127, 125, 21);
-		
-		Label lblNomeDeUsurio = new Label(container, SWT.NONE);
-		lblNomeDeUsurio.setBounds(130, 93, 44, 15);
-		lblNomeDeUsurio.setText("Login");
-		
-		Label lblSenha = new Label(container, SWT.NONE);
-		lblSenha.setBounds(130, 130, 44, 15);
-		lblSenha.setText("Senha");
 
-		return container;
+		return fundo;
 	}
 
 	/**
@@ -144,7 +143,11 @@ public class GUI extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("New Application");
+		newShell.setText("Old but Gold");
+		Image imgOldButGold = new Image(null, "imgOldButGold.jpg");
+		newShell.setImage(imgOldButGold);
+		newShell.setBackgroundImage(imgOldButGold);
+		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
 	/**
