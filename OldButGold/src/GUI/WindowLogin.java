@@ -1,4 +1,4 @@
-/*package GUI;
+package GUI;
 
 import javax.swing.JOptionPane;
 
@@ -99,48 +99,48 @@ public class WindowLogin extends ApplicationWindow
 		return container;
 	}
 
-	*//**
+	/**
 	 * Create the actions.
-	 *//*
+	 */
 	private void createActions() {
 		// Create the actions
 	}
 
-	*//**
+	/**
 	 * Create the menu manager.
 	 * @return the menu manager
-	 *//*
+	 */
 	@Override
 	protected MenuManager createMenuManager() {
 		MenuManager menuManager = new MenuManager("menu");
 		return menuManager;
 	}
 
-	*//**
+	/**
 	 * Create the toolbar manager.
 	 * @return the toolbar manager
-	 *//*
+	 */
 	@Override
 	protected ToolBarManager createToolBarManager(int style) {
 		ToolBarManager toolBarManager = new ToolBarManager(style);
 		return toolBarManager;
 	}
 
-	*//**
+	/**
 	 * Create the status line manager.
 	 * @return the status line manager
-	 *//*
+	 */
 	@Override
 	protected StatusLineManager createStatusLineManager() {
 		StatusLineManager statusLineManager = new StatusLineManager();
 		return statusLineManager;
 	}
 
-	*//**
+	/**
 	 * Launch the application.
 	 * @param args
-	 *//*
-	
+	 */
+	/*
 	public static void main(String args[]) {
 		try {
 			JanelaLogin window = new JanelaLogin();
@@ -151,12 +151,12 @@ public class WindowLogin extends ApplicationWindow
 			e.printStackTrace();
 		}
 	}
-	
+	*/
 
-	*//**
+	/**
 	 * Configure the shell.
 	 * @param newShell
-	 *//*
+	 */
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
@@ -167,12 +167,11 @@ public class WindowLogin extends ApplicationWindow
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
-	*//**
+	/**
 	 * Return the initial size of the window.
-	 *//*
+	 */
 	@Override
 	protected Point getInitialSize() {
 		return new Point(450, 300);
 	}
 }
-*/
