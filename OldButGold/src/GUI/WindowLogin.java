@@ -24,13 +24,13 @@ import person.Person;
 import db.Database;
 import org.eclipse.swt.layout.GridLayout;
 
-public class JanelaLogin extends ApplicationWindow
+public class WindowLogin extends ApplicationWindow
 {
 	private Text guiLogin;
 	private Text guiPassword;
 	private Database db;
 
-	public JanelaLogin() 
+	public WindowLogin() 
 	{
 		super(null);
 		createActions();
@@ -43,23 +43,23 @@ public class JanelaLogin extends ApplicationWindow
 
 	@Override
 	protected Control createContents(Composite parent) {
-		Composite fundo = new Composite(parent, SWT.NONE);
-		fundo.setLayout(new GridLayout(2, false));
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(new GridLayout(2, false));
 		
-		Label lblNomeDeUsurio = new Label(fundo, SWT.NONE);
+		Label lblNomeDeUsurio = new Label(container, SWT.NONE);
 		lblNomeDeUsurio.setText("Login");
 		
-		guiLogin = new Text(fundo, SWT.BORDER);
+		guiLogin = new Text(container, SWT.BORDER);
 		
-		Label lblSenha = new Label(fundo, SWT.NONE);
-		lblSenha.setText("Senha");
+		Label lblPassword = new Label(container, SWT.NONE);
+		lblPassword.setText("Senha");
 		
-		guiPassword = new Text(fundo, SWT.BORDER | SWT.PASSWORD);
-		new Label(fundo, SWT.NONE);
+		guiPassword = new Text(container, SWT.BORDER | SWT.PASSWORD);
+		new Label(container, SWT.NONE);
 		
-		Button btnLogar = new Button(fundo, SWT.NONE);
+		Button btnLogin = new Button(container, SWT.NONE);
 		
-		btnLogar.addSelectionListener(new SelectionAdapter() {
+		btnLogin.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//função de ação quando botão logar é pressionado
@@ -76,7 +76,7 @@ public class JanelaLogin extends ApplicationWindow
 					if(user.getPassword().equals(guiPassword.getText()))
 					{
 						JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
-						JanelaMenuFuncionario menuFuncionario = new JanelaMenuFuncionario();
+						WindowEmployeeMenu menuFuncionario = new WindowEmployeeMenu();
 						menuFuncionario.main(null);
 					}
 					
@@ -92,11 +92,11 @@ public class JanelaLogin extends ApplicationWindow
 			
 
 		});
-		btnLogar.setText("Logar");
+		btnLogin.setText("Logar");
 
 		
 		
-		return fundo;
+		return container;
 	}
 
 	/**

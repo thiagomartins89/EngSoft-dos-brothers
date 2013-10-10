@@ -15,12 +15,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class JanelaMenuFuncionario extends ApplicationWindow {
+public class WindowEmployeeMenu extends ApplicationWindow {
 
 	/**
 	 * Create the application window.
 	 */
-	public JanelaMenuFuncionario() {
+	public WindowEmployeeMenu() {
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
@@ -94,9 +94,9 @@ public class JanelaMenuFuncionario extends ApplicationWindow {
 	 */
 	public static void main(String args[]) {
 		try {
-			JanelaMenuFuncionario window = new JanelaMenuFuncionario();
-			window.setBlockOnOpen(true);
-			window.open();
+			WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu();
+			employeeMenuWindow.setBlockOnOpen(true);
+			employeeMenuWindow.open();
 			Display.getCurrent().dispose();
 		} catch (Exception e) {
 			e.printStackTrace();

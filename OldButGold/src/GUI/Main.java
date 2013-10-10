@@ -9,9 +9,9 @@ public class Main
 	
 		try 
 		{	
-			JanelaLogin window = new JanelaLogin();
-			window.setBlockOnOpen(true);
-			window.open();
+			WindowLogin loginWindow = new WindowLogin();
+			loginWindow.setBlockOnOpen(true);
+			loginWindow.open();
 			Display.getCurrent().dispose();
 		} 
 		catch (Exception e) 
