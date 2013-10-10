@@ -2,11 +2,10 @@ package db;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
-import person.*;
-
-import vehicle.*;
+import person.Client;
+import person.Employee;
+import person.Person;
+import vehicle.Vehicle;
 
 public class Database
 {

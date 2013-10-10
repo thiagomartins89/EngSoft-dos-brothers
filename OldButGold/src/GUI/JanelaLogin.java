@@ -140,6 +140,7 @@ public class JanelaLogin extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
+	/*
 	public static void main(String args[]) {
 		try {
 			JanelaLogin window = new JanelaLogin();
@@ -150,6 +151,7 @@ public class JanelaLogin extends ApplicationWindow
 			e.printStackTrace();
 		}
 	}
+	*/
 
 	/**
 	 * Configure the shell.
