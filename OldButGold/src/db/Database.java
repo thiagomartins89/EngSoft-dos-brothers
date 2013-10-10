@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import person.*;
-import userslist.UsersList;
+import vehicle.*;
 
-public class Database {
+public class Database
+{
 	
-	private ArrayList<Person> list;
+	private ArrayList<Person> userList;
+	private ArrayList<Vehicle> vehicleList;
 	
 	public Database()
 	{
 		//criar clientes para a base de dados de exemplo
-		list = new ArrayList<Person>();
+		userList = new ArrayList<Person>();
 		
 		Client client1 = new Client();
 		
@@ -48,15 +50,15 @@ public class Database {
 	
 	public Person getUser(String login)
 	{
-		for(int i = 0; i < list.size(); i++)
-			if(list.get(i).getId().equals(login))
-				return list.get(i);
+		for(int i = 0; i < userList.size(); i++)
+			if(userList.get(i).getId().equals(login))
+				return userList.get(i);
 		
 		return null;
 	}
 	
 	public void addUser(Person person)
 	{
-		list.add(person);
+		userList.add(person);
 	}
 }
