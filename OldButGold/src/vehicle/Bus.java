@@ -1,5 +1,5 @@
 package vehicle;
 
-public class Bus {
+public class Bus extends Vehicle {
 
 }
