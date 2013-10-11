@@ -11,19 +11,23 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.GridLayout;
 
 import control.CurrentState;
 
-public class WindowEmployeeMenu extends ApplicationWindow {
-
+public class WindowSubscribeClient extends ApplicationWindow {
+	private Text txtUserName;
+	private Text txtUserCPF;
+	private Text txtUserId;
+	private Text txtUserPassword;
 	private CurrentState currentState;
+	
 	/**
 	 * Create the application window.
 	 */
-	public WindowEmployeeMenu(CurrentState mainCurrentState) {
+	public WindowSubscribeClient(CurrentState mainCurrentState) {
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
@@ -39,29 +43,34 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		{
-			Button btnSubscribeClient = new Button(container, SWT.NONE);
-			btnSubscribeClient.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					//função de ação quando botão Cadastrar é pressionado
-					currentState.setChosenAction("Cadastrar Cliente");
-					close();
-					
-				}
-			});
-			btnSubscribeClient.setBounds(124, 70, 192, 30);
-			btnSubscribeClient.setText("Cadastrar Cliente");
-		}
+		container.setLayout(new GridLayout(3, false));
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
 		
-		Button btnAddRemoveVehicle = new Button(container, SWT.NONE);
-		btnAddRemoveVehicle.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnAddRemoveVehicle.setBounds(124, 107, 192, 30);
-		btnAddRemoveVehicle.setText("Adicionar/Remover Veículo");
+		Label lblUserName = new Label(container, SWT.NONE);
+		lblUserName.setText("Nome");
+		
+		txtUserName = new Text(container, SWT.BORDER);
+		new Label(container, SWT.NONE);
+		
+		Label lblUserCPF = new Label(container, SWT.NONE);
+		lblUserCPF.setText("CPF");
+		
+		txtUserCPF = new Text(container, SWT.BORDER);
+		new Label(container, SWT.NONE);
+		
+		Label lblUserId = new Label(container, SWT.NONE);
+		lblUserId.setText("Usuário");
+		
+		txtUserId = new Text(container, SWT.BORDER);
+		new Label(container, SWT.NONE);
+		
+		Label lblUserPassword = new Label(container, SWT.NONE);
+		lblUserPassword.setText("Senha");
+		
+		txtUserPassword = new Text(container, SWT.BORDER);
 
 		return container;
 	}
@@ -111,9 +120,9 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 	/*
 	public static void main(String args[]) {
 		try {
-			WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu();
-			employeeMenuWindow.setBlockOnOpen(true);
-			employeeMenuWindow.open();
+			WindowSubscribeClient window = new WindowSubscribeClient();
+			window.setBlockOnOpen(true);
+			window.open();
 			Display.getCurrent().dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,6 +149,6 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 300);
+		return new Point(448, 299);
 	}
 }
