@@ -15,17 +15,21 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class JanelaMenuFuncionario extends ApplicationWindow {
+import control.CurrentState;
 
+public class WindowEmployeeMenu extends ApplicationWindow {
+
+	private CurrentState currentState;
 	/**
 	 * Create the application window.
 	 */
-	public JanelaMenuFuncionario() {
+	public WindowEmployeeMenu(CurrentState mainCurrentState) {
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
+		currentState = mainCurrentState;
 	}
 
 	/**
@@ -36,17 +40,28 @@ public class JanelaMenuFuncionario extends ApplicationWindow {
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		{
-			Button btnSubscribeVehicle = new Button(container, SWT.NONE);
-			btnSubscribeVehicle.addSelectionListener(new SelectionAdapter() {
+			Button btnSubscribeClient = new Button(container, SWT.NONE);
+			btnSubscribeClient.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					//função de ação quando botão Cadastrar é pressionado
+					currentState.setChosenAction("Cadastrar Cliente");
+					close();
 					
 				}
 			});
-			btnSubscribeVehicle.setBounds(142, 75, 121, 25);
-			btnSubscribeVehicle.setText("Cadastrar Veículo");
+			btnSubscribeClient.setBounds(124, 70, 192, 30);
+			btnSubscribeClient.setText("Cadastrar Cliente");
 		}
+		
+		Button btnAddRemoveVehicle = new Button(container, SWT.NONE);
+		btnAddRemoveVehicle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnAddRemoveVehicle.setBounds(124, 107, 192, 30);
+		btnAddRemoveVehicle.setText("Adicionar/Remover Veículo");
 
 		return container;
 	}
@@ -92,16 +107,19 @@ public class JanelaMenuFuncionario extends ApplicationWindow {
 	 * Launch the application.
 	 * @param args
 	 */
+	
+	/*
 	public static void main(String args[]) {
 		try {
-			JanelaMenuFuncionario window = new JanelaMenuFuncionario();
-			window.setBlockOnOpen(true);
-			window.open();
+			WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu();
+			employeeMenuWindow.setBlockOnOpen(true);
+			employeeMenuWindow.open();
 			Display.getCurrent().dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	*/
 
 	/**
 	 * Configure the shell.
@@ -124,5 +142,4 @@ public class JanelaMenuFuncionario extends ApplicationWindow {
 	protected Point getInitialSize() {
 		return new Point(450, 300);
 	}
-
 }
