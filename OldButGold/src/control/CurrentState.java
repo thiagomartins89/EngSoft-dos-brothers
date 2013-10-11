@@ -8,7 +8,7 @@ public class CurrentState
 	//Classe que serve de controle para todas as ações executadas nas janelas.
 	private
 	
-	Person currentUser; //Id do usuário que está logado no sistema
+	Person currentUser; //usuário que está logado no sistema
 	String chosenAction; //texto do botão pressionado pelo usuário
 	
 	public Person getCurrentUser() 

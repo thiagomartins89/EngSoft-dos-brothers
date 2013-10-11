@@ -5,12 +5,14 @@ import java.sql.Date;
 public class Vehicle
 {
 
-	private int enginePower;
+	private
+	int enginePower;
 	Date manufacturingDate;
 	double length;
 	String brand, plate;
 	Boolean isAvailable;
-
+	String category;
+	
 	public int getEnginePower()
 	{
 		return enginePower;
@@ -69,6 +71,14 @@ public class Vehicle
 	public void setPlate(String plate)
 	{
 		this.plate = plate;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String string) {
+		this.category = string;
 	}
 
 }

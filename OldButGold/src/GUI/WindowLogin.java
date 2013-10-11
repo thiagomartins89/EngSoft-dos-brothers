@@ -49,25 +49,25 @@ public class WindowLogin extends ApplicationWindow
 	@Override
 	protected Control createContents(Composite parent) 
 	{
-		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout(4, false));
+		Composite container = new Composite(parent, SWT.BORDER | SWT.NO_REDRAW_RESIZE);
+		container.setLayout(null);
 		
 		Label lblNomeDeUsurio = new Label(container, SWT.NONE);
+		lblNomeDeUsurio.setBounds(139, 86, 50, 20);
 		lblNomeDeUsurio.setText("Usuário");
 		
 		txtUserLogin = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		txtUserLogin.setBounds(211, 83, 78, 26);
 		
 		Label lblPassword = new Label(container, SWT.NONE);
+		lblPassword.setBounds(144, 126, 40, 20);
 		lblPassword.setText("Senha");
 		
 		txtUserPassword = new Text(container, SWT.BORDER | SWT.PASSWORD);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		txtUserPassword.setBounds(211, 120, 78, 26);
 		
 		Button btnLogin = new Button(container, SWT.NONE);
+		btnLogin.setBounds(134, 164, 55, 29);
 		
 		btnLogin.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -101,9 +101,9 @@ public class WindowLogin extends ApplicationWindow
 		});
 		
 		btnLogin.setText("Logar");
-		new Label(container, SWT.NONE);
 		
 		Button btnExit = new Button(container, SWT.NONE);
+		btnExit.setBounds(223, 163, 55, 30);
 		btnExit.addSelectionListener(new SelectionAdapter()
 		{
 			@Override
@@ -115,9 +115,6 @@ public class WindowLogin extends ApplicationWindow
 				close();
 			}
 		});
-		GridData gd_btnExit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnExit.widthHint = 55;
-		btnExit.setLayoutData(gd_btnExit);
 		btnExit.setText("Sair");
 
 		
@@ -204,7 +201,7 @@ public class WindowLogin extends ApplicationWindow
 	@Override
 	protected Point getInitialSize() 
 	{
-		return new Point(450, 300);
+		return new Point(450, 329);
 	}
 
 	public CurrentState getCurrentState()

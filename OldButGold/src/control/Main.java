@@ -57,10 +57,11 @@ public class Main
 				e.printStackTrace();
 			}
 			
-			switch(mainCurrentState.getChosenAction())
+			switch(mainCurrentState.getChosenAction()) //opção escolhida pelo funcionário no menu
 			{
-				//abre a janela de cadastro de cliente
+				
 				case "Cadastrar Cliente":
+					//abre a janela de cadastro de cliente
 					try 
 					{	
 						WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState);

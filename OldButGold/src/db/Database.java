@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import person.Client;
 import person.Employee;
 import person.Person;
+import vehicle.Car;
+import vehicle.Motorcycle;
 import vehicle.Vehicle;
 
 public class Database
@@ -46,6 +48,15 @@ public class Database
 		employee2.setPassword("e2");
 
 		this.addUser(employee2);
+		
+		// criar veículos para a base de dados de exemplo
+		vehicleList = new ArrayList<Vehicle>();
+		
+		Vehicle motorcycle = new Motorcycle();
+		motorcycle.setPlate("IQT2191");
+		
+		Vehicle car = new Car();
+		
 	}
 
 	public Person getUser(String login)
@@ -70,6 +81,14 @@ public class Database
 
 	public void addVehicle(Vehicle vehicle)
 	{
-		// TODO: implementar método que adiciona veículo.
+		if (vehicleList.contains(vehicle))
+			return;
+		
+		vehicleList.add(vehicle);
+	}
+	
+	public ArrayList<Vehicle> getVehicleList()
+	{
+		return vehicleList;
 	}
 }
