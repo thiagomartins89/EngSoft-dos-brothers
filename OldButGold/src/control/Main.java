@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Display;
 import GUI.WindowEmployeeMenu;
 import GUI.WindowLogin;
 import GUI.WindowSubscribeClient;
+import GUI.WindowSubscribeVehicle;
 
 //classe em que o programa inicia.
 public class Main
@@ -66,6 +67,21 @@ public class Main
 						WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState);
 						subscribeClientWindow.setBlockOnOpen(true);
 						subscribeClientWindow.open();
+						Display.getCurrent().dispose();			
+					} 
+					catch (Exception e) 
+					{
+						e.printStackTrace();
+					}
+					break;
+					
+				//abre a janela de cadastro de veículo
+				case "Adicionar Veículo":
+					try 
+					{	
+						WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState);
+						subscribeVehicleWindow.setBlockOnOpen(true);
+						subscribeVehicleWindow.open();
 						Display.getCurrent().dispose();			
 					} 
 					catch (Exception e) 

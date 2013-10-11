@@ -58,6 +58,8 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 		btnAddRemoveVehicle.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				currentState.setChosenAction("Adicionar Veículo");
+				close();
 			}
 		});
 		btnAddRemoveVehicle.setBounds(124, 107, 192, 30);

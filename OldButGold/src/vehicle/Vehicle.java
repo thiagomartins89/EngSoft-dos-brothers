@@ -7,8 +7,8 @@ public class Vehicle
 
 	private int enginePower;
 	Date manufacturingDate;
-	double length;
-	String brand, plate;
+	double length, width;
+	String brand, model,  plate;
 	Boolean isAvailable;
 
 	public int getEnginePower()
