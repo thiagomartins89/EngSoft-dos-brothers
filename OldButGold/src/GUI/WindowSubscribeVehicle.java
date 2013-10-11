@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import control.CurrentState;
+import db.Database;
 
 public class WindowSubscribeVehicle extends ApplicationWindow
 {
@@ -27,11 +28,12 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	private Text txtVehicleWidth;
 	private Text txtVehicleMileage;
 	private CurrentState currentState;
+	private Database subscribeVehicleDatabase;
 
 	/**
 	 * Create the application window.
 	 */
-	public WindowSubscribeVehicle(CurrentState mainCurrentState)
+	public WindowSubscribeVehicle(CurrentState mainCurrentState, Database mainDatabase)
 	{
 		super(null);
 		createActions();
@@ -39,6 +41,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
+		subscribeVehicleDatabase = mainDatabase;
 	}
 
 	/**

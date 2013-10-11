@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import person.Client;
 import person.Employee;
 import person.Person;
+import vehicle.Bus;
 import vehicle.Car;
+import vehicle.MicroBus;
 import vehicle.Motorcycle;
+import vehicle.Truck;
 import vehicle.Vehicle;
 
 public class Database
@@ -58,8 +61,26 @@ public class Database
 		
 		Vehicle motorcycle = new Motorcycle();
 		motorcycle.setPlate("IQT2191");
+		motorcycle.setEnginePower("1000");
+		this.addVehicle(motorcycle);
 		
 		Vehicle car = new Car();
+		car.setPlate("IQQ8765");
+		car.setEnginePower("2000");
+		this.addVehicle(car);
+		
+		
+		Vehicle bus = new Bus();
+		bus.setEnginePower("3000");
+		this.addVehicle(bus);
+		
+		Vehicle truck = new Truck();
+		truck.setEnginePower("4000");
+		this.addVehicle(truck);
+		
+		Vehicle microBus = new MicroBus();
+		microBus.setEnginePower("3500");		
+		this.addVehicle(microBus);
 		
 	}
 

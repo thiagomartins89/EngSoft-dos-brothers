@@ -6,19 +6,19 @@ public class Vehicle
 {
 
 	private
-	int enginePower;
+	String enginePower;
 	Date manufacturingDate;
 	double length, width;
 	String brand, model,  plate;
 	Boolean isAvailable;
 	String category;
 	
-	public int getEnginePower()
+	public String getEnginePower()
 	{
 		return enginePower;
 	}
 
-	public void setEnginePower(int enginePower)
+	public void setEnginePower(String enginePower)
 	{
 		this.enginePower = enginePower;
 	}

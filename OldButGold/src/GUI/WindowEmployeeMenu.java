@@ -19,19 +19,25 @@ import control.CurrentState;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 
-public class WindowEmployeeMenu extends ApplicationWindow {
+import db.Database;
+
+public class WindowEmployeeMenu extends ApplicationWindow
+{
 
 	private CurrentState currentState;
+	private Database employeeMenuDatabase;
 	/**
 	 * Create the application window.
 	 */
-	public WindowEmployeeMenu(CurrentState mainCurrentState) {
+	public WindowEmployeeMenu(CurrentState mainCurrentState, Database mainDatabase)
+	{
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
+		employeeMenuDatabase = mainDatabase;
 	}
 
 	/**

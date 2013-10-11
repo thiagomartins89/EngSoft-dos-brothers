@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 
+import db.Database;
+
 import GUI.WindowClientMenu;
 import GUI.WindowEmployeeMenu;
 import GUI.WindowLogin;
@@ -16,6 +18,7 @@ import GUI.WindowSubscribeVehicle;
 public class Main
 {
 	private static CurrentState mainCurrentState = new CurrentState();
+	private static Database mainDatabase = new Database();
 	
 	public static void main(String[] args)
 	{
@@ -24,7 +27,7 @@ public class Main
 			//abre-se a janela de login
 			try 
 			{	
-				WindowLogin loginWindow = new WindowLogin(mainCurrentState);
+				WindowLogin loginWindow = new WindowLogin(mainCurrentState, mainDatabase);
 				loginWindow.setBlockOnOpen(true);
 				int ret = loginWindow.open();
 				if (ret != 0) //se houve algum problema ao fechar a janela
@@ -52,7 +55,7 @@ public class Main
 				//se é funcionário, abre janela de menu de funcionário
 				try 
 				{	
-					WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu(mainCurrentState);
+					WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu(mainCurrentState, mainDatabase);
 					employeeMenuWindow.setBlockOnOpen(true);
 					employeeMenuWindow.open();
 					Display.getCurrent().dispose();			
@@ -69,7 +72,7 @@ public class Main
 						//abre a janela de cadastro de cliente
 						try 
 						{	
-							WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState);
+							WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState, mainDatabase);
 							subscribeClientWindow.setBlockOnOpen(true);
 							subscribeClientWindow.open();
 							Display.getCurrent().dispose();			
@@ -84,7 +87,7 @@ public class Main
 					case "Adicionar Veículo":
 						try 
 						{	
-							WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState);
+							WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState, mainDatabase);
 							subscribeVehicleWindow.setBlockOnOpen(true);
 							subscribeVehicleWindow.open();
 							Display.getCurrent().dispose();			
@@ -109,7 +112,7 @@ public class Main
 					//se é cliente, abre janela de menu de cliente
 					try 
 					{	
-						WindowClientMenu clientMenuWindow = new WindowClientMenu(mainCurrentState);
+						WindowClientMenu clientMenuWindow = new WindowClientMenu(mainCurrentState, mainDatabase);
 						clientMenuWindow.setBlockOnOpen(true);
 						clientMenuWindow.open();
 						Display.getCurrent().dispose();			
@@ -127,7 +130,7 @@ public class Main
 						case "Pesquisar Veículo":
 							try 
 							{	
-								WindowSearchVehicle searchVehicleWindow = new WindowSearchVehicle(mainCurrentState);
+								WindowSearchVehicle searchVehicleWindow = new WindowSearchVehicle(mainCurrentState, mainDatabase);
 								searchVehicleWindow.setBlockOnOpen(true);
 								searchVehicleWindow.open();
 								Display.getCurrent().dispose();			

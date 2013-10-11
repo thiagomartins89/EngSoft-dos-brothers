@@ -31,10 +31,10 @@ public class WindowLogin extends ApplicationWindow
 {
 	private Text txtUserLogin;
 	private Text txtUserPassword;
-	private Database db;
+	private Database loginDatabase;
 	private CurrentState currentState;
 
-	public WindowLogin(CurrentState mainCurrentState) 
+	public WindowLogin(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
 		createActions();
@@ -43,7 +43,7 @@ public class WindowLogin extends ApplicationWindow
 		addStatusLine();
 		
 		currentState = mainCurrentState;
-		db = new Database();
+		loginDatabase = mainDatabase;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class WindowLogin extends ApplicationWindow
 			public void widgetSelected(SelectionEvent e) {
 				//função de ação quando botão logar é pressionado
 				
-				Person user = db.getUser(txtUserLogin.getText());	
+				Person user = loginDatabase.getUser(txtUserLogin.getText());	
 				
 				if(txtUserLogin.getText().equals(""))
 					JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");				

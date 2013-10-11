@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import org.eclipse.jface.action.MenuManager;
@@ -23,19 +25,25 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
 
+import vehicle.Vehicle;
+
+import db.Database;
+
 public class WindowSearchVehicle extends ApplicationWindow {
 
 	private CurrentState currentState;
+	private Database searchVehicleDatabase;
 	/**
 	 * Create the application window.
 	 */
-	public WindowSearchVehicle(CurrentState mainCurrentState) {
+	public WindowSearchVehicle(CurrentState mainCurrentState, Database mainDatabase) {
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
+		searchVehicleDatabase = mainDatabase;
 	}
 
 	/**
@@ -57,17 +65,64 @@ public class WindowSearchVehicle extends ApplicationWindow {
 			//e coloca na outra combo as opções disponíveis do tipo escolhido.
 			public void modifyText(ModifyEvent arg0)
 			{
+				comboSearchOptionsResults.removeAll(); //limpa os resultados anteriores
+				
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
-				JOptionPane.showMessageDialog(null, optionName);
+				ArrayList<Vehicle> vehicleList = searchVehicleDatabase.getVehicleList();
 				
-				if(optionIndex == 1) 	//POR QUE NÃO CAI AQUI??
-				{					
-					comboSearchOptionsResults.add("combofunciona");
+				switch(optionName)
+				{
+					case "Categoria":	//Coloca todas as categorias disponíveis para o usuário selecionar uma.
+						
+						//Lista feita para manter o controle do que já foi adicionado à comboBox.
+						ArrayList<String> categoryList = new ArrayList<String>(); 
+						
+						for(int i=0; i < vehicleList.size(); i++)
+						{
+							String vehicleCategory = vehicleList.get(i).getCategory();
+							
+							if(categoryList.isEmpty())
+							{
+								categoryList.add(vehicleCategory);
+								comboSearchOptionsResults.add(categoryList.get(i));
+							}		
+						
+							
+							else if(!categoryList.contains(vehicleCategory))
+							{
+								categoryList.add(vehicleCategory);
+								comboSearchOptionsResults.add(categoryList.get(i));
+							}
+													
+						}						
+						break; //fim do Categoria
+						
+					case "Potência do motor":
+						
+						//Lista feita para manter o controle do que já foi adicionado à comboBox.
+						ArrayList<String> enginePowerList = new ArrayList<String>();
+						for(int i=0; i < vehicleList.size(); i++)
+						{
+							String vehicleEnginePower = vehicleList.get(i).getEnginePower();
+							
+							if(enginePowerList.isEmpty())
+							{
+								enginePowerList.add(vehicleEnginePower);								
+								comboSearchOptionsResults.add(vehicleEnginePower);
+							}								
+							else if(!enginePowerList.contains(vehicleEnginePower))
+							{
+								enginePowerList.add(vehicleEnginePower);
+								comboSearchOptionsResults.add(vehicleEnginePower);
+							}
+													
+						}						
+						break; //fim do Potência
 				}
 			}
 		});
-		comboSearchOptions.setBounds(96, 7, 152, 23);
+		comboSearchOptions.setBounds(119, 7, 192, 28);
 		
 		//Adicionando as opções à ComboBox
 		comboSearchOptions.add("Categoria");	
@@ -79,14 +134,14 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-		lblSearchOptions.setBounds(10, 10, 80, 15);
+		lblSearchOptions.setBounds(10, 10, 103, 25);
 		lblSearchOptions.setText("Pesquisar por :");
 		
 		
-		comboSearchOptionsResults.setBounds(96, 35, 152, 23);
+		comboSearchOptionsResults.setBounds(119, 55, 192, 28);
 		
 		List list = new List(container, SWT.BORDER);
-		list.setBounds(261, 6, 134, 104);		
+		list.setBounds(338, 10, 134, 104);		
 		
 		Button btnReturn = new Button(container, SWT.NONE);
 		btnReturn.addSelectionListener(new SelectionAdapter() 
@@ -99,7 +154,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				close();
 			}
 		});
-		btnReturn.setBounds(285, 136, 75, 25);
+		btnReturn.setBounds(332, 155, 75, 25);
 		btnReturn.setText("Voltar");
 
 
@@ -182,6 +237,6 @@ public class WindowSearchVehicle extends ApplicationWindow {
 	@Override
 	protected Point getInitialSize() 
 	{
-		return new Point(459, 342);
+		return new Point(490, 381);
 	}
 }

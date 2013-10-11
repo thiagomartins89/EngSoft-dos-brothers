@@ -15,20 +15,23 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import control.CurrentState;
+import db.Database;
 
 public class WindowClientMenu extends ApplicationWindow {
 
 	private CurrentState currentState;
+	private Database clientMenuDatabase;
 	/**
 	 * Create the application window.
 	 */
-	public WindowClientMenu(CurrentState mainCurrentState) {
+	public WindowClientMenu(CurrentState mainCurrentState, Database mainDatabase) {
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
+		clientMenuDatabase = mainDatabase;
 	}
 
 	/**

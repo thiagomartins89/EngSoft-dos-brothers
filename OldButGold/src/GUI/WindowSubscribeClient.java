@@ -16,24 +16,29 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridLayout;
 
 import control.CurrentState;
+import db.Database;
 
-public class WindowSubscribeClient extends ApplicationWindow {
+public class WindowSubscribeClient extends ApplicationWindow
+{
 	private Text txtUserName;
 	private Text txtUserCPF;
 	private Text txtUserId;
 	private Text txtUserPassword;
 	private CurrentState currentState;
+	private Database subscribeClientDatabase;
 	
 	/**
 	 * Create the application window.
 	 */
-	public WindowSubscribeClient(CurrentState mainCurrentState) {
+	public WindowSubscribeClient(CurrentState mainCurrentState, Database mainDatabase) 
+	{
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
+		subscribeClientDatabase = mainDatabase;
 	}
 
 	/**
