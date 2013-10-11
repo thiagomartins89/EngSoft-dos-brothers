@@ -24,6 +24,7 @@ public class Database
 
 		client1.setId("c1");
 		client1.setPassword("c1");
+		client1.setName("Cliente 1");
 
 		this.addUser(client1);
 
@@ -31,6 +32,7 @@ public class Database
 
 		client2.setId("c2");
 		client2.setPassword("c2");
+		client2.setName("Cliente 2");
 
 		this.addUser(client2);
 
@@ -39,6 +41,7 @@ public class Database
 
 		employee1.setId("e1");
 		employee1.setPassword("e1");
+		employee1.setName("Funcionário 1");
 
 		this.addUser(employee1);
 
@@ -46,6 +49,7 @@ public class Database
 
 		employee2.setId("e2");
 		employee2.setPassword("e2");
+		employee2.setName("Funcionário 2");
 
 		this.addUser(employee2);
 		

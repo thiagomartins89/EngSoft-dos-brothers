@@ -5,8 +5,10 @@ import javax.swing.JOptionPane;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 
+import GUI.WindowClientMenu;
 import GUI.WindowEmployeeMenu;
 import GUI.WindowLogin;
+import GUI.WindowSearchVehicle;
 import GUI.WindowSubscribeClient;
 import GUI.WindowSubscribeVehicle;
 
@@ -17,86 +19,130 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		//abre-se a janela de login
-		try 
-		{	
-			WindowLogin loginWindow = new WindowLogin(mainCurrentState);
-			loginWindow.setBlockOnOpen(true);
-			int ret = loginWindow.open();
-			if (ret != 0) //se houve algum problema ao fechar a janela
-				return;
-			
-			Display.getCurrent().dispose();			
-		} 
-		catch (Exception e) 
+		do
 		{
-			e.printStackTrace();
-		}
-
-		if(mainCurrentState.getChosenAction() == "Sair")
-			return;
-		
-		Class userClass = mainCurrentState.getCurrentUser().getClass();
-		
-		//--------------------------------------------------------------------------
-		//Início das funções do funcionário.
-		//Se ficar muito grande, considerar colocar em outra classe.
-		
-		if(userClass.getName() == "person.Employee")	//não sei como fazer retornar apenas "Employee",
-														//mas isso já quebra o galho
-		{
-			//se é funcionário, abre janela de menu de funcionário
+			//abre-se a janela de login
 			try 
 			{	
-				WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu(mainCurrentState);
-				employeeMenuWindow.setBlockOnOpen(true);
-				employeeMenuWindow.open();
+				WindowLogin loginWindow = new WindowLogin(mainCurrentState);
+				loginWindow.setBlockOnOpen(true);
+				int ret = loginWindow.open();
+				if (ret != 0) //se houve algum problema ao fechar a janela
+					return;
+				
 				Display.getCurrent().dispose();			
 			} 
 			catch (Exception e) 
 			{
 				e.printStackTrace();
 			}
+	
+			if(mainCurrentState.getChosenAction() == "Sair")
+				return;
 			
-			switch(mainCurrentState.getChosenAction()) //opção escolhida pelo funcionário no menu
+			Class userClass = mainCurrentState.getCurrentUser().getClass();
+			
+			//--------------------------------------------------------------------------
+			//Início das funções do funcionário.
+			//Se ficar muito grande, considerar colocar em outra classe.
+			
+			if(userClass.getName() == "person.Employee")	//não sei como fazer retornar apenas "Employee",
+															//mas isso já quebra o galho
 			{
+				//se é funcionário, abre janela de menu de funcionário
+				try 
+				{	
+					WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu(mainCurrentState);
+					employeeMenuWindow.setBlockOnOpen(true);
+					employeeMenuWindow.open();
+					Display.getCurrent().dispose();			
+				} 
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+				}
 				
-				case "Cadastrar Cliente":
-					//abre a janela de cadastro de cliente
-					try 
-					{	
-						WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState);
-						subscribeClientWindow.setBlockOnOpen(true);
-						subscribeClientWindow.open();
-						Display.getCurrent().dispose();			
-					} 
-					catch (Exception e) 
-					{
-						e.printStackTrace();
-					}
-					break;
+				switch(mainCurrentState.getChosenAction()) //opção escolhida pelo funcionário no menu
+				{
 					
-				//abre a janela de cadastro de veículo
-				case "Adicionar Veículo":
+					case "Cadastrar Cliente":
+						//abre a janela de cadastro de cliente
+						try 
+						{	
+							WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState);
+							subscribeClientWindow.setBlockOnOpen(true);
+							subscribeClientWindow.open();
+							Display.getCurrent().dispose();			
+						} 
+						catch (Exception e) 
+						{
+							e.printStackTrace();
+						}
+						break;
+						
+					//abre a janela de cadastro de veículo
+					case "Adicionar Veículo":
+						try 
+						{	
+							WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState);
+							subscribeVehicleWindow.setBlockOnOpen(true);
+							subscribeVehicleWindow.open();
+							Display.getCurrent().dispose();			
+						} 
+						catch (Exception e) 
+						{
+							e.printStackTrace();
+						}
+						break;
+						
+					case "Sair":
+						break;
+				}
+			}
+			
+			//----------------------------------------------------------------------------
+			//Fim das funções do funcionário
+			else
+			{
+				do
+				{
+					//se é cliente, abre janela de menu de cliente
 					try 
 					{	
-						WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState);
-						subscribeVehicleWindow.setBlockOnOpen(true);
-						subscribeVehicleWindow.open();
+						WindowClientMenu clientMenuWindow = new WindowClientMenu(mainCurrentState);
+						clientMenuWindow.setBlockOnOpen(true);
+						clientMenuWindow.open();
 						Display.getCurrent().dispose();			
 					} 
 					catch (Exception e) 
 					{
 						e.printStackTrace();
 					}
-					break;
+					
+					if(mainCurrentState.getChosenAction() == "Sair")
+						continue;
+					
+					switch(mainCurrentState.getChosenAction()) //opção escolhida pelo cliente no menu
+					{
+						case "Pesquisar Veículo":
+							try 
+							{	
+								WindowSearchVehicle searchVehicleWindow = new WindowSearchVehicle(mainCurrentState);
+								searchVehicleWindow.setBlockOnOpen(true);
+								searchVehicleWindow.open();
+								Display.getCurrent().dispose();			
+							} 
+							catch (Exception e) 
+							{
+								e.printStackTrace();
+							}
 				
+					}
+					
+				}while(mainCurrentState.getChosenAction() == "Voltar");
 			}
-		}
-		
-		//----------------------------------------------------------------------------
-		//Fim das funções do funcionário
-		
+			
+		}while(mainCurrentState.getCurrentUser() != null);
 	}
 	
 

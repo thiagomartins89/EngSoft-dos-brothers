@@ -82,6 +82,8 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 				@Override
 				//função de ação quando botão "Sair" é pressionado
 				public void widgetSelected(SelectionEvent e) {
+					currentState.setChosenAction("Sair");
+					close();
 				}
 			});
 			btnExit.setBounds(103, 138, 194, 30);

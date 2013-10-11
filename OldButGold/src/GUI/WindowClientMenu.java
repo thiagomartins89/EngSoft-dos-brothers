@@ -14,17 +14,21 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
+import control.CurrentState;
+
 public class WindowClientMenu extends ApplicationWindow {
 
+	private CurrentState currentState;
 	/**
 	 * Create the application window.
 	 */
-	public WindowClientMenu() {
+	public WindowClientMenu(CurrentState mainCurrentState) {
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
+		currentState = mainCurrentState;
 	}
 
 	/**
@@ -52,6 +56,8 @@ public class WindowClientMenu extends ApplicationWindow {
 				@Override
 				//função de ação quando botão "Pesquisar Veículo" é pressionado
 				public void widgetSelected(SelectionEvent e) {
+					currentState.setChosenAction("Pesquisar Veículo");
+					close();
 				}
 			});
 			btnSearchVehicle.setBounds(150, 72, 138, 30);
@@ -66,6 +72,16 @@ public class WindowClientMenu extends ApplicationWindow {
 		
 		{
 			Button btnExit = new Button(container, SWT.NONE);
+			btnExit.addSelectionListener(new SelectionAdapter()
+			{
+				@Override
+				//função de ação quando botão "Sair" é pressionado
+				public void widgetSelected(SelectionEvent e)
+				{
+					currentState.setChosenAction("Sair");
+					close();
+				}
+			});
 			btnExit.setBounds(150, 144, 138, 30);
 			btnExit.setText("Sair");
 		}
@@ -115,6 +131,8 @@ public class WindowClientMenu extends ApplicationWindow {
 	 * Launch the application.
 	 * @param args
 	 */
+	
+	/*
 	public static void main(String args[]) {
 		try {
 			WindowClientMenu window = new WindowClientMenu();
@@ -125,7 +143,7 @@ public class WindowClientMenu extends ApplicationWindow {
 			e.printStackTrace();
 		}
 	}
-
+	 */
 	/**
 	 * Configure the shell.
 	 * @param newShell

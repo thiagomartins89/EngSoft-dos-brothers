@@ -84,18 +84,17 @@ public class WindowLogin extends ApplicationWindow
 				{
 					if(user.getPassword().equals(txtUserPassword.getText()))
 					{
-						JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
+						JOptionPane.showMessageDialog(null, "Bem vindo, " + user.getName() + "!");
 						
 						currentState.setChosenAction("Logar");
-						currentState.setCurrentUser(user);
-						
+						currentState.setCurrentUser(user);						
 						close();
 					}					
 					else
 						JOptionPane.showMessageDialog(null, "Senha incorreta!");
 				}				
 				else
-					JOptionPane.showMessageDialog(null, "Usuario não existe!");
+					JOptionPane.showMessageDialog(null, "Usuário não existe!");
 			}			
 			
 		});
