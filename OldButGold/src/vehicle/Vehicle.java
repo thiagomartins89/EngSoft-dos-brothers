@@ -1,6 +1,6 @@
 package vehicle;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Vehicle
 {
@@ -79,6 +79,26 @@ public class Vehicle
 
 	public void setCategory(String string) {
 		this.category = string;
+	}
+
+	public double getWidth()
+	{
+		return width;
+	}
+
+	public void setWidth(double width)
+	{
+		this.width = width;
+	}
+
+	public String getModel()
+	{
+		return model;
+	}
+
+	public void setModel(String model)
+	{
+		this.model = model;
 	}
 
 }

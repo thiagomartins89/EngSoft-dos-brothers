@@ -72,6 +72,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 			//função de ação quando botão "Adicionar Veículo" é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
+				currentState.setChosenAction("Adicionar Veículo");
+				close();
 			}
 		});
 		btnAddVehicle.setText("Adicionar Veículo");

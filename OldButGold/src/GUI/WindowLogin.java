@@ -26,6 +26,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 import control.CurrentState;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 public class WindowLogin extends ApplicationWindow
 {
@@ -64,6 +66,15 @@ public class WindowLogin extends ApplicationWindow
 		lblPassword.setText("Senha");
 		
 		txtUserPassword = new Text(container, SWT.BORDER | SWT.PASSWORD);
+		txtUserPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR)
+				{
+					login();
+				}
+			}
+		});
 		txtUserPassword.setBounds(211, 120, 78, 26);
 		
 		Button btnLogin = new Button(container, SWT.NONE);
@@ -72,29 +83,7 @@ public class WindowLogin extends ApplicationWindow
 		btnLogin.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//função de ação quando botão logar é pressionado
-				
-				Person user = loginDatabase.getUser(txtUserLogin.getText());	
-				
-				if(txtUserLogin.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");				
-				else if(txtUserPassword.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Uma senha deve ser informada.");				
-				else if(user != null)
-				{
-					if(user.getPassword().equals(txtUserPassword.getText()))
-					{
-						JOptionPane.showMessageDialog(null, "Bem vindo, " + user.getName() + "!");
-						
-						currentState.setChosenAction("Logar");
-						currentState.setCurrentUser(user);						
-						close();
-					}					
-					else
-						JOptionPane.showMessageDialog(null, "Senha incorreta!");
-				}				
-				else
-					JOptionPane.showMessageDialog(null, "Usuário não existe!");
+				login();
 			}			
 			
 		});
@@ -119,6 +108,33 @@ public class WindowLogin extends ApplicationWindow
 		
 		
 		return container;
+	}
+	
+	private void login()
+	{
+		//função de ação quando botão logar é pressionado
+		
+		Person user = loginDatabase.getUser(txtUserLogin.getText());	
+		
+		if(txtUserLogin.getText().equals(""))
+			JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");				
+		else if(txtUserPassword.getText().equals(""))
+			JOptionPane.showMessageDialog(null, "Uma senha deve ser informada.");				
+		else if(user != null)
+		{
+			if(user.getPassword().equals(txtUserPassword.getText()))
+			{
+				JOptionPane.showMessageDialog(null, "Bem vindo, " + user.getName() + "!");
+				
+				currentState.setChosenAction("Logar");
+				currentState.setCurrentUser(user);						
+				close();
+			}					
+			else
+				JOptionPane.showMessageDialog(null, "Senha incorreta!");
+		}				
+		else
+			JOptionPane.showMessageDialog(null, "Usuário não existe!");
 	}
 
 	/**
