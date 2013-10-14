@@ -1,16 +1,37 @@
 package vehicle;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Vehicle
 {
 
-	private int enginePower;
-	Date manufacturingDate;
-	double length;
-	String brand, plate;
-	Boolean isAvailable;
+	public Vehicle(int enginePower, int manufacturingDate, double length,
+			double width, String brand, String model, String plate, String category)
+	{
+		this.enginePower = enginePower;
+		this.manufacturingDate = manufacturingDate;
+		this.length = length;
+		this.width = width;
+		this.brand = brand;
+		this.model = model;
+		this.plate = plate;
+		this.category = category;
+		this.isAvailable = true; //todos os veículos já vêm adicionados como disponíveis
+	}
+	
+	
+	public Vehicle() {
+		// TODO Auto-generated constructor stub
+	}
 
+
+	protected String brand, model, plate, category;
+	protected double length, width;
+	protected int enginePower, manufacturingDate;
+	protected Boolean isAvailable;
+
+	
 	public int getEnginePower()
 	{
 		return enginePower;
@@ -21,12 +42,12 @@ public class Vehicle
 		this.enginePower = enginePower;
 	}
 
-	public Date getManufacturingDate()
+	public int getManufacturingDate()
 	{
 		return manufacturingDate;
 	}
 
-	public void setManufacturingDate(Date manufacturingDate)
+	public void setManufacturingDate(int manufacturingDate)
 	{
 		this.manufacturingDate = manufacturingDate;
 	}
@@ -69,6 +90,34 @@ public class Vehicle
 	public void setPlate(String plate)
 	{
 		this.plate = plate;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String string) {
+		this.category = string;
+	}
+
+	public double getWidth()
+	{
+		return width;
+	}
+
+	public void setWidth(double width)
+	{
+		this.width = width;
+	}
+
+	public String getModel()
+	{
+		return model;
+	}
+
+	public void setModel(String model)
+	{
+		this.model = model;
 	}
 
 }

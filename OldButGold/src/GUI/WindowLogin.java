@@ -26,84 +26,73 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 import control.CurrentState;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 public class WindowLogin extends ApplicationWindow
 {
 	private Text txtUserLogin;
 	private Text txtUserPassword;
-	private Database db;
+	private Database loginDatabase;
 	private CurrentState currentState;
 
-	public WindowLogin(CurrentState mainCurrentState) 
+	public WindowLogin(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
 		
 		currentState = mainCurrentState;
-		db = new Database();
+		loginDatabase = mainDatabase;
 	}
 
 	@Override
 	protected Control createContents(Composite parent) 
 	{
-		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout(4, false));
+		Composite container = new Composite(parent, SWT.BORDER | SWT.NO_REDRAW_RESIZE);
+		container.setLayout(null);
 		
 		Label lblNomeDeUsurio = new Label(container, SWT.NONE);
+		lblNomeDeUsurio.setBounds(139, 86, 50, 20);
 		lblNomeDeUsurio.setText("Usuário");
 		
 		txtUserLogin = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		txtUserLogin.setBounds(211, 83, 78, 26);
 		
 		Label lblPassword = new Label(container, SWT.NONE);
+		lblPassword.setBounds(144, 126, 40, 20);
 		lblPassword.setText("Senha");
 		
 		txtUserPassword = new Text(container, SWT.BORDER | SWT.PASSWORD);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		txtUserPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR)
+				{
+					login();
+				}
+			}
+		});
+		txtUserPassword.setBounds(211, 120, 78, 26);
 		
 		Button btnLogin = new Button(container, SWT.NONE);
+		btnLogin.setBounds(134, 164, 55, 29);
 		
 		btnLogin.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//função de ação quando botão logar é pressionado
-				
-				Person user = db.getUser(txtUserLogin.getText());	
-				
-				if(txtUserLogin.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");				
-				else if(txtUserPassword.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Uma senha deve ser informada.");				
-				else if(user != null)
-				{
-					if(user.getPassword().equals(txtUserPassword.getText()))
-					{
-						JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
-						
-						currentState.setChosenAction("Logar");
-						currentState.setCurrentUser(user);
-						
-						close();
-					}					
-					else
-						JOptionPane.showMessageDialog(null, "Senha incorreta!");
-				}				
-				else
-					JOptionPane.showMessageDialog(null, "Usuario não existe!");
+				login();
 			}			
 			
 		});
 		
 		btnLogin.setText("Logar");
-		new Label(container, SWT.NONE);
 		
 		Button btnExit = new Button(container, SWT.NONE);
+		btnExit.setBounds(223, 163, 55, 30);
 		btnExit.addSelectionListener(new SelectionAdapter()
 		{
 			@Override
@@ -115,14 +104,38 @@ public class WindowLogin extends ApplicationWindow
 				close();
 			}
 		});
-		GridData gd_btnExit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnExit.widthHint = 55;
-		btnExit.setLayoutData(gd_btnExit);
 		btnExit.setText("Sair");
 
 		
 		
 		return container;
+	}
+	
+	private void login()
+	{
+		//função de ação quando botão logar é pressionado
+		
+		Person user = loginDatabase.getUser(txtUserLogin.getText());	
+		
+		if(txtUserLogin.getText().equals(""))
+			JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");				
+		else if(txtUserPassword.getText().equals(""))
+			JOptionPane.showMessageDialog(null, "Uma senha deve ser informada.");				
+		else if(user != null)
+		{
+			if(user.getPassword().equals(txtUserPassword.getText()))
+			{
+				JOptionPane.showMessageDialog(null, "Bem vindo, " + user.getName() + "!");
+				
+				currentState.setChosenAction("Logar");
+				currentState.setCurrentUser(user);						
+				close();
+			}					
+			else
+				JOptionPane.showMessageDialog(null, "Senha incorreta!");
+		}				
+		else
+			JOptionPane.showMessageDialog(null, "Usuário não existe!");
 	}
 
 	/**
@@ -170,18 +183,6 @@ public class WindowLogin extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
-	/*
-	public static void main(String args[]) {
-		try {
-			JanelaLogin window = new JanelaLogin();
-			window.setBlockOnOpen(true);
-			window.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	/**
 	 * Configure the shell.
@@ -204,7 +205,7 @@ public class WindowLogin extends ApplicationWindow
 	@Override
 	protected Point getInitialSize() 
 	{
-		return new Point(450, 300);
+		return new Point(450, 329);
 	}
 
 	public CurrentState getCurrentState()

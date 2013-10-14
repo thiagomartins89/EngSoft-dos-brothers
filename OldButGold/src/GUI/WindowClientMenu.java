@@ -11,30 +11,21 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridLayout;
-
-import control.CurrentState;
-import db.Database;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class WindowSubscribeClient extends ApplicationWindow
-{
-	private Text txtUserName;
-	private Text txtUserCPF;
-	private Text txtUserId;
-	private Text txtUserPassword;
+import control.CurrentState;
+import db.Database;
+
+public class WindowClientMenu extends ApplicationWindow {
+
 	private CurrentState currentState;
-	private Database subscribeClientDatabase;
-	
+	private Database clientMenuDatabase;
 	/**
 	 * Create the application window.
 	 */
-	public WindowSubscribeClient(CurrentState mainCurrentState, Database mainDatabase) 
-	{
+	public WindowClientMenu(CurrentState mainCurrentState, Database mainDatabase) {
 		super(null);
 		setShellStyle(SWT.MAX);
 		createActions();
@@ -42,7 +33,7 @@ public class WindowSubscribeClient extends ApplicationWindow
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
-		subscribeClientDatabase = mainDatabase;
+		clientMenuDatabase = mainDatabase;
 	}
 
 	/**
@@ -52,54 +43,54 @@ public class WindowSubscribeClient extends ApplicationWindow
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout(5, false));
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		{
+			Button btnCarRental = new Button(container, SWT.NONE);
+			btnCarRental.setBounds(150, 0, 138, 30);
+			btnCarRental.setText("Locação");
+		}
 		
-		Label lblUserName = new Label(container, SWT.NONE);
-		lblUserName.setText("Nome");
+		{
+			Button btnScheduling = new Button(container, SWT.NONE);
+			btnScheduling.setBounds(150, 36, 138, 30);
+			btnScheduling.setText("Agendamento");
+		}
 		
-		txtUserName = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		{
+			Button btnSearchVehicle = new Button(container, SWT.NONE);
+			btnSearchVehicle.addSelectionListener(new SelectionAdapter() {
+				@Override
+				//função de ação quando botão "Pesquisar Veículo" é pressionado
+				public void widgetSelected(SelectionEvent e) {
+					currentState.setChosenAction("Pesquisar Veículo");
+					close();
+				}
+			});
+			btnSearchVehicle.setBounds(150, 72, 138, 30);
+			btnSearchVehicle.setText("Pesquisar Veículo");
+		}
 		
-		Label lblUserCPF = new Label(container, SWT.NONE);
-		lblUserCPF.setText("CPF");
+		{
+			Button btnVerifyHistory = new Button(container, SWT.NONE);
+			btnVerifyHistory.setBounds(150, 108, 138, 30);
+			btnVerifyHistory.setText("Verificar Histórico");
+		}		
 		
-		txtUserCPF = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		
-		Label lblUserId = new Label(container, SWT.NONE);
-		lblUserId.setText("Usuário");
-		
-		txtUserId = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		
-		Label lblUserPassword = new Label(container, SWT.NONE);
-		lblUserPassword.setText("Senha");
-		
-		txtUserPassword = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		
-		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			//Botão Voltar
-			public void widgetSelected(SelectionEvent e) 
+		{
+			Button btnExit = new Button(container, SWT.NONE);
+			btnExit.addSelectionListener(new SelectionAdapter()
 			{
-				close();
-			}
-		});
-		btnReturn.setText("Voltar");
+				@Override
+				//função de ação quando botão "Sair" é pressionado
+				public void widgetSelected(SelectionEvent e)
+				{
+					currentState.setChosenAction("Sair");
+					close();
+				}
+			});
+			btnExit.setBounds(150, 144, 138, 30);
+			btnExit.setText("Sair");
+		}
+
 
 		return container;
 	}
@@ -145,7 +136,7 @@ public class WindowSubscribeClient extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
-
+	
 	/**
 	 * Configure the shell.
 	 * @param newShell
@@ -165,6 +156,7 @@ public class WindowSubscribeClient extends ApplicationWindow
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(448, 299);
+		return new Point(450, 313);
 	}
+
 }

@@ -16,20 +16,29 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import control.CurrentState;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
 
-public class WindowEmployeeMenu extends ApplicationWindow {
+import db.Database;
+
+public class WindowEmployeeMenu extends ApplicationWindow
+{
 
 	private CurrentState currentState;
+	private Database employeeMenuDatabase;
 	/**
 	 * Create the application window.
 	 */
-	public WindowEmployeeMenu(CurrentState mainCurrentState) {
+	public WindowEmployeeMenu(CurrentState mainCurrentState, Database mainDatabase)
+	{
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
+		employeeMenuDatabase = mainDatabase;
 	}
 
 	/**
@@ -39,29 +48,57 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(null);
 		{
 			Button btnSubscribeClient = new Button(container, SWT.NONE);
+			btnSubscribeClient.setBounds(101, 28, 196, 30);
 			btnSubscribeClient.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
-					//função de ação quando botão Cadastrar é pressionado
+				//função de ação quando botão "Cadastrar Cliente" é pressionado
+				public void widgetSelected(SelectionEvent e) 
+				{
 					currentState.setChosenAction("Cadastrar Cliente");
 					close();
 					
 				}
 			});
-			btnSubscribeClient.setBounds(124, 70, 192, 30);
 			btnSubscribeClient.setText("Cadastrar Cliente");
 		}
 		
-		Button btnAddRemoveVehicle = new Button(container, SWT.NONE);
-		btnAddRemoveVehicle.addSelectionListener(new SelectionAdapter() {
+		Button btnAddVehicle = new Button(container, SWT.NONE);
+		btnAddVehicle.setBounds(101, 64, 196, 30);
+		btnAddVehicle.addSelectionListener(new SelectionAdapter() 
+		{
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			//função de ação quando botão "Adicionar Veículo" é pressionado
+			public void widgetSelected(SelectionEvent e)
+			{
+				currentState.setChosenAction("Adicionar Veículo");
+				close();
 			}
 		});
-		btnAddRemoveVehicle.setBounds(124, 107, 192, 30);
-		btnAddRemoveVehicle.setText("Adicionar/Remover Veículo");
+		btnAddVehicle.setText("Adicionar Veículo");
+		
+		{
+			Button btnRemoveVehicle = new Button(container, SWT.NONE);
+			btnRemoveVehicle.setBounds(101, 100, 196, 30);
+			btnRemoveVehicle.setText("Remover Veículo");
+		}
+		
+		{
+			Button btnExit = new Button(container, SWT.NONE);
+			btnExit.addSelectionListener(new SelectionAdapter() {
+				@Override
+				//função de ação quando botão "Sair" é pressionado
+				public void widgetSelected(SelectionEvent e) {
+					currentState.setChosenAction("Sair");
+					close();
+				}
+			});
+			btnExit.setBounds(103, 138, 194, 30);
+			btnExit.setText("Sair");
+		}
+
 
 		return container;
 	}
@@ -107,19 +144,6 @@ public class WindowEmployeeMenu extends ApplicationWindow {
 	 * Launch the application.
 	 * @param args
 	 */
-	
-	/*
-	public static void main(String args[]) {
-		try {
-			WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu();
-			employeeMenuWindow.setBlockOnOpen(true);
-			employeeMenuWindow.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	/**
 	 * Configure the shell.
