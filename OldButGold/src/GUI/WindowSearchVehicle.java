@@ -1,6 +1,7 @@
 package GUI;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -74,51 +75,47 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				switch(optionName)
 				{
 					case "Categoria":	//Coloca todas as categorias disponíveis para o usuário selecionar uma.
-						
-						//Lista feita para manter o controle do que já foi adicionado à comboBox.
-						ArrayList<String> categoryList = new ArrayList<String>(); 
-						
 						for(int i=0; i < vehicleList.size(); i++)
 						{
-							String vehicleCategory = vehicleList.get(i).getCategory();
-							
-							if(categoryList.isEmpty())
-							{
-								categoryList.add(vehicleCategory);
-								comboSearchOptionsResults.add(categoryList.get(i));
-							}		
-						
-							
-							else if(!categoryList.contains(vehicleCategory))
-							{
-								categoryList.add(vehicleCategory);
-								comboSearchOptionsResults.add(categoryList.get(i));
-							}
+								String vehicleCategory = vehicleList.get(i).getCategory();
+								
+								if(comboSearchOptionsResults.indexOf(vehicleCategory) == -1)
+									comboSearchOptionsResults.add(vehicleCategory);
 													
 						}						
 						break; //fim do Categoria
 						
 					case "Potência do motor":
-						
-						//Lista feita para manter o controle do que já foi adicionado à comboBox.
-						ArrayList<String> enginePowerList = new ArrayList<String>();
 						for(int i=0; i < vehicleList.size(); i++)
 						{
 							String vehicleEnginePower = vehicleList.get(i).getEnginePower();
 							
-							if(enginePowerList.isEmpty())
-							{
-								enginePowerList.add(vehicleEnginePower);								
+							if(comboSearchOptionsResults.indexOf(vehicleEnginePower) == -1)
 								comboSearchOptionsResults.add(vehicleEnginePower);
-							}								
-							else if(!enginePowerList.contains(vehicleEnginePower))
-							{
-								enginePowerList.add(vehicleEnginePower);
-								comboSearchOptionsResults.add(vehicleEnginePower);
-							}
-													
+							
 						}						
 						break; //fim do Potência
+						
+					case "Ano":
+						for(int i=0; i < vehicleList.size(); i++)
+						{
+							int vehicleYear = vehicleList.get(i).getManufacturingDate().getYear();
+							//JOptionPane.showMessageDialog(null, vehicleYear);
+							String strVehicleYear = String.format(toString(), vehicleYear);
+							if(comboSearchOptionsResults.indexOf(strVehicleYear) == -1)
+								comboSearchOptionsResults.add(strVehicleYear);
+							
+						}				
+						break;
+						
+					case "Comprimento máximo":
+						break;
+						
+					case "Marca":
+						break;
+						
+					case "Modelo":
+						break;
 				}
 			}
 		});

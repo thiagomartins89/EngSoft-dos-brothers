@@ -105,6 +105,7 @@ public class Main
 			
 			//----------------------------------------------------------------------------
 			//Fim das funções do funcionário
+			
 			else
 			{
 				do

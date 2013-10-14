@@ -1,6 +1,7 @@
 package db;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import person.Client;
 import person.Employee;
@@ -59,27 +60,29 @@ public class Database
 		// criar veículos para a base de dados de exemplo
 		vehicleList = new ArrayList<Vehicle>();
 		
-		Vehicle motorcycle = new Motorcycle();
-		motorcycle.setPlate("IQT2191");
-		motorcycle.setEnginePower("1000");
+		Date motorcycleDate = new Date(01, 01, 2009);
+		Motorcycle motorcycle = new Motorcycle("1000", motorcycleDate, 1.2,
+				0.8, "Honda", "Biz", "ABC1234");		
 		this.addVehicle(motorcycle);
 		
-		Vehicle car = new Car();
-		car.setPlate("IQQ8765");
-		car.setEnginePower("2000");
+		Date carDate = new Date(02, 01, 2010);
+		Vehicle car = new Car("2000", carDate, 2.8,
+				1.9, "Volkswagen", "Gol", "ABC1235");
 		this.addVehicle(car);
 		
-		
-		Vehicle bus = new Bus();
-		bus.setEnginePower("3000");
+		Date busDate = new Date(03, 01, 2011);
+		Vehicle bus = new Bus("3000", busDate, 15,
+				3, "Mercedez-Benz", "bus1", "ABC1236");
 		this.addVehicle(bus);
-		
-		Vehicle truck = new Truck();
-		truck.setEnginePower("4000");
+
+		Date truckDate = new Date(04, 01, 2012);
+		Vehicle truck = new Truck("4000", truckDate, 20,
+				3, "TruckBrand", "truck1", "ABC1237");
 		this.addVehicle(truck);
 		
-		Vehicle microBus = new MicroBus();
-		microBus.setEnginePower("3500");		
+		Date microBusDate = new Date(05, 01, 2013);
+		Vehicle microBus = new MicroBus("3500", microBusDate, 10,
+				2.7, "MicroBusBrand", "microbus1", "ABC1238");	
 		this.addVehicle(microBus);
 		
 	}

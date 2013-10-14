@@ -5,13 +5,31 @@ import java.util.Date;
 public class Vehicle
 {
 
-	private
-	String enginePower;
-	Date manufacturingDate;
-	double length, width;
-	String brand, model,  plate;
-	Boolean isAvailable;
-	String category;
+	public Vehicle(String enginePower, Date manufacturingDate, double length,
+			double width, String brand, String model, String plate, String category)
+	{
+		this.enginePower = enginePower;
+		this.manufacturingDate = manufacturingDate;
+		this.length = length;
+		this.width = width;
+		this.brand = brand;
+		this.model = model;
+		this.plate = plate;
+		this.category = category;
+		this.isAvailable = true; //todos os veículos já vêm adicionados como disponíveis
+	}
+	
+	
+	public Vehicle() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	protected String enginePower, brand, model,  plate, category;
+	protected Date manufacturingDate;
+	protected double length, width;
+	protected Boolean isAvailable;
+
 	
 	public String getEnginePower()
 	{
