@@ -17,6 +17,9 @@ import org.eclipse.swt.layout.GridLayout;
 
 import control.CurrentState;
 import db.Database;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class WindowSubscribeClient extends ApplicationWindow
 {
@@ -33,6 +36,7 @@ public class WindowSubscribeClient extends ApplicationWindow
 	public WindowSubscribeClient(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
@@ -48,7 +52,9 @@ public class WindowSubscribeClient extends ApplicationWindow
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout(3, false));
+		container.setLayout(new GridLayout(5, false));
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -59,11 +65,15 @@ public class WindowSubscribeClient extends ApplicationWindow
 		
 		txtUserName = new Text(container, SWT.BORDER);
 		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
 		
 		Label lblUserCPF = new Label(container, SWT.NONE);
 		lblUserCPF.setText("CPF");
 		
 		txtUserCPF = new Text(container, SWT.BORDER);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		
 		Label lblUserId = new Label(container, SWT.NONE);
@@ -71,11 +81,25 @@ public class WindowSubscribeClient extends ApplicationWindow
 		
 		txtUserId = new Text(container, SWT.BORDER);
 		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
 		
 		Label lblUserPassword = new Label(container, SWT.NONE);
 		lblUserPassword.setText("Senha");
 		
 		txtUserPassword = new Text(container, SWT.BORDER);
+		new Label(container, SWT.NONE);
+		
+		Button btnReturn = new Button(container, SWT.NONE);
+		btnReturn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			//Botão Voltar
+			public void widgetSelected(SelectionEvent e) 
+			{
+				close();
+			}
+		});
+		btnReturn.setText("Voltar");
 
 		return container;
 	}
@@ -121,19 +145,6 @@ public class WindowSubscribeClient extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
-	
-	/*
-	public static void main(String args[]) {
-		try {
-			WindowSubscribeClient window = new WindowSubscribeClient();
-			window.setBlockOnOpen(true);
-			window.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	/**
 	 * Configure the shell.

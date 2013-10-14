@@ -2,6 +2,11 @@ package db;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.swing.JOptionPane;
+
+import com.ibm.icu.util.Calendar;
 
 import person.Client;
 import person.Employee;
@@ -60,29 +65,34 @@ public class Database
 		// criar veículos para a base de dados de exemplo
 		vehicleList = new ArrayList<Vehicle>();
 		
-		Date motorcycleDate = new Date(01, 01, 2009);
-		Motorcycle motorcycle = new Motorcycle("1000", motorcycleDate, 1.2,
-				0.8, "Honda", "Biz", "ABC1234");		
+		GregorianCalendar motorcycleDate = new GregorianCalendar();
+		motorcycleDate.set(2009,01,01);
+		Motorcycle motorcycle = new Motorcycle(1000, motorcycleDate.get(Calendar.YEAR), 1.2,
+											   0.8, "Honda", "Biz", "ABC1234");		
 		this.addVehicle(motorcycle);
 		
-		Date carDate = new Date(02, 01, 2010);
-		Vehicle car = new Car("2000", carDate, 2.8,
-				1.9, "Volkswagen", "Gol", "ABC1235");
+		GregorianCalendar carDate = new GregorianCalendar();
+		carDate.set(2010,01,02 );
+		Vehicle car = new Car(2000, carDate.get(Calendar.YEAR), 2.8,
+							 1.9, "Volkswagen", "Gol", "ABC1235");
 		this.addVehicle(car);
 		
-		Date busDate = new Date(03, 01, 2011);
-		Vehicle bus = new Bus("3000", busDate, 15,
-				3, "Mercedez-Benz", "bus1", "ABC1236");
+		GregorianCalendar busDate = new GregorianCalendar();
+		busDate.set(2011, 01, 03);
+		Vehicle bus = new Bus(3000, busDate.get(Calendar.YEAR), 15,
+							  3, "Marcopolo", "Audace", "ABC1236");
 		this.addVehicle(bus);
 
-		Date truckDate = new Date(04, 01, 2012);
-		Vehicle truck = new Truck("4000", truckDate, 20,
-				3, "TruckBrand", "truck1", "ABC1237");
+		GregorianCalendar truckDate = new GregorianCalendar();
+		truckDate.set(2012, 01, 04);
+		Vehicle truck = new Truck(4000, truckDate.get(Calendar.YEAR), 20,
+								  3, "Ford", "Cargo", "ABC1237");
 		this.addVehicle(truck);
 		
-		Date microBusDate = new Date(05, 01, 2013);
-		Vehicle microBus = new MicroBus("3500", microBusDate, 10,
-				2.7, "MicroBusBrand", "microbus1", "ABC1238");	
+		GregorianCalendar microBusDate = new GregorianCalendar();
+		microBusDate.set(2013, 01, 05);
+		Vehicle microBus = new MicroBus(3500, microBusDate.get(Calendar.YEAR), 10,
+										2.7, "Mercedez-Benz", "LO 915", "ABC1238");	
 		this.addVehicle(microBus);
 		
 	}
@@ -98,6 +108,9 @@ public class Database
 
 	public void addUser(Person person)
 	{
+		if (userList.contains(person))
+			return;
+		
 		userList.add(person);
 	}
 

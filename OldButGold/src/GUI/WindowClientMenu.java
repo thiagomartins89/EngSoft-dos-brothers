@@ -5,6 +5,7 @@ import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -26,6 +27,7 @@ public class WindowClientMenu extends ApplicationWindow {
 	 */
 	public WindowClientMenu(CurrentState mainCurrentState, Database mainDatabase) {
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
@@ -135,18 +137,6 @@ public class WindowClientMenu extends ApplicationWindow {
 	 * @param args
 	 */
 	
-	/*
-	public static void main(String args[]) {
-		try {
-			WindowClientMenu window = new WindowClientMenu();
-			window.setBlockOnOpen(true);
-			window.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	 */
 	/**
 	 * Configure the shell.
 	 * @param newShell
@@ -154,7 +144,11 @@ public class WindowClientMenu extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("New Application");
+		newShell.setText("Old but Gold");
+		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
+		newShell.setImage(imgOldButGold);
+		newShell.setBackgroundImage(imgOldButGold);
+		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
 	/**

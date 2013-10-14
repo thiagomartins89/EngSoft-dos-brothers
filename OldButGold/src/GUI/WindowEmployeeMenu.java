@@ -32,6 +32,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	public WindowEmployeeMenu(CurrentState mainCurrentState, Database mainDatabase)
 	{
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
@@ -143,19 +144,6 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
-	
-	/*
-	public static void main(String args[]) {
-		try {
-			WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu();
-			employeeMenuWindow.setBlockOnOpen(true);
-			employeeMenuWindow.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	/**
 	 * Configure the shell.

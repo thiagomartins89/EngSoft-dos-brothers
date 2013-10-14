@@ -3,6 +3,7 @@ package GUI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,7 @@ import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -51,6 +53,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	public WindowSubscribeVehicle(CurrentState mainCurrentState, Database mainDatabase)
 	{
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
@@ -74,6 +77,14 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		btnSubscribe.setText("Adicionar");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
+		btnReturn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			//botão "Voltar"
+			public void widgetSelected(SelectionEvent e) {
+				currentState.setChosenAction("Voltar");
+				close();
+			}
+		});
 		btnReturn.setBounds(334, 181, 76, 25);
 		btnReturn.setText("Voltar");
 		
@@ -170,27 +181,32 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 				
 				vehicle.setBrand(txtVehicleBrand.getText());
 				vehicle.setCategory(cmbVehicleCategory.getText());
-				vehicle.setEnginePower(txtVehicleEnginePower.getText());
+				vehicle.setEnginePower(Integer.parseInt(txtVehicleEnginePower.getText()));
 				vehicle.setIsAvailable(true);
 				vehicle.setLength(Double.parseDouble(txtVehicleLength.getText()));
 				
-				Date date = new Date();
+				//CÓDIGO ABAIXO FUNCIONA, MAS NÃO FAZ QUAISQUER VERIFICAÇÕES.
+				//CORRIGIR ASSIM QUE POSSÍVEL.
+				GregorianCalendar date = new GregorianCalendar();
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
 				try
 				{
-					date = dateFormat.parse(txtVehicleManufacturingDate.getText());
-				} catch (ParseException e1)
+					date.set(Integer.parseInt(txtVehicleManufacturingDate.getText()), 01, 01);
+					//date = dateFormat.parse(txtVehicleManufacturingDate.getText());
+				} 
+				catch (NumberFormatException e1)
 				{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
-				vehicle.setManufacturingDate(date);
+				//vehicle.setManufacturingDate(date);
 				vehicle.setModel(txtVehicleModel.getText());
 				vehicle.setPlate(txtVehiclePlate.getText());
 				vehicle.setWidth(Double.parseDouble(txtVehicleWidth.getText()));
 				
 				subscribeVehicleDatabase.addVehicle(vehicle);
+				close();
 			}
 		});
 
@@ -220,19 +236,6 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
-/*	public static void main(String args[])
-	{
-		try
-		{
-			WindowSubscribeVehicle window = new WindowSubscribeVehicle();
-			window.setBlockOnOpen(true);
-			window.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}*/
 
 	/**
 	 * Configure the shell.
@@ -243,6 +246,10 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	{
 		super.configureShell(newShell);
 		newShell.setText("Old but Gold");
+		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
+		newShell.setImage(imgOldButGold);
+		newShell.setBackgroundImage(imgOldButGold);
+		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
 	/**
@@ -251,6 +258,6 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(437, 275);
+		return new Point(437, 287);
 	}
 }

@@ -52,60 +52,69 @@ public class Main
 			if(userClass.getName() == "person.Employee")	//não sei como fazer retornar apenas "Employee",
 															//mas isso já quebra o galho
 			{
-				//se é funcionário, abre janela de menu de funcionário
-				try 
-				{	
-					WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu(mainCurrentState, mainDatabase);
-					employeeMenuWindow.setBlockOnOpen(true);
-					employeeMenuWindow.open();
-					Display.getCurrent().dispose();			
-				} 
-				catch (Exception e) 
+				do
 				{
-					e.printStackTrace();
-				}
-				
-				switch(mainCurrentState.getChosenAction()) //opção escolhida pelo funcionário no menu
-				{
+					//se é funcionário, abre janela de menu de funcionário
+					try 
+					{	
+						WindowEmployeeMenu employeeMenuWindow = new WindowEmployeeMenu(mainCurrentState, mainDatabase);
+						employeeMenuWindow.setBlockOnOpen(true);
+						employeeMenuWindow.open();
+						Display.getCurrent().dispose();			
+					} 
+					catch (Exception e) 
+					{
+						e.printStackTrace();
+					}
 					
-					case "Cadastrar Cliente":
-						//abre a janela de cadastro de cliente
-						try 
-						{	
-							WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState, mainDatabase);
-							subscribeClientWindow.setBlockOnOpen(true);
-							subscribeClientWindow.open();
-							Display.getCurrent().dispose();			
-						} 
-						catch (Exception e) 
-						{
-							e.printStackTrace();
-						}
-						break;
+					switch(mainCurrentState.getChosenAction()) //opção escolhida pelo funcionário no menu
+					{
 						
-					//abre a janela de cadastro de veículo
-					case "Adicionar Veículo":
-						try 
-						{	
-							WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState, mainDatabase);
-							subscribeVehicleWindow.setBlockOnOpen(true);
-							subscribeVehicleWindow.open();
-							Display.getCurrent().dispose();			
-						} 
-						catch (Exception e) 
-						{
-							e.printStackTrace();
-						}
-						break;
-						
-					case "Sair":
-						break;
-				}
+						case "Cadastrar Cliente":
+							//abre a janela de cadastro de cliente
+							try 
+							{	
+								WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainCurrentState, mainDatabase);
+								subscribeClientWindow.setBlockOnOpen(true);
+								subscribeClientWindow.open();
+								Display.getCurrent().dispose();			
+							} 
+							catch (Exception e) 
+							{
+								e.printStackTrace();
+							}
+							break;
+							
+						//abre a janela de cadastro de veículo
+						case "Adicionar Veículo":
+							try 
+							{	
+								WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainCurrentState, mainDatabase);
+								subscribeVehicleWindow.setBlockOnOpen(true);
+								subscribeVehicleWindow.open();
+								Display.getCurrent().dispose();			
+							} 
+							catch (Exception e) 
+							{
+								e.printStackTrace();
+							}
+							break;
+							
+						case "Sair":
+							break;
+					}
+					
+				//Volta para o início do menu de funcionário caso o veículo seja
+				//adicionado com sucesso, ou se o funcionário pressionar "voltar".
+				}while(mainCurrentState.getChosenAction() == "Voltar" 
+				  || mainCurrentState.getChosenAction() == "Adicionar Veículo");
 			}
+				
 			
 			//----------------------------------------------------------------------------
 			//Fim das funções do funcionário
 			
+			//Início das funções de cliente
 			else
 			{
 				do
@@ -143,6 +152,7 @@ public class Main
 				
 					}
 					
+				//Volta para o início do menu de cliente
 				}while(mainCurrentState.getChosenAction() == "Voltar");
 			}
 			

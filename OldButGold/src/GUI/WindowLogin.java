@@ -39,6 +39,7 @@ public class WindowLogin extends ApplicationWindow
 	public WindowLogin(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
+		setShellStyle(SWT.MAX);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
@@ -182,18 +183,6 @@ public class WindowLogin extends ApplicationWindow
 	 * Launch the application.
 	 * @param args
 	 */
-	/*
-	public static void main(String args[]) {
-		try {
-			JanelaLogin window = new JanelaLogin();
-			window.setBlockOnOpen(true);
-			window.open();
-			Display.getCurrent().dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	/**
 	 * Configure the shell.

@@ -1,11 +1,12 @@
 package vehicle;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Truck extends Vehicle 
 {
 
-	public Truck(String enginePower, Date manufacturingDate, double length,
+	public Truck(int enginePower, int manufacturingDate, double length,
 			double width, String brand, String model, String plate)
 	{
 		this.enginePower = enginePower;

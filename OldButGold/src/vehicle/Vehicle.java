@@ -1,11 +1,12 @@
 package vehicle;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Vehicle
 {
 
-	public Vehicle(String enginePower, Date manufacturingDate, double length,
+	public Vehicle(int enginePower, int manufacturingDate, double length,
 			double width, String brand, String model, String plate, String category)
 	{
 		this.enginePower = enginePower;
@@ -25,28 +26,28 @@ public class Vehicle
 	}
 
 
-	protected String enginePower, brand, model,  plate, category;
-	protected Date manufacturingDate;
+	protected String brand, model, plate, category;
 	protected double length, width;
+	protected int enginePower, manufacturingDate;
 	protected Boolean isAvailable;
 
 	
-	public String getEnginePower()
+	public int getEnginePower()
 	{
 		return enginePower;
 	}
 
-	public void setEnginePower(String enginePower)
+	public void setEnginePower(int enginePower)
 	{
 		this.enginePower = enginePower;
 	}
 
-	public Date getManufacturingDate()
+	public int getManufacturingDate()
 	{
 		return manufacturingDate;
 	}
 
-	public void setManufacturingDate(Date manufacturingDate)
+	public void setManufacturingDate(int manufacturingDate)
 	{
 		this.manufacturingDate = manufacturingDate;
 	}
