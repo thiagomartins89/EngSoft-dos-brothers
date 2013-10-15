@@ -46,13 +46,15 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * @param parent
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(Composite parent)
+	{
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(null);
 		{
 			Button btnSubscribeClient = new Button(container, SWT.NONE);
 			btnSubscribeClient.setBounds(101, 28, 196, 30);
-			btnSubscribeClient.addSelectionListener(new SelectionAdapter() {
+			btnSubscribeClient.addSelectionListener(new SelectionAdapter()
+			{
 				@Override
 				//função de ação quando botão "Cadastrar Cliente" é pressionado
 				public void widgetSelected(SelectionEvent e) 
@@ -106,7 +108,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	/**
 	 * Create the actions.
 	 */
-	private void createActions() {
+	private void createActions()
+	{
 		// Create the actions
 	}
 
@@ -115,7 +118,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * @return the menu manager
 	 */
 	@Override
-	protected MenuManager createMenuManager() {
+	protected MenuManager createMenuManager() 
+	{
 		MenuManager menuManager = new MenuManager("menu");
 		return menuManager;
 	}
@@ -125,7 +129,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * @return the toolbar manager
 	 */
 	@Override
-	protected ToolBarManager createToolBarManager(int style) {
+	protected ToolBarManager createToolBarManager(int style) 
+	{
 		ToolBarManager toolBarManager = new ToolBarManager(style);
 		return toolBarManager;
 	}
@@ -135,7 +140,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * @return the status line manager
 	 */
 	@Override
-	protected StatusLineManager createStatusLineManager() {
+	protected StatusLineManager createStatusLineManager()
+	{
 		StatusLineManager statusLineManager = new StatusLineManager();
 		return statusLineManager;
 	}
@@ -150,7 +156,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * @param newShell
 	 */
 	@Override
-	protected void configureShell(Shell newShell) {
+	protected void configureShell(Shell newShell)
+	{
 		super.configureShell(newShell);
 		newShell.setText("Old but Gold");
 		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
@@ -163,7 +170,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	 * Return the initial size of the window.
 	 */
 	@Override
-	protected Point getInitialSize() {
+	protected Point getInitialSize()
+	{
 		return new Point(450, 300);
 	}
 }
