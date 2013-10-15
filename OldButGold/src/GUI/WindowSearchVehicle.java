@@ -66,10 +66,10 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
 		final List listSearchResults = new List(container, SWT.BORDER);
-		listSearchResults.setBounds(291, 39, 148, 104);	
+		listSearchResults.setBounds(315, 21, 148, 105);	
 		
 		final Label lblUnity = new Label(container, SWT.NONE);
-		lblUnity.setBounds(300, 54, 24, 15);
+		lblUnity.setBounds(285, 43, 24, 15);
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -348,9 +348,9 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		btnReturn.setBounds(285, 172, 75, 25);
 		btnReturn.setText("Voltar");
 		
-		Label lblAvailableVehicles = new Label(container, SWT.NONE);
-		lblAvailableVehicles.setBounds(300, 14, 126, 15);
-		lblAvailableVehicles.setText("Veículos disponíveis:");
+		Label lblAvailableModels = new Label(container, SWT.NONE);
+		lblAvailableModels.setBounds(330, 0, 126, 15);
+		lblAvailableModels.setText("Modelos disponíveis:");
 
 
 		return container;
@@ -413,7 +413,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		newShell.setText("Old but Gold");
 		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
 		newShell.setImage(imgOldButGold);
-		newShell.setBackgroundImage(imgOldButGold);
+		//newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
