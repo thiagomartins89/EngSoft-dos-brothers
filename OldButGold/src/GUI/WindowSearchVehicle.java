@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
 
+import control.CtrlSearchVehicle;
 import control.CurrentState;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -39,6 +40,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 
 	private CurrentState currentState;
 	private Database searchVehicleDatabase;
+	private CtrlSearchVehicle searchVehicleCtrl;
 
 	/**
 	 * Create the application window.
@@ -52,6 +54,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		addStatusLine();
 		currentState = mainCurrentState;
 		searchVehicleDatabase = mainDatabase;
+		searchVehicleCtrl = new CtrlSearchVehicle(mainDatabase);
 	}
 
 	/**
@@ -64,6 +67,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		Composite container = new Composite(parent, SWT.NONE);
 		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
+		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
 		final List listSearchResults = new List(container, SWT.BORDER);
 		listSearchResults.setBounds(315, 21, 148, 105);	
@@ -76,162 +80,27 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		//seleciona as opções da primeira combo box.
 		comboSearchOptions.addModifyListener(new ModifyListener() 
 		{
-			//função que verifica a opção escolhida pelo usuário e coloca na outra
-			//combo as opções disponíveis do tipo escolhido, de forma ordenada.
-			//Ex: se tiver apenas uma moto e um carro e o usuário selecionar categoria,
-			//a combo de resultados apresentará A e B.
 			public void modifyText(ModifyEvent arg0)
 			{
 				lblUnity.setText("");
 				comboSearchOptionsResults.removeAll(); //limpa os resultados anteriores
 				listSearchResults.removeAll();
 				
-				final ArrayList<Vehicle> vehicleList = searchVehicleDatabase.getVehicleList();
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
-								
-				switch(optionName)
+				
+				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName);
+				
+				for(int i = 0; i < secondComboItems.size(); i++)
 				{
-					case "Categoria":
-						//lista auxiliar para ordenar os itens
-						ArrayList<String> sortCategoryList = new ArrayList<String>();
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							if(!sortCategoryList.contains(vehicleList.get(i).getCategory()))
-									sortCategoryList.add(vehicleList.get(i).getCategory());
-						}
-						
-						Collections.sort(sortCategoryList);
-						
-						//insere no combo a lista após ser ordenada
-						for(int i=0; i < sortCategoryList.size(); i++)
-						{
-								String vehicleCategory = sortCategoryList.get(i);
-								
-								if(comboSearchOptionsResults.indexOf(vehicleCategory) == -1)
-									comboSearchOptionsResults.add(vehicleCategory);
-													
-						}
-						break; //fim do Categoria
-						
-					case "Potência do motor":
-						
-						ArrayList<Integer> sortEnginePowerList = new ArrayList<Integer>();
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							if(!sortEnginePowerList.contains(vehicleList.get(i).getEnginePower()))
-								sortEnginePowerList.add(vehicleList.get(i).getEnginePower());
-						}
-						
-						Collections.sort(sortEnginePowerList);
-						
-						for(int i=0; i < sortEnginePowerList.size(); i++)
-						{
-							String strEnginePower = sortEnginePowerList.get(i).toString();
-							
-							if(comboSearchOptionsResults.indexOf(strEnginePower) == -1)
-								comboSearchOptionsResults.add(strEnginePower);
-							
-						}		
-						lblUnity.setText("Cv");
-						
-						break; //fim do Potência
-						
-					case "Ano":
-						ArrayList<Integer> sortYearList = new ArrayList<Integer>();
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							if(!sortYearList.contains(vehicleList.get(i).getManufacturingDate()))
-								sortYearList.add(vehicleList.get(i).getManufacturingDate());
-						}						
-						Collections.sort(sortYearList);
-						
-						for(int i=0; i < sortYearList.size(); i++)
-						{
-							String strVehicleYear = sortYearList.get(i).toString();
-							if(comboSearchOptionsResults.indexOf(strVehicleYear) == -1)
-								comboSearchOptionsResults.add(strVehicleYear);
-							
-						}				
-						break;
-						
-					case "Comprimento máximo":
-						ArrayList<Double> sortMaxLengthList = new ArrayList<Double>();
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							if(!sortMaxLengthList.contains(vehicleList.get(i).getLength()))
-								sortMaxLengthList.add(vehicleList.get(i).getLength());
-						}						
-						Collections.sort(sortMaxLengthList);
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							String strMaxLength = sortMaxLengthList.get(i).toString();
-							if(comboSearchOptionsResults.indexOf(strMaxLength) == -1)
-								comboSearchOptionsResults.add(strMaxLength);
-							
-						}	
-						lblUnity.setText("m");
-						break;
-						
-					case "Marca":
-						ArrayList<String> sortBrandList = new ArrayList<String>();
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							if(!sortBrandList.contains(vehicleList.get(i).getBrand()))
-								sortBrandList.add(vehicleList.get(i).getBrand());
-						}						
-						Collections.sort(sortBrandList);
-						
-						for(int i=0; i < sortBrandList.size(); i++)
-						{
-							String vehicleBrand = sortBrandList.get(i);
-								
-							if(comboSearchOptionsResults.indexOf(vehicleBrand) == -1)
-								comboSearchOptionsResults.add(vehicleBrand);
-													
-						}				
-						break;
-						
-					case "Modelo":
-						ArrayList<String> sortModelList = new ArrayList<String>();
-						
-						for(int i=0; i < vehicleList.size(); i++)
-						{
-							if(!sortModelList.contains(vehicleList.get(i).getModel()))
-								sortModelList.add(vehicleList.get(i).getModel());
-						}						
-						Collections.sort(sortModelList);
-						
-						for(int i=0; i < sortModelList.size(); i++)
-						{
-								String vehicleModel = sortModelList.get(i);
-								
-								if(comboSearchOptionsResults.indexOf(vehicleModel) == -1)
-									comboSearchOptionsResults.add(vehicleModel);
-													
-						}		
-						break;
+					comboSearchOptionsResults.add(secondComboItems.get(i));
 				}
 			}
 		});
-		comboSearchOptions.setBounds(87, 11, 192, 28);
+		comboSearchOptions.setBounds(87, 11, 192, 28);	
 		
-		//Adicionando as opções à ComboBox
-		comboSearchOptions.add("Categoria");	
-		comboSearchOptions.add("Potência do motor");	
-		comboSearchOptions.add("Ano");	
-		comboSearchOptions.add("Comprimento máximo");
-		comboSearchOptions.add("Marca");
-		comboSearchOptions.add("Modelo");		
-		comboSearchOptions.select(0); //Coloca a primeira opção como default		
-		
-		
+		//função que executa o que acontece quando o usuário
+		//seleciona as opções da segunda combo box.
 		comboSearchOptionsResults.addModifyListener(new ModifyListener() 
 		{
 			//função que preenche a lista com as opções de veículos
@@ -247,90 +116,31 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				int optionIndex = comboSearchOptions.getSelectionIndex();				
 				String chosenOption = comboSearchOptions.getItem(optionIndex);
 				
-				final ArrayList<Vehicle> vehicleList = searchVehicleDatabase.getVehicleList();
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
+
+				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult);
 				
-				switch(chosenOption)
+				for(int i = 0; i < resultsListItems.size(); i++)
 				{
-					case "Categoria":						
-						for(int i = 0; i < vehicleList.size(); i++)
-						{
-							if(vehicleList.get(i).getCategory().equals(chosenOptionResult))
-							{
-								listSearchResults.add(vehicleList.get(i).getModel());
-							}
-						}
-										
-						break; //fim do Categoria
-						
-					case "Potência do motor":
-						for(int i = 0; i < vehicleList.size(); i++)
-						{
-							int vehicleEnginePower = vehicleList.get(i).getEnginePower();
-							String strEnginePower = ("" + vehicleEnginePower);
-							if(strEnginePower.equals(chosenOptionResult))
-							{
-								listSearchResults.add(vehicleList.get(i).getModel());
-							}
-							
-						}
-						break; //fim do Potência
-						
-					case "Ano":
-						for(int i = 0; i < vehicleList.size(); i++)
-						{
-							int vehicleManufacturingYear = vehicleList.get(i).getManufacturingDate();
-							String strManufacturingYear = ("" + vehicleManufacturingYear);
-							if(strManufacturingYear.equals(chosenOptionResult))
-							{
-								listSearchResults.add(vehicleList.get(i).getModel());
-							}
-						}
-						break;
-						
-					case "Comprimento máximo":
-						for(int i = 0; i < vehicleList.size(); i++)
-						{
-							double vehicleMaxLength = vehicleList.get(i).getLength();
-							String strMaxLength = ("" + vehicleMaxLength);
-							if(strMaxLength.equals(chosenOptionResult))
-							{
-								listSearchResults.add(vehicleList.get(i).getModel());
-							}
-						}
-						break;
-						
-					case "Marca":
-						for(int i = 0; i < vehicleList.size(); i++)
-						{
-							String vehicleBrand = vehicleList.get(i).getBrand();
-							if(vehicleBrand.equals(chosenOptionResult))
-							{
-								listSearchResults.add(vehicleList.get(i).getModel());
-							}
-						}			
-						break;
-						
-					case "Modelo":
-						for(int i = 0; i < vehicleList.size(); i++)
-						{
-							String vehicleModel = vehicleList.get(i).getModel();
-							if(vehicleModel.equals(chosenOptionResult))
-							{
-								listSearchResults.add(vehicleModel);
-							}
-						}	
-						break;
-					}
+					listSearchResults.add(resultsListItems.get(i));
+				}
 					 
 			}
 		});
 		
+		//Adicionando as opções à ComboBox
+		comboSearchOptions.add("Categoria");	
+		comboSearchOptions.add("Potência do motor");	
+		comboSearchOptions.add("Ano");	
+		comboSearchOptions.add("Comprimento máximo");
+		comboSearchOptions.add("Marca");
+		comboSearchOptions.add("Modelo");		
+		comboSearchOptions.select(0); //Coloca a primeira opção como default
+		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
 		lblSearchOptions.setBounds(4, 14, 77, 25);
-		lblSearchOptions.setText("Pesquisar por :");
-		
+		lblSearchOptions.setText("Pesquisar por :");		
 		
 		comboSearchOptionsResults.setBounds(87, 40, 192, 28);	
 		
@@ -351,7 +161,6 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		Label lblAvailableModels = new Label(container, SWT.NONE);
 		lblAvailableModels.setBounds(330, 0, 126, 15);
 		lblAvailableModels.setText("Modelos disponíveis:");
-
 
 		return container;
 	}
