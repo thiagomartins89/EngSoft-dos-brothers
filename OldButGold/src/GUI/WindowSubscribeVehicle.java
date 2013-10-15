@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import vehicle.Vehicle;
+import control.CtrlSubscribeVehicle;
 import control.CurrentState;
 import db.Database;
 import org.eclipse.swt.layout.GridLayout;
@@ -47,6 +48,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	private CurrentState currentState;
 	private Database subscribeVehicleDatabase;
 	private Combo comboVehicleCategory;
+	private CtrlSubscribeVehicle ctrlSubscribeVehicle;
 
 	/**
 	 * Create the application window.
@@ -62,6 +64,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		addStatusLine();
 		currentState = mainCurrentState;
 		subscribeVehicleDatabase = mainDatabase;
+		ctrlSubscribeVehicle = new CtrlSubscribeVehicle(mainDatabase);
 	}
 
 	/**
@@ -111,36 +114,36 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 
 		txtVehicleModel = new Text(grpSubscribeVehicle, SWT.BORDER);
 		txtVehicleModel.setBounds(106, 49, 110, 21);
-		
-				Label lblVehicleManufacturingDate = new Label(grpSubscribeVehicle,
-						SWT.NONE);
-				lblVehicleManufacturingDate.setBounds(75, 79, 25, 15);
-				lblVehicleManufacturingDate.setText("Ano:");
-		
-				txtVehicleManufacturingDate = new Text(grpSubscribeVehicle, SWT.BORDER);
-				txtVehicleManufacturingDate.setBounds(106, 76, 76, 21);
-		
-				Label lblVehicleMileage = new Label(grpSubscribeVehicle, SWT.NONE);
-				lblVehicleMileage.setBounds(13, 106, 87, 15);
-				lblVehicleMileage.setText("Quilometragem:");
-		
-				txtVehicleMileage = new Text(grpSubscribeVehicle, SWT.BORDER);
-				txtVehicleMileage.setBounds(106, 103, 76, 21);
-		
-				Label lblKm = new Label(grpSubscribeVehicle, SWT.NONE);
-				lblKm.setBounds(188, 106, 17, 15);
-				lblKm.setText("km");
-		
-				Label lblVehicleLength = new Label(grpSubscribeVehicle, SWT.NONE);
-				lblVehicleLength.setBounds(22, 133, 78, 15);
-				lblVehicleLength.setText("Comprimento:");
-		
-				txtVehicleLength = new Text(grpSubscribeVehicle, SWT.BORDER);
-				txtVehicleLength.setBounds(106, 130, 76, 21);
-		
-				Label lblM = new Label(grpSubscribeVehicle, SWT.NONE);
-				lblM.setBounds(188, 133, 11, 15);
-				lblM.setText("m");
+
+		Label lblVehicleManufacturingDate = new Label(grpSubscribeVehicle,
+				SWT.NONE);
+		lblVehicleManufacturingDate.setBounds(75, 79, 25, 15);
+		lblVehicleManufacturingDate.setText("Ano:");
+
+		txtVehicleManufacturingDate = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleManufacturingDate.setBounds(106, 76, 76, 21);
+
+		Label lblVehicleMileage = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblVehicleMileage.setBounds(13, 106, 87, 15);
+		lblVehicleMileage.setText("Quilometragem:");
+
+		txtVehicleMileage = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleMileage.setBounds(106, 103, 76, 21);
+
+		Label lblKm = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblKm.setBounds(188, 106, 17, 15);
+		lblKm.setText("km");
+
+		Label lblVehicleLength = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblVehicleLength.setBounds(22, 133, 78, 15);
+		lblVehicleLength.setText("Comprimento:");
+
+		txtVehicleLength = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleLength.setBounds(106, 130, 76, 21);
+
+		Label lblM = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblM.setBounds(188, 133, 11, 15);
+		lblM.setText("m");
 
 		Label lblVehicleCategory = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblVehicleCategory.setBounds(234, 25, 54, 15);
@@ -185,145 +188,21 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 			// Botão Adicionar
 			public void widgetSelected(SelectionEvent e)
 			{
-				if(checkFields() == false)
-					return;
-				
-				Vehicle vehicle = new Vehicle();
-				
-				try
-				{
-					vehicle.setBrand(txtVehicleBrand.getText());
-					vehicle.setModel(txtVehicleModel.getText());
-					vehicle.setManufacturingDate(Integer.parseInt(txtVehicleManufacturingDate.getText()));
-					vehicle.setManufacturingDate(Integer.parseInt(txtVehicleMileage.getText()));
-					vehicle.setLength(Double.parseDouble(txtVehicleLength.getText().replace(",", ".")));
-					vehicle.setCategory(comboVehicleCategory.getText());
-					vehicle.setPlate(txtVehiclePlate.getText());
-					vehicle.setEnginePower(Integer.parseInt(txtVehicleEnginePower.getText()));
-					vehicle.setWidth(Double.parseDouble(txtVehicleWidth.getText().replace(",", ".")));
-				}
-				catch (Exception e1)
-				{
-					JOptionPane.showMessageDialog(null, "Não foi possível adicionar o veículo. Verifique os dados de entrada.");
-					return;
-				}
+				String returnMessage = ctrlSubscribeVehicle.subscribeVehicle(
+						txtVehicleBrand.getText(), txtVehicleModel.getText(),
+						txtVehicleManufacturingDate.getText(),
+						txtVehicleMileage.getText(),
+						txtVehicleLength.getText(),
+						comboVehicleCategory.getText(),
+						txtVehiclePlate.getText(),
+						txtVehicleEnginePower.getText(),
+						txtVehicleWidth.getText());
 
-				subscribeVehicleDatabase.addVehicle(vehicle);
-				
-				JOptionPane.showMessageDialog(null, "Veículo adicionado com sucesso!");
-				
-				close();
+				JOptionPane.showMessageDialog(null, returnMessage);
 			}
 		});
 
 		return container;
-	}
-
-	// Verifica se todas as entradas estão corretas.
-	private boolean checkFields()
-	{
-		// Verifica se todas as entradas estão preenchidas:
-		if (txtVehicleBrand.getText().isEmpty()
-				|| txtVehicleModel.getText().isEmpty()
-				|| txtVehicleManufacturingDate.getText().isEmpty()
-				|| txtVehicleMileage.getText().isEmpty()
-				|| txtVehicleLength.getText().isEmpty()
-				|| comboVehicleCategory.getText().isEmpty()
-				|| txtVehiclePlate.getText().isEmpty()
-				|| txtVehicleEnginePower.getText().isEmpty()
-				|| txtVehicleWidth.getText().isEmpty())
-		{
-			JOptionPane.showMessageDialog(null, "Todos os campos devem estar preenchidos.");
-			return false;
-		}
-		
-		// Verifica se o ano é válido:
-		try
-		{
-			if(txtVehicleManufacturingDate.getText().length() != 4)
-			{
-				JOptionPane.showMessageDialog(null, "O ano deve ser preenchido no formato 'AAAA'");
-				return false;
-			}
-			
-			int manufacturingDate = Integer.parseInt(txtVehicleManufacturingDate.getText());
-			if(manufacturingDate < 0)
-			{
-				JOptionPane.showMessageDialog(null, "Ano inválido.");
-				return false;
-			}
-		}
-		catch (NumberFormatException e1)
-		{
-			JOptionPane.showMessageDialog(null, "Ano inválido.");
-			return false;
-		}
-
-		// Verifica se a quilometragem é válida:
-		try
-		{
-			int mileage = Integer.parseInt(txtVehicleMileage.getText());
-			if(mileage < 0)
-			{
-				JOptionPane.showMessageDialog(null, "Quilometragem inválida.");
-				return false;
-			}
-		}
-		catch (NumberFormatException e1)
-		{
-			JOptionPane.showMessageDialog(null, "Quilometragem inválida.");
-			return false;
-		}
-		
-		// Verifica se o comprimento é válido:
-		try
-		{
-			double length = Double.parseDouble(txtVehicleLength.getText().replace(",", "."));
-			if(length < 0)
-			{
-				JOptionPane.showMessageDialog(null, "Comprimento inválido.");
-				return false;
-			}
-		}
-		catch (NumberFormatException e1)
-		{
-			JOptionPane.showMessageDialog(null, "Comprimento inválido.");
-			return false;
-		}
-		
-		// Verifica se a potência é válida:
-		try
-		{
-			int enginePower = Integer.parseInt(txtVehicleEnginePower.getText());
-			if(enginePower < 0)
-			{
-				JOptionPane.showMessageDialog(null, "Potência inválida.");
-				return false;
-			}
-		}
-		catch (NumberFormatException e1)
-		{
-			JOptionPane.showMessageDialog(null, "Potência inválida.");
-			return false;
-		}
-		
-		// Verifica se a largura é válida:
-		try
-		{
-			double width = Double.parseDouble(txtVehicleWidth.getText().replace(",", "."));
-			if(width < 0)
-			{
-				JOptionPane.showMessageDialog(null, "Largura inválida.");
-				return false;
-			}
-		}
-		catch (NumberFormatException e1)
-		{
-			JOptionPane.showMessageDialog(null, "Largura inválida.");
-			return false;
-		}
-
-		return true;
 	}
 
 	/**
@@ -364,7 +243,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		newShell.setText("Old but Gold");
 		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
 		newShell.setImage(imgOldButGold);
-		//newShell.setBackgroundImage(imgOldButGold);
+		// newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 

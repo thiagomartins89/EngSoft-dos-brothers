@@ -97,8 +97,8 @@ public class Vehicle
 		return category;
 	}
 
-	public void setCategory(String string) {
-		this.category = string;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public double getWidth()
