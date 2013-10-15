@@ -155,7 +155,7 @@ public class WindowSubscribeClient extends ApplicationWindow
 		newShell.setText("Old but Gold");
 		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
 		newShell.setImage(imgOldButGold);
-		newShell.setBackgroundImage(imgOldButGold);
+		//newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 

@@ -4,7 +4,7 @@ public class Vehicle
 {
 
 	public Vehicle(int enginePower, int manufacturingDate, double length,
-			double width, String brand, String model, String plate, String category)
+			double width, String brand, String model, String plate, String category, int mileage)
 	{
 		this.enginePower = enginePower;
 		this.manufacturingDate = manufacturingDate;
@@ -15,6 +15,7 @@ public class Vehicle
 		this.plate = plate;
 		this.category = category;
 		this.isAvailable = true; //todos os veículos já vêm adicionados como disponíveis
+		this.mileage = mileage;
 	}
 	
 	
@@ -25,7 +26,7 @@ public class Vehicle
 
 	protected String brand, model, plate, category;
 	protected double length, width;
-	protected int enginePower, manufacturingDate;
+	protected int enginePower, manufacturingDate, mileage;
 	protected Boolean isAvailable;
 
 	
@@ -93,8 +94,8 @@ public class Vehicle
 		return category;
 	}
 
-	public void setCategory(String string) {
-		this.category = string;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public double getWidth()
@@ -115,6 +116,16 @@ public class Vehicle
 	public void setModel(String model)
 	{
 		this.model = model;
+	}
+	
+	public int getMileage()
+	{
+		return mileage;
+	}
+
+	public void setMileage(int mileage)
+	{
+		this.mileage = mileage;
 	}
 
 }

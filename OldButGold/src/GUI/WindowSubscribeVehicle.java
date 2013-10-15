@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import vehicle.Vehicle;
+import control.CtrlSubscribeVehicle;
 import control.CurrentState;
 import db.Database;
 import org.eclipse.swt.widgets.Group;
@@ -35,11 +36,14 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	private Text txtVehicleMileage;
 	private CurrentState currentState;
 	private Database subscribeVehicleDatabase;
+	private Combo comboVehicleCategory;
+	private CtrlSubscribeVehicle ctrlSubscribeVehicle;
 
 	/**
 	 * Create the application window.
 	 */
-	public WindowSubscribeVehicle(CurrentState mainCurrentState, Database mainDatabase)
+	public WindowSubscribeVehicle(CurrentState mainCurrentState,
+			Database mainDatabase)
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -49,10 +53,12 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		addStatusLine();
 		currentState = mainCurrentState;
 		subscribeVehicleDatabase = mainDatabase;
+		ctrlSubscribeVehicle = new CtrlSubscribeVehicle(mainDatabase);
 	}
 
 	/**
 	 * Create contents of the application window.
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -60,142 +66,128 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	{
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(null);
-		
+
 		Button btnSubscribe = new Button(container, SWT.NONE);
 		btnSubscribe.setBounds(251, 181, 76, 25);
 		btnSubscribe.setText("Adicionar");
-		
+
 		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.addSelectionListener(new SelectionAdapter() {
+		btnReturn.addSelectionListener(new SelectionAdapter()
+		{
 			@Override
-			//botão "Voltar"
-			public void widgetSelected(SelectionEvent e) {
+			// botão "Voltar"
+			public void widgetSelected(SelectionEvent e)
+			{
 				currentState.setChosenAction("Voltar");
 				close();
 			}
 		});
 		btnReturn.setBounds(334, 181, 76, 25);
 		btnReturn.setText("Voltar");
-		
-		Group grpCadastroDeVeculo = new Group(container, SWT.NONE);
-		grpCadastroDeVeculo.setBounds(10, 10, 400, 165);
-		grpCadastroDeVeculo.setText("Cadastro de ve\u00EDculo");
-		grpCadastroDeVeculo.setLayout(null);
-		
-		Label lblVehicleBrand = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Group grpSubscribeVehicle = new Group(container, SWT.NONE);
+		grpSubscribeVehicle.setBounds(10, 10, 400, 165);
+		grpSubscribeVehicle.setText("Cadastro de ve\u00EDculo");
+		grpSubscribeVehicle.setLayout(null);
+
+		Label lblVehicleBrand = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblVehicleBrand.setBounds(64, 25, 36, 15);
 		lblVehicleBrand.setText("Marca:");
-		
-		txtVehicleBrand = new Text(grpCadastroDeVeculo, SWT.BORDER);
+
+		txtVehicleBrand = new Text(grpSubscribeVehicle, SWT.BORDER);
 		txtVehicleBrand.setBounds(106, 22, 110, 21);
-		
-		Label lblVehicleModel = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Label lblVehicleModel = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblVehicleModel.setBounds(56, 52, 44, 15);
 		lblVehicleModel.setText("Modelo:");
-		
-		txtVehicleModel = new Text(grpCadastroDeVeculo, SWT.BORDER);
+
+		txtVehicleModel = new Text(grpSubscribeVehicle, SWT.BORDER);
 		txtVehicleModel.setBounds(106, 49, 110, 21);
-		
-		Label lblVehicleCategory = new Label(grpCadastroDeVeculo, SWT.NONE);
-		lblVehicleCategory.setBounds(234, 25, 54, 15);
-		lblVehicleCategory.setText("Categoria:");
-		
-		final Combo cmbVehicleCategory = new Combo(grpCadastroDeVeculo, SWT.READ_ONLY);
-		cmbVehicleCategory.setBounds(294, 21, 76, 23);
-		cmbVehicleCategory.setItems(new String[] {"A", "B", "C", "D"});
-		
-		Label lblVehiclePlate = new Label(grpCadastroDeVeculo, SWT.NONE);
-		lblVehiclePlate.setBounds(257, 52, 31, 15);
-		lblVehiclePlate.setText("Placa:");
-		
-		txtVehiclePlate = new Text(grpCadastroDeVeculo, SWT.BORDER);
-		txtVehiclePlate.setBounds(294, 49, 76, 21);
-		
-		Label lblVehicleManufacturingDate = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Label lblVehicleManufacturingDate = new Label(grpSubscribeVehicle,
+				SWT.NONE);
 		lblVehicleManufacturingDate.setBounds(75, 79, 25, 15);
 		lblVehicleManufacturingDate.setText("Ano:");
-		
-		txtVehicleManufacturingDate = new Text(grpCadastroDeVeculo, SWT.BORDER);
+
+		txtVehicleManufacturingDate = new Text(grpSubscribeVehicle, SWT.BORDER);
 		txtVehicleManufacturingDate.setBounds(106, 76, 76, 21);
-		
-		Label lblVehicleEnginePower = new Label(grpCadastroDeVeculo, SWT.NONE);
-		lblVehicleEnginePower.setBounds(239, 79, 49, 15);
-		lblVehicleEnginePower.setText("Pot\u00EAncia:");
-		
-		txtVehicleEnginePower = new Text(grpCadastroDeVeculo, SWT.BORDER);
-		txtVehicleEnginePower.setBounds(294, 76, 76, 21);
-		
-		Label lblCv = new Label(grpCadastroDeVeculo, SWT.NONE);
-		lblCv.setBounds(376, 79, 12, 15);
-		lblCv.setText("cv");
-		
-		Label lblVehicleMileage = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Label lblVehicleMileage = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblVehicleMileage.setBounds(13, 106, 87, 15);
 		lblVehicleMileage.setText("Quilometragem:");
-		
-		txtVehicleMileage = new Text(grpCadastroDeVeculo, SWT.BORDER);
+
+		txtVehicleMileage = new Text(grpSubscribeVehicle, SWT.BORDER);
 		txtVehicleMileage.setBounds(106, 103, 76, 21);
-		
-		Label lblKm = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Label lblKm = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblKm.setBounds(188, 106, 17, 15);
 		lblKm.setText("km");
-		
-		Label lblVehicleWidth = new Label(grpCadastroDeVeculo, SWT.NONE);
-		lblVehicleWidth.setBounds(245, 106, 43, 15);
-		lblVehicleWidth.setText("Largura:");
-		
-		txtVehicleWidth = new Text(grpCadastroDeVeculo, SWT.BORDER);
-		txtVehicleWidth.setBounds(294, 103, 76, 21);
-		
-		Label lblM_1 = new Label(grpCadastroDeVeculo, SWT.NONE);
-		lblM_1.setBounds(376, 106, 11, 15);
-		lblM_1.setText("m");
-		
-		Label lblVehicleLength = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Label lblVehicleLength = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblVehicleLength.setBounds(22, 133, 78, 15);
 		lblVehicleLength.setText("Comprimento:");
-		
-		txtVehicleLength = new Text(grpCadastroDeVeculo, SWT.BORDER);
+
+		txtVehicleLength = new Text(grpSubscribeVehicle, SWT.BORDER);
 		txtVehicleLength.setBounds(106, 130, 76, 21);
-		
-		Label lblM = new Label(grpCadastroDeVeculo, SWT.NONE);
+
+		Label lblM = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblM.setBounds(188, 133, 11, 15);
 		lblM.setText("m");
-		
-		btnSubscribe.addSelectionListener(new SelectionAdapter() {
+
+		Label lblVehicleCategory = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblVehicleCategory.setBounds(234, 25, 54, 15);
+		lblVehicleCategory.setText("Categoria:");
+
+		comboVehicleCategory = new Combo(grpSubscribeVehicle, SWT.READ_ONLY);
+		comboVehicleCategory.setBounds(294, 21, 76, 23);
+		comboVehicleCategory.setItems(new String[] { "A", "B", "C", "D" });
+
+		Label lblVehiclePlate = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblVehiclePlate.setBounds(257, 52, 31, 15);
+		lblVehiclePlate.setText("Placa:");
+
+		txtVehiclePlate = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehiclePlate.setBounds(294, 49, 76, 21);
+
+		Label lblVehicleEnginePower = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblVehicleEnginePower.setBounds(239, 79, 49, 15);
+		lblVehicleEnginePower.setText("Pot\u00EAncia:");
+
+		txtVehicleEnginePower = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleEnginePower.setBounds(294, 76, 76, 21);
+
+		Label lblCv = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblCv.setBounds(376, 79, 12, 15);
+		lblCv.setText("cv");
+
+		Label lblVehicleWidth = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblVehicleWidth.setBounds(245, 106, 43, 15);
+		lblVehicleWidth.setText("Largura:");
+
+		txtVehicleWidth = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleWidth.setBounds(294, 103, 76, 21);
+
+		Label lblM_1 = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblM_1.setBounds(376, 106, 11, 15);
+		lblM_1.setText("m");
+
+		btnSubscribe.addSelectionListener(new SelectionAdapter()
+		{
 			@Override
-			//Botão Adicionar
-			public void widgetSelected(SelectionEvent e) {
-				Vehicle vehicle = new Vehicle();
-				
-				vehicle.setBrand(txtVehicleBrand.getText());
-				vehicle.setCategory(cmbVehicleCategory.getText());
-				vehicle.setEnginePower(Integer.parseInt(txtVehicleEnginePower.getText()));
-				vehicle.setIsAvailable(true);
-				vehicle.setLength(Double.parseDouble(txtVehicleLength.getText()));
-				
-				//CÓDIGO ABAIXO FUNCIONA, MAS NÃO FAZ QUAISQUER VERIFICAÇÕES.
-				//CORRIGIR ASSIM QUE POSSÍVEL.
-				GregorianCalendar date = new GregorianCalendar();
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
-				try
-				{
-					date.set(Integer.parseInt(txtVehicleManufacturingDate.getText()), 01, 01);
-					//date = dateFormat.parse(txtVehicleManufacturingDate.getText());
-				} 
-				catch (NumberFormatException e1)
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				//vehicle.setManufacturingDate(date);
-				vehicle.setModel(txtVehicleModel.getText());
-				vehicle.setPlate(txtVehiclePlate.getText());
-				vehicle.setWidth(Double.parseDouble(txtVehicleWidth.getText()));
-				
-				subscribeVehicleDatabase.addVehicle(vehicle);
-				close();
+			// Botão Adicionar
+			public void widgetSelected(SelectionEvent e)
+			{
+				String returnMessage = ctrlSubscribeVehicle.subscribeVehicle(
+						txtVehicleBrand.getText(), txtVehicleModel.getText(),
+						txtVehicleManufacturingDate.getText(),
+						txtVehicleMileage.getText(),
+						txtVehicleLength.getText(),
+						comboVehicleCategory.getText(),
+						txtVehiclePlate.getText(),
+						txtVehicleEnginePower.getText(),
+						txtVehicleWidth.getText());
+
+				JOptionPane.showMessageDialog(null, returnMessage);
 			}
 		});
 
@@ -212,6 +204,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 
 	/**
 	 * Create the status line manager.
+	 * 
 	 * @return the status line manager
 	 */
 	@Override
@@ -223,11 +216,13 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 
 	/**
 	 * Launch the application.
+	 * 
 	 * @param args
 	 */
 
 	/**
 	 * Configure the shell.
+	 * 
 	 * @param newShell
 	 */
 	@Override
@@ -237,7 +232,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		newShell.setText("Old but Gold");
 		Image imgOldButGold = new Image(null, "images/oldbutgold.png");
 		newShell.setImage(imgOldButGold);
-		newShell.setBackgroundImage(imgOldButGold);
+		// newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 
