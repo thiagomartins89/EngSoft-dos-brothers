@@ -1,8 +1,5 @@
 package vehicle;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 public class Bus extends Vehicle
 {
 	public Bus(int enginePower, int manufacturingDate, double length,

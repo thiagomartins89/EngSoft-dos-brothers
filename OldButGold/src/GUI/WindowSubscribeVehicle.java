@@ -1,15 +1,9 @@
 package GUI;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.JOptionPane;
-
-import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,11 +21,6 @@ import org.eclipse.swt.widgets.Text;
 import vehicle.Vehicle;
 import control.CurrentState;
 import db.Database;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Group;
 
 public class WindowSubscribeVehicle extends ApplicationWindow

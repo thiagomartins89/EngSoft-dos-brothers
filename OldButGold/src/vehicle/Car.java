@@ -1,8 +1,5 @@
 package vehicle;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 public class Car extends Vehicle 
 {
 	public Car(int enginePower, int manufacturingDate, double length,
