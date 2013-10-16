@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Label;
 import person.Person;
 
 import db.Database;
+import control.CtrlUserLogin;
 import control.CurrentState;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -31,6 +32,7 @@ public class WindowLogin extends ApplicationWindow
 	private Text txtUserPassword;
 	private Database loginDatabase;
 	private CurrentState currentState;
+	private CtrlUserLogin userLoginCtrl;
 
 	public WindowLogin(CurrentState mainCurrentState, Database mainDatabase) 
 	{
@@ -43,6 +45,7 @@ public class WindowLogin extends ApplicationWindow
 		
 		currentState = mainCurrentState;
 		loginDatabase = mainDatabase;
+		userLoginCtrl = new CtrlUserLogin(mainDatabase);
 	}
 
 	@Override
@@ -107,31 +110,29 @@ public class WindowLogin extends ApplicationWindow
 		return container;
 	}
 	
+	//função de ação quando botão logar é pressionado
 	private void login()
-	{
-		//função de ação quando botão logar é pressionado
+	{	
+		CurrentState auxState = null;
 		
-		Person user = loginDatabase.getUser(txtUserLogin.getText());	
+		String username = txtUserLogin.getText(),
+			   password = txtUserPassword.getText();
 		
-		if(txtUserLogin.getText().equals(""))
-			JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");				
-		else if(txtUserPassword.getText().equals(""))
-			JOptionPane.showMessageDialog(null, "Uma senha deve ser informada.");				
-		else if(user != null)
-		{
-			if(user.getPassword().equals(txtUserPassword.getText()))
-			{
-				JOptionPane.showMessageDialog(null, "Bem vindo, " + user.getName() + "!");
+		if(username.equals(""))
+			JOptionPane.showMessageDialog(null, "Um nome de usuário deve ser informado.");
+		
+		else if(password.equals(""))
+			JOptionPane.showMessageDialog(null, "Uma senha deve ser informada.");
 				
-				currentState.setChosenAction("Logar");
-				currentState.setCurrentUser(user);						
-				close();
-			}					
-			else
-				JOptionPane.showMessageDialog(null, "Senha incorreta!");
-		}				
-		else
-			JOptionPane.showMessageDialog(null, "Usuário não existe!");
+		else 
+			auxState = userLoginCtrl.setCurrentState(username, password, currentState);
+		
+		if(auxState != null)
+		{
+			currentState = auxState;
+			
+			close();
+		}
 	}
 
 	/**

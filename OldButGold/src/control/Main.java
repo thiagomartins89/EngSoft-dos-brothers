@@ -1,5 +1,7 @@
 package control;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.widgets.Display;
 
 import db.Database;
