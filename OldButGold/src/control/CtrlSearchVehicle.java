@@ -175,7 +175,7 @@ public class CtrlSearchVehicle
 				{
 					double vehicleMaxLength = vehicleList.get(i).getLength();
 					String strMaxLength = ("" + vehicleMaxLength);
-					if(strMaxLength.equals(chosenOptionResult))
+					if(strMaxLength.equals(chosenOptionResult) || vehicleMaxLength < Double.parseDouble(chosenOptionResult))
 					{
 						listItems.add(vehicleList.get(i).getModel());
 					}
