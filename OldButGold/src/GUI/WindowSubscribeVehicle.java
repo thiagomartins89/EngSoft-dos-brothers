@@ -244,6 +244,6 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(437, 287);
+		return new Point(425, 269);
 	}
 }

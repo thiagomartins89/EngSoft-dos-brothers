@@ -1,7 +1,10 @@
 package control;
 
-import db.Database;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import vehicle.Vehicle;
+import db.Database;
 
 public class CtrlSubscribeVehicle
 {
@@ -25,8 +28,15 @@ public class CtrlSubscribeVehicle
 				category, plate, enginePower, width) == false)
 			return "Todos os campos devem estar preenchidos.";
 
-		if (checkManufacturingDate(manufacturingDate) == false)
+		switch (checkManufacturingDate(manufacturingDate))
+		{
+		case 1:
 			return "O ano deve estar no formato 'AAAA'.";
+		case 2:
+			return "O ano não pode ser maior que o ano atual.";
+		case 3:
+			return "Ano inválido.";
+		}
 
 		if (checkMileage(mileage) == false)
 			return "Quilometragem inválida.";
@@ -61,8 +71,7 @@ public class CtrlSubscribeVehicle
 			mainDatabase.addVehicle(vehicle);
 
 			return "Veículo adicionado com sucesso!";
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			return "Não foi possível adicionar o veículo. Verifique as entradas e tente novamente.";
 		}
@@ -84,24 +93,33 @@ public class CtrlSubscribeVehicle
 	}
 
 	/**
-	 * Verifica se o ano recebido como parâmetro é válido.
+	 * Verifica se o ano recebido como parâmetro é válido. Retorna 0, caso o ano
+	 * seja correto. Retorna 1, caso o ano não esteja no formato 'AAAA'. Retorna
+	 * 2, caso o ano seja maior que o ano atual. Retorna 3, para outros
+	 * problemas.
 	 */
-	private boolean checkManufacturingDate(String manufacturingDate)
+	private int checkManufacturingDate(String manufacturingDate)
 	{
 		try
 		{
 			if (manufacturingDate.length() != 4)
-				return false;
+				return 1;
 
-			if (Integer.parseInt(manufacturingDate) < 0)
-				return false;
-		}
-		catch (NumberFormatException e1)
+			if (manufacturingDate.equals("0000"))
+				return 3;
+
+			Calendar calendar = new GregorianCalendar();
+
+			if (Integer.parseInt(manufacturingDate) <= 0
+					|| Integer.parseInt(manufacturingDate) > calendar
+							.get(Calendar.YEAR))
+				return 2;
+		} catch (NumberFormatException e1)
 		{
-			return false;
+			return 1;
 		}
 
-		return true;
+		return 0;
 	}
 
 	/**
@@ -113,8 +131,7 @@ public class CtrlSubscribeVehicle
 		{
 			if (Integer.parseInt(mileage) < 0)
 				return false;
-		}
-		catch (NumberFormatException e1)
+		} catch (NumberFormatException e1)
 		{
 			return false;
 		}
@@ -129,10 +146,9 @@ public class CtrlSubscribeVehicle
 	{
 		try
 		{
-			if (Double.parseDouble(length) < 0)
+			if (Double.parseDouble(length) <= 0)
 				return false;
-		}
-		catch (NumberFormatException e1)
+		} catch (NumberFormatException e1)
 		{
 			return false;
 		}
@@ -147,10 +163,9 @@ public class CtrlSubscribeVehicle
 	{
 		try
 		{
-			if (Integer.parseInt(enginePower) < 0)
+			if (Integer.parseInt(enginePower) <= 0)
 				return false;
-		}
-		catch (NumberFormatException e1)
+		} catch (NumberFormatException e1)
 		{
 			return false;
 		}
@@ -165,10 +180,9 @@ public class CtrlSubscribeVehicle
 	{
 		try
 		{
-			if (Double.parseDouble(width) < 0)
+			if (Double.parseDouble(width) <= 0)
 				return false;
-		}
-		catch (NumberFormatException e1)
+		} catch (NumberFormatException e1)
 		{
 			return false;
 		}
