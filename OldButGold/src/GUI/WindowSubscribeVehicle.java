@@ -232,8 +232,8 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	{
 		super.configureShell(newShell);
 		newShell.setText("Old but Gold");
-		Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		newShell.setImage(imgOldButGold);
+		//Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
+		//newShell.setImage(imgOldButGold);
 		// newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}

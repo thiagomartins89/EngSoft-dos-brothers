@@ -1,46 +1,44 @@
+//Esta classe funciona da mesma forma que a WindowSearchVehicle e, inclusive,
+//Usa a mesma classe de controle (CtrlSearchVehicle).
+
 package GUI;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.swing.JOptionPane;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Label;
 
 import control.CtrlSearchVehicle;
 import control.CurrentState;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-
-import vehicle.Vehicle;
-
 import db.Database;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormAttachment;
 
-public class WindowSearchVehicle extends ApplicationWindow {
+public class WindowClientCarRent extends ApplicationWindow
+{
 
 	private CurrentState currentState;
-	private Database searchVehicleDatabase;
+	private Database clientCarRentDatabase;
 	private CtrlSearchVehicle searchVehicleCtrl;
-
-	/**
-	 * Create the application window.
-	 */
-	public WindowSearchVehicle(CurrentState mainCurrentState, Database mainDatabase) 
+	
+	public WindowClientCarRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -49,7 +47,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		addMenuBar();
 		addStatusLine();
 		currentState = mainCurrentState;
-		searchVehicleDatabase = mainDatabase;
+		clientCarRentDatabase = mainDatabase;
 		searchVehicleCtrl = new CtrlSearchVehicle(mainDatabase);
 	}
 
@@ -63,16 +61,29 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(null);
 		
+		Button btnRent = new Button(container, SWT.NONE);
+		btnRent.addSelectionListener(new SelectionAdapter() 
+		{
+			@Override
+			//função de ação quando botão Sair é pressionado
+			public void widgetSelected(SelectionEvent e)
+			{
+				
+			}
+		});
+		btnRent.setBounds(52, 119, 96, 30);
+		btnRent.setText("Locar");
+		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptions.setBounds(102, 11, 192, 28);
+		comboSearchOptions.setBounds(106, 32, 192, 23);
 		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptionsResults.setBounds(102, 42, 192, 28);
+		comboSearchOptionsResults.setBounds(106, 61, 192, 23);
 		final List listSearchResults = new List(container, SWT.BORDER);
-		listSearchResults.setBounds(332, 23, 148, 105);
+		listSearchResults.setBounds(337, 60, 148, 105);
 		
 		final Label lblUnity = new Label(container, SWT.NONE);
-		lblUnity.setBounds(296, 45, 30, 25);
+		lblUnity.setBounds(304, 64, 30, 25);
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -144,11 +155,11 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-		lblSearchOptions.setBounds(0, 14, 96, 25);
+		lblSearchOptions.setBounds(10, 35, 90, 25);
 		lblSearchOptions.setText("Pesquisar por :");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.setBounds(285, 172, 75, 25);
+		btnReturn.setBounds(359, 184, 96, 30);
 		btnReturn.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
@@ -162,79 +173,35 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-		lblAvailableModels.setBounds(332, 0, 152, 28);
+		lblAvailableModels.setBounds(344, 35, 128, 20);
 		lblAvailableModels.setText("Modelos disponíveis:");
+		
+		Button btnDetalhes = new Button(container, SWT.NONE);
+		btnDetalhes.setBounds(175, 119, 96, 30);
+		btnDetalhes.setText("Detalhes");
 
 		return container;
 	}
 
-	/**
-	 * Create the actions.
-	 */
 	private void createActions()
 	{
 		// Create the actions
 	}
 
-	/**
-	 * Create the menu manager.
-	 * @return the menu manager
-	 */
-	@Override
-	protected MenuManager createMenuManager()
-	{
-		MenuManager menuManager = new MenuManager("menu");
-		return menuManager;
-	}
 
-	/**
-	 * Create the toolbar manager.
-	 * @return the toolbar manager
-	 */
 	@Override
-	protected ToolBarManager createToolBarManager(int style)
-	{
-		ToolBarManager toolBarManager = new ToolBarManager(style);
-		return toolBarManager;
-	}
-
-	/**
-	 * Create the status line manager.
-	 * @return the status line manager
-	 */
-	@Override
-	protected StatusLineManager createStatusLineManager() 
-	{
-		StatusLineManager statusLineManager = new StatusLineManager();
-		return statusLineManager;
-	}
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-
-	/**
-	 * Configure the shell.
-	 * @param newShell
-	 */
-	@Override
-	protected void configureShell(Shell newShell)
+	protected void configureShell(Shell newShell) 
 	{
 		super.configureShell(newShell);
-		newShell.setText("Old but Gold");
-		//Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		//newShell.setImage(imgOldButGold);
-		//newShell.setBackgroundImage(imgOldButGold);
-		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		newShell.setText("New Application");
 	}
 
 	/**
 	 * Return the initial size of the window.
 	 */
 	@Override
-	protected Point getInitialSize() 
+	protected Point getInitialSize()
 	{
-		return new Point(490, 381);
+		return new Point(500, 273);
 	}
 }

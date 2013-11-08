@@ -41,10 +41,21 @@ public class WindowClientMenu extends ApplicationWindow {
 	 * @param parent
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(Composite parent)
+	{
 		Composite container = new Composite(parent, SWT.NONE);
 		{
 			Button btnCarRental = new Button(container, SWT.NONE);
+			btnCarRental.addSelectionListener(new SelectionAdapter()
+			{
+				@Override
+				//função de ação quando botão "Locação" é pressionado
+				public void widgetSelected(SelectionEvent e) 
+				{
+					currentState.setChosenAction("Locação");
+					close();
+				}
+			});
 			btnCarRental.setBounds(150, 0, 138, 30);
 			btnCarRental.setText("Locação");
 		}
@@ -57,10 +68,12 @@ public class WindowClientMenu extends ApplicationWindow {
 		
 		{
 			Button btnSearchVehicle = new Button(container, SWT.NONE);
-			btnSearchVehicle.addSelectionListener(new SelectionAdapter() {
+			btnSearchVehicle.addSelectionListener(new SelectionAdapter() 
+			{
 				@Override
 				//função de ação quando botão "Pesquisar Veículo" é pressionado
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(SelectionEvent e)
+				{
 					currentState.setChosenAction("Pesquisar Veículo");
 					close();
 				}
@@ -145,8 +158,8 @@ public class WindowClientMenu extends ApplicationWindow {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText("Old but Gold");
-		Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		newShell.setImage(imgOldButGold);
+		//Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
+		//newShell.setImage(imgOldButGold);
 		//newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
