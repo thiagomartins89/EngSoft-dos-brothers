@@ -56,7 +56,11 @@ public class WindowClientMenu extends ApplicationWindow {
 					close();
 				}
 			});
+<<<<<<< HEAD
 			btnCarRental.setBounds(150, 52, 138, 30);
+=======
+			btnCarRental.setBounds(150, 0, 138, 30);
+>>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 			btnCarRental.setText("Locação");
 		}
 		
@@ -65,7 +69,27 @@ public class WindowClientMenu extends ApplicationWindow {
 			btnScheduling.setBounds(150, 88, 138, 30);
 			btnScheduling.setText("Agendamento");
 		}
+<<<<<<< HEAD
 				
+=======
+		
+		{
+			Button btnSearchVehicle = new Button(container, SWT.NONE);
+			btnSearchVehicle.addSelectionListener(new SelectionAdapter() 
+			{
+				@Override
+				//função de ação quando botão "Pesquisar Veículo" é pressionado
+				public void widgetSelected(SelectionEvent e)
+				{
+					currentState.setChosenAction("Pesquisar Veículo");
+					close();
+				}
+			});
+			btnSearchVehicle.setBounds(150, 72, 138, 30);
+			btnSearchVehicle.setText("Pesquisar Veículo");
+		}
+		
+>>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		{
 			Button btnVerifyHistory = new Button(container, SWT.NONE);
 			btnVerifyHistory.setBounds(150, 124, 138, 30);

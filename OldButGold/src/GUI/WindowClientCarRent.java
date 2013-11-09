@@ -1,46 +1,38 @@
+//Esta classe funciona da mesma forma que a WindowSearchVehicle.
+
 package GUI;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.StatusLineManager;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
 
 import control.CtrlClientCarRent;
 import control.CurrentState;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-
-import vehicle.Vehicle;
-
 import db.Database;
 
-public class WindowSearchVehicle extends ApplicationWindow {
+public class WindowClientCarRent extends ApplicationWindow
+{
 
-	private CurrentState currentState;
-	private Database searchVehicleDatabase;
-	private CtrlClientCarRent searchVehicleCtrl;
-
-	/**
-	 * Create the application window.
-	 */
-	public WindowSearchVehicle(CurrentState mainCurrentState, Database mainDatabase) 
+	private CurrentState rentCurrentState;
+	private Database clientCarRentDatabase;
+	private CtrlClientCarRent clientCarRentCtrl;
+	
+	public WindowClientCarRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -48,9 +40,9 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
-		currentState = mainCurrentState;
-		searchVehicleDatabase = mainDatabase;
-		searchVehicleCtrl = new CtrlClientCarRent(mainDatabase);
+		rentCurrentState = mainCurrentState;
+		clientCarRentDatabase = mainDatabase;
+		clientCarRentCtrl = new CtrlClientCarRent(mainDatabase);
 	}
 
 	/**
@@ -64,7 +56,6 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		container.setLayout(null);
 		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-<<<<<<< HEAD
 		comboSearchOptions.setBounds(106, 32, 192, 23);
 		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -82,23 +73,16 @@ public class WindowSearchVehicle extends ApplicationWindow {
 			//função de ação quando botão Locar é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
-				listSearchResults.getSelection();
+				int selectionIndex = listSearchResults.getSelectionIndex();
+				if(selectionIndex != -1) 
+					clientCarRentCtrl.MakeCarRent(selectionIndex, rentCurrentState);				
+				else
+					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 			}
 		});
 		
 		btnRent.setBounds(52, 119, 96, 30);
 		btnRent.setText("Locar");
-=======
-		comboSearchOptions.setBounds(102, 11, 192, 28);
-		
-		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptionsResults.setBounds(102, 42, 192, 28);
-		final List listSearchResults = new List(container, SWT.BORDER);
-		listSearchResults.setBounds(332, 23, 148, 105);
-		
-		final Label lblUnity = new Label(container, SWT.NONE);
-		lblUnity.setBounds(296, 45, 30, 25);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -114,14 +98,10 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = clientCarRentCtrl.getSecondComboItems(optionName);
 				
 				if(optionName.equals("Potência do motor"))
-<<<<<<< HEAD
 					lblUnity.setText("cv");
-=======
-					lblUnity.setText("Cv");
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 				
 				else if(optionName.equals("Comprimento máximo"))
 					lblUnity.setText("m");
@@ -154,7 +134,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = clientCarRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
@@ -174,37 +154,25 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-<<<<<<< HEAD
 		lblSearchOptions.setBounds(10, 35, 90, 25);
 		lblSearchOptions.setText("Pesquisar por :");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
 		btnReturn.setBounds(359, 184, 96, 30);
-=======
-		lblSearchOptions.setBounds(0, 14, 96, 25);
-		lblSearchOptions.setText("Pesquisar por :");
-		
-		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.setBounds(285, 172, 75, 25);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		btnReturn.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
 			//função de ação quando botão "Voltar" é pressionado
 			public void widgetSelected(SelectionEvent e) 
 			{
-				currentState.setChosenAction("Voltar");
+				rentCurrentState.setChosenAction("Voltar");
 				close();
 			}
 		});
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-<<<<<<< HEAD
 		lblAvailableModels.setBounds(344, 35, 128, 20);
-=======
-		lblAvailableModels.setBounds(332, 0, 152, 28);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		lblAvailableModels.setText("Modelos disponíveis:");
 		
 		Button btnDetalhes = new Button(container, SWT.NONE);
@@ -224,15 +192,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 	protected void configureShell(Shell newShell) 
 	{
 		super.configureShell(newShell);
-<<<<<<< HEAD
 		newShell.setText("New Application");
-=======
-		newShell.setText("Old but Gold");
-		//Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		//newShell.setImage(imgOldButGold);
-		//newShell.setBackgroundImage(imgOldButGold);
-		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 	}
 
 	/**
