@@ -64,7 +64,6 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		container.setLayout(null);
 		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-<<<<<<< HEAD
 		comboSearchOptions.setBounds(106, 32, 192, 23);
 		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -88,17 +87,6 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		
 		btnRent.setBounds(52, 119, 96, 30);
 		btnRent.setText("Locar");
-=======
-		comboSearchOptions.setBounds(102, 11, 192, 28);
-		
-		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptionsResults.setBounds(102, 42, 192, 28);
-		final List listSearchResults = new List(container, SWT.BORDER);
-		listSearchResults.setBounds(332, 23, 148, 105);
-		
-		final Label lblUnity = new Label(container, SWT.NONE);
-		lblUnity.setBounds(296, 45, 30, 25);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -117,11 +105,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName);
 				
 				if(optionName.equals("Potência do motor"))
-<<<<<<< HEAD
 					lblUnity.setText("cv");
-=======
-					lblUnity.setText("Cv");
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 				
 				else if(optionName.equals("Comprimento máximo"))
 					lblUnity.setText("m");
@@ -174,19 +158,11 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-<<<<<<< HEAD
 		lblSearchOptions.setBounds(10, 35, 90, 25);
 		lblSearchOptions.setText("Pesquisar por :");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
 		btnReturn.setBounds(359, 184, 96, 30);
-=======
-		lblSearchOptions.setBounds(0, 14, 96, 25);
-		lblSearchOptions.setText("Pesquisar por :");
-		
-		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.setBounds(285, 172, 75, 25);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		btnReturn.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
@@ -200,11 +176,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-<<<<<<< HEAD
 		lblAvailableModels.setBounds(344, 35, 128, 20);
-=======
-		lblAvailableModels.setBounds(332, 0, 152, 28);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 		lblAvailableModels.setText("Modelos disponíveis:");
 		
 		Button btnDetalhes = new Button(container, SWT.NONE);
@@ -224,15 +196,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 	protected void configureShell(Shell newShell) 
 	{
 		super.configureShell(newShell);
-<<<<<<< HEAD
 		newShell.setText("New Application");
-=======
-		newShell.setText("Old but Gold");
-		//Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		//newShell.setImage(imgOldButGold);
-		//newShell.setBackgroundImage(imgOldButGold);
-		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
->>>>>>> 90453230de4cd5e2a59a8f9ba43197822af74141
 	}
 
 	/**
