@@ -1,4 +1,4 @@
-//Classe que serve de controle à janela WindowSearchVehicle
+//Classe que serve de controle às janelas que precisam pesquisar carros
 
 package control;
 
@@ -9,10 +9,11 @@ import vehicle.Vehicle;
 
 import db.Database;
 
-public class CtrlSearchVehicle 
+public class CtrlSearchVehicle
 {
 	private Database ctrlSearchVehicleDatabase;
-
+	ArrayList<Vehicle> vehicleList = new ArrayList<Vehicle>();
+	
 	public CtrlSearchVehicle(Database mainDatabase)
 	{
 		this.ctrlSearchVehicleDatabase = mainDatabase;
@@ -24,7 +25,7 @@ public class CtrlSearchVehicle
 	//a função retornará uma lista contendo A e B.
 	public ArrayList<String> getSecondComboItems(String optionName) 
 	{
-		final ArrayList<Vehicle> vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
+		vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
 		ArrayList<String> secondComboItems = new ArrayList<String>();
 		
 		switch(optionName)
@@ -129,7 +130,7 @@ public class CtrlSearchVehicle
 	
 	public ArrayList<String> getResultsListItems(String chosenOption, String chosenOptionResult)
 	{
-		final ArrayList<Vehicle> vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
+		vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
 		ArrayList<String> listItems = new ArrayList<String>();
 		
 		switch(chosenOption)
@@ -207,4 +208,10 @@ public class CtrlSearchVehicle
 		return listItems;
 		
 	}
+	
+	public ArrayList<Vehicle> getVehicleList()
+	{
+		return vehicleList;
+	}
+
 }

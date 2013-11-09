@@ -70,7 +70,7 @@ public class Vehicle
 		this.brand = brand;
 	}
 
-	public Boolean getIsAvailable()
+	public Boolean IsAvailable()
 	{
 		return isAvailable;
 	}

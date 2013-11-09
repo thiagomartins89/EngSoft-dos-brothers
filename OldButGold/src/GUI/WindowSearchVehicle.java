@@ -2,6 +2,9 @@ package GUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.swing.JOptionPane;
+
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
@@ -17,7 +20,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
 
-import control.CtrlSearchVehicle;
+import control.CtrlClientCarRent;
 import control.CurrentState;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -32,12 +35,13 @@ public class WindowSearchVehicle extends ApplicationWindow {
 
 	private CurrentState currentState;
 	private Database searchVehicleDatabase;
-	private CtrlSearchVehicle searchVehicleCtrl;
+	private CtrlClientCarRent searchVehicleCtrl;
 
 	/**
 	 * Create the application window.
 	 */
-	public WindowSearchVehicle(CurrentState mainCurrentState, Database mainDatabase) {
+	public WindowSearchVehicle(CurrentState mainCurrentState, Database mainDatabase) 
+	{
 		super(null);
 		setShellStyle(SWT.MAX);
 		createActions();
@@ -46,7 +50,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		addStatusLine();
 		currentState = mainCurrentState;
 		searchVehicleDatabase = mainDatabase;
-		searchVehicleCtrl = new CtrlSearchVehicle(mainDatabase);
+		searchVehicleCtrl = new CtrlClientCarRent(mainDatabase);
 	}
 
 	/**
@@ -57,15 +61,32 @@ public class WindowSearchVehicle extends ApplicationWindow {
 	protected Control createContents(Composite parent) 
 	{
 		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(null);
 		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
+		comboSearchOptions.setBounds(106, 32, 192, 23);
 		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
+		comboSearchOptionsResults.setBounds(106, 61, 192, 23);
 		final List listSearchResults = new List(container, SWT.BORDER);
-		listSearchResults.setBounds(315, 21, 148, 105);	
+		listSearchResults.setBounds(337, 60, 148, 105);
 		
 		final Label lblUnity = new Label(container, SWT.NONE);
-		lblUnity.setBounds(285, 43, 24, 15);
+		lblUnity.setBounds(304, 64, 30, 25);
+		
+		Button btnRent = new Button(container, SWT.NONE);
+		btnRent.addSelectionListener(new SelectionAdapter() 
+		{
+			@Override
+			//função de ação quando botão Locar é pressionado
+			public void widgetSelected(SelectionEvent e)
+			{
+				listSearchResults.getSelection();
+			}
+		});
+		
+		btnRent.setBounds(52, 119, 96, 30);
+		btnRent.setText("Locar");
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -83,13 +104,19 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				
 				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName);
 				
+				if(optionName.equals("Potência do motor"))
+					lblUnity.setText("cv");
+				
+				else if(optionName.equals("Comprimento máximo"))
+					lblUnity.setText("m");
+				
+				
 				for(int i = 0; i < secondComboItems.size(); i++)
 				{
 					comboSearchOptionsResults.add(secondComboItems.get(i));
 				}
 			}
 		});
-		comboSearchOptions.setBounds(87, 11, 192, 28);	
 		
 		//função que executa o que acontece quando o usuário
 		//seleciona as opções da segunda combo box.
@@ -131,12 +158,11 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-		lblSearchOptions.setBounds(4, 14, 77, 25);
-		lblSearchOptions.setText("Pesquisar por :");		
-		
-		comboSearchOptionsResults.setBounds(87, 40, 192, 28);	
+		lblSearchOptions.setBounds(10, 35, 90, 25);
+		lblSearchOptions.setText("Pesquisar por :");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
+		btnReturn.setBounds(359, 184, 96, 30);
 		btnReturn.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
@@ -147,83 +173,38 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				close();
 			}
 		});
-		btnReturn.setBounds(285, 172, 75, 25);
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-		lblAvailableModels.setBounds(330, 0, 126, 15);
+		lblAvailableModels.setBounds(344, 35, 128, 20);
 		lblAvailableModels.setText("Modelos disponíveis:");
+		
+		Button btnDetalhes = new Button(container, SWT.NONE);
+		btnDetalhes.setBounds(175, 119, 96, 30);
+		btnDetalhes.setText("Detalhes");
 
 		return container;
 	}
 
-	/**
-	 * Create the actions.
-	 */
 	private void createActions()
 	{
 		// Create the actions
 	}
 
-	/**
-	 * Create the menu manager.
-	 * @return the menu manager
-	 */
-	@Override
-	protected MenuManager createMenuManager()
-	{
-		MenuManager menuManager = new MenuManager("menu");
-		return menuManager;
-	}
 
-	/**
-	 * Create the toolbar manager.
-	 * @return the toolbar manager
-	 */
 	@Override
-	protected ToolBarManager createToolBarManager(int style)
-	{
-		ToolBarManager toolBarManager = new ToolBarManager(style);
-		return toolBarManager;
-	}
-
-	/**
-	 * Create the status line manager.
-	 * @return the status line manager
-	 */
-	@Override
-	protected StatusLineManager createStatusLineManager() 
-	{
-		StatusLineManager statusLineManager = new StatusLineManager();
-		return statusLineManager;
-	}
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-
-	/**
-	 * Configure the shell.
-	 * @param newShell
-	 */
-	@Override
-	protected void configureShell(Shell newShell)
+	protected void configureShell(Shell newShell) 
 	{
 		super.configureShell(newShell);
-		newShell.setText("Old but Gold");
-		Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		newShell.setImage(imgOldButGold);
-		//newShell.setBackgroundImage(imgOldButGold);
-		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		newShell.setText("New Application");
 	}
 
 	/**
 	 * Return the initial size of the window.
 	 */
 	@Override
-	protected Point getInitialSize() 
+	protected Point getInitialSize()
 	{
-		return new Point(490, 381);
+		return new Point(500, 273);
 	}
 }

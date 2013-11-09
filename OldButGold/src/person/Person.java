@@ -1,6 +1,7 @@
 package person;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 public class Person
 {
@@ -9,7 +10,7 @@ public class Person
 	
 	String name, id, password;
 	long cpf;
-	Date birthDate;
+	Calendar birthDate;
 	
 	
 	public String getName() 
@@ -53,12 +54,12 @@ public class Person
 		this.cpf = cpf;
 	}
 
-	public Date getBirthDate() 
+	public Calendar getBirthDate() 
 	{
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) 
+	public void setBirthDate(Calendar birthDate) 
 	{
 		this.birthDate = birthDate;
 	}		

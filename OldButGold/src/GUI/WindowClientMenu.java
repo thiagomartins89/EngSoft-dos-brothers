@@ -41,37 +41,34 @@ public class WindowClientMenu extends ApplicationWindow {
 	 * @param parent
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(Composite parent)
+	{
 		Composite container = new Composite(parent, SWT.NONE);
 		{
 			Button btnCarRental = new Button(container, SWT.NONE);
-			btnCarRental.setBounds(150, 0, 138, 30);
+			btnCarRental.addSelectionListener(new SelectionAdapter()
+			{
+				@Override
+				//função de ação quando botão "Locação" é pressionado
+				public void widgetSelected(SelectionEvent e) 
+				{
+					currentState.setChosenAction("Locação");
+					close();
+				}
+			});
+			btnCarRental.setBounds(150, 52, 138, 30);
 			btnCarRental.setText("Locação");
 		}
 		
 		{
 			Button btnScheduling = new Button(container, SWT.NONE);
-			btnScheduling.setBounds(150, 36, 138, 30);
+			btnScheduling.setBounds(150, 88, 138, 30);
 			btnScheduling.setText("Agendamento");
 		}
-		
-		{
-			Button btnSearchVehicle = new Button(container, SWT.NONE);
-			btnSearchVehicle.addSelectionListener(new SelectionAdapter() {
-				@Override
-				//função de ação quando botão "Pesquisar Veículo" é pressionado
-				public void widgetSelected(SelectionEvent e) {
-					currentState.setChosenAction("Pesquisar Veículo");
-					close();
-				}
-			});
-			btnSearchVehicle.setBounds(150, 72, 138, 30);
-			btnSearchVehicle.setText("Pesquisar Veículo");
-		}
-		
+				
 		{
 			Button btnVerifyHistory = new Button(container, SWT.NONE);
-			btnVerifyHistory.setBounds(150, 108, 138, 30);
+			btnVerifyHistory.setBounds(150, 124, 138, 30);
 			btnVerifyHistory.setText("Verificar Histórico");
 		}		
 		
@@ -87,7 +84,7 @@ public class WindowClientMenu extends ApplicationWindow {
 					close();
 				}
 			});
-			btnExit.setBounds(150, 144, 138, 30);
+			btnExit.setBounds(150, 160, 138, 30);
 			btnExit.setText("Sair");
 		}
 
@@ -145,8 +142,8 @@ public class WindowClientMenu extends ApplicationWindow {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText("Old but Gold");
-		Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
-		newShell.setImage(imgOldButGold);
+		//Image imgOldButGold = new Image(null, "C:/oldbutgold.png");
+		//newShell.setImage(imgOldButGold);
 		//newShell.setBackgroundImage(imgOldButGold);
 		newShell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
