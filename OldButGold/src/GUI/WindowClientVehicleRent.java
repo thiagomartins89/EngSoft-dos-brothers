@@ -21,19 +21,23 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
-import control.CtrlClientCarRent;
-import control.CtrlEmployeeCarRent;
+import control.CtrlClientVehicleRent;
 import control.CurrentState;
 import db.Database;
 
-public class WindowEmployeeCarRent extends ApplicationWindow
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+
+import vehicle.Vehicle;
+
+public class WindowClientVehicleRent extends ApplicationWindow
 {
 
 	private CurrentState rentCurrentState;
 	private Database clientCarRentDatabase;
-	private CtrlEmployeeCarRent employeeCarRentCtrl;
+	private CtrlClientVehicleRent clientCarRentCtrl;
 	
-	public WindowEmployeeCarRent(CurrentState mainCurrentState, Database mainDatabase) 
+	public WindowClientVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -43,7 +47,7 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 		addStatusLine();
 		rentCurrentState = mainCurrentState;
 		clientCarRentDatabase = mainDatabase;
-		employeeCarRentCtrl = new CtrlEmployeeCarRent(mainDatabase);
+		clientCarRentCtrl = new CtrlClientVehicleRent(mainDatabase);
 	}
 
 	/**
@@ -62,7 +66,28 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
 		comboSearchOptionsResults.setBounds(106, 61, 192, 23);
 		final List listSearchResults = new List(container, SWT.BORDER);
-		listSearchResults.setBounds(337, 60, 148, 105);
+		
+		listSearchResults.addMouseListener(new MouseAdapter() 
+		{
+			@Override
+			//função de ação quando se clica duas vezes em um veículo da lista
+			public void mouseDoubleClick(MouseEvent e)
+			{
+				ArrayList<Vehicle> vehicleList = clientCarRentCtrl.getVehicleList();			
+				
+				int selectionIndex = listSearchResults.getSelectionIndex();	
+				
+				if(selectionIndex != -1)
+				{
+					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					vehicleDeitalsWindow.open();
+				}	
+				else
+					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
+			}
+		});
+		listSearchResults.setBounds(337, 60, 216, 105);
 		
 		final Label lblUnity = new Label(container, SWT.NONE);
 		lblUnity.setBounds(304, 64, 30, 25);
@@ -74,13 +99,11 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 			//função de ação quando botão Locar é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
-				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					employeeCarRentCtrl.MakeCarRent(selectionIndex, rentCurrentState);				
+					clientCarRentCtrl.MakeCarRent(selectionIndex, rentCurrentState);				
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
-					
 			}
 		});
 		
@@ -101,7 +124,7 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = employeeCarRentCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = clientCarRentCtrl.getSecondComboItems(optionName);
 				
 				if(optionName.equals("Potência do motor"))
 					lblUnity.setText("cv");
@@ -130,6 +153,7 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 				
 				//limpa a lista para inserir os novos resultados				
 				listSearchResults.removeAll();
+				listSearchResults.setEnabled(true);
 				
 				int optionIndex = comboSearchOptions.getSelectionIndex();				
 				String chosenOption = comboSearchOptions.getItem(optionIndex);
@@ -137,12 +161,19 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = employeeCarRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = clientCarRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
 					listSearchResults.add(resultsListItems.get(i));
 				}
+				
+				ArrayList<Vehicle> vehicleList = clientCarRentCtrl.getVehicleList();
+				if(vehicleList.isEmpty())
+				{
+					listSearchResults.setEnabled(false);
+					return;
+				}	
 					 
 			}
 		});
@@ -175,12 +206,31 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-		lblAvailableModels.setBounds(344, 35, 128, 20);
+		lblAvailableModels.setBounds(358, 35, 147, 20);
 		lblAvailableModels.setText("Modelos disponíveis:");
 		
-		Button btnDetalhes = new Button(container, SWT.NONE);
-		btnDetalhes.setBounds(175, 119, 96, 30);
-		btnDetalhes.setText("Detalhes");
+		Button btnDetails = new Button(container, SWT.NONE);
+		btnDetails.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			//função de ação quando botão Detalhes é pressionado
+			public void widgetSelected(SelectionEvent e) 
+			{
+				int selectionIndex = listSearchResults.getSelectionIndex();
+				
+				if(selectionIndex != -1)
+				{
+					ArrayList<Vehicle> vehicleList = clientCarRentCtrl.getVehicleList();
+					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					vehicleDeitalsWindow.open();
+				}	
+				else
+					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
+			}
+		});
+		btnDetails.setBounds(175, 119, 96, 30);
+		btnDetails.setText("Detalhes");
 
 		return container;
 	}
@@ -204,6 +254,6 @@ public class WindowEmployeeCarRent extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(500, 273);
+		return new Point(569, 280);
 	}
 }

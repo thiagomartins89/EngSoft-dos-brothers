@@ -2,6 +2,8 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
+import GUI.WindowClientVehicleRent;
+import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowEmployeeMenu;
 import GUI.WindowSubscribeClient;
 import GUI.WindowSubscribeVehicle;
@@ -73,12 +75,32 @@ public class MainEmployee
 					}
 					break;
 					
+				case "Locação":
+					MakeEmployeeRent();
+					break;		
+					
 			}
 			
 		//Volta para o início do menu de funcionário caso o veículo seja
 		//adicionado com sucesso, ou se o funcionário pressionar "voltar".
 		}while(mainEmployeeCurrentState.getChosenAction() == "Voltar" ||
 		       mainEmployeeCurrentState.getChosenAction() == "Adicionar Veículo");
+	}
+	
+	private void MakeEmployeeRent()
+	{
+		try 
+		{	
+			WindowEmployeeVehicleRent employeeCarRentWindow = new WindowEmployeeVehicleRent(mainEmployeeCurrentState, mainEmployeeDatabase);
+			employeeCarRentWindow.setBlockOnOpen(true);
+			employeeCarRentWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -2,7 +2,7 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientCarRent;
+import GUI.WindowClientVehicleRent;
 import GUI.WindowClientMenu;
 import GUI.WindowSearchVehicle;
 import db.Database;
@@ -71,7 +71,7 @@ public class MainClient
 	{
 		try 
 		{	
-			WindowClientCarRent clientCarRentWindow = new WindowClientCarRent(mainClientCurrentState, mainClientDatabase);
+			WindowClientVehicleRent clientCarRentWindow = new WindowClientVehicleRent(mainClientCurrentState, mainClientDatabase);
 			clientCarRentWindow.setBlockOnOpen(true);
 			clientCarRentWindow.open();
 			Display.getCurrent().dispose();			

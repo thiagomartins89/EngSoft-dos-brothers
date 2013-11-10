@@ -49,7 +49,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		container.setLayout(null);
 		{
 			Button btnSubscribeClient = new Button(container, SWT.NONE);
-			btnSubscribeClient.setBounds(101, 28, 196, 30);
+			btnSubscribeClient.setBounds(101, 0, 196, 30);
 			btnSubscribeClient.addSelectionListener(new SelectionAdapter()
 			{
 				@Override
@@ -65,7 +65,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		}
 		
 		Button btnAddVehicle = new Button(container, SWT.NONE);
-		btnAddVehicle.setBounds(101, 64, 196, 30);
+		btnAddVehicle.setBounds(101, 72, 196, 30);
 		btnAddVehicle.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
@@ -80,7 +80,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		
 		{
 			Button btnRemoveVehicle = new Button(container, SWT.NONE);
-			btnRemoveVehicle.setBounds(101, 100, 196, 30);
+			btnRemoveVehicle.setBounds(101, 108, 196, 30);
 			btnRemoveVehicle.setText("Remover Veículo");
 		}
 		
@@ -94,10 +94,23 @@ public class WindowEmployeeMenu extends ApplicationWindow
 					close();
 				}
 			});
-			btnExit.setBounds(103, 138, 194, 30);
+			btnExit.setBounds(101, 144, 196, 30);
 			btnExit.setText("Sair");
 		}
-
+		
+		Button btnRent = new Button(container, SWT.NONE);
+		btnRent.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			//função de ação quando botão "Locação" é pressionado
+			public void widgetSelected(SelectionEvent e) 
+			{
+				currentState.setChosenAction("Locação");
+				close();
+			}
+		});
+		btnRent.setBounds(101, 36, 196, 30);
+		btnRent.setText("Locação");
 
 		return container;
 	}

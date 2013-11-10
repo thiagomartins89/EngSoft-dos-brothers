@@ -17,11 +17,11 @@ import vehicle.Vehicle;
 import db.Database;
 import db.Rent;
 
-public class CtrlClientCarRent extends CtrlSearchVehicle
+public class CtrlClientVehicleRent extends CtrlSearchVehicle
 {
 	private Database ctrlSearchVehicleDatabase;
 
-	public CtrlClientCarRent(Database mainDatabase)
+	public CtrlClientVehicleRent(Database mainDatabase)
 	{
 		super(mainDatabase);
 		this.ctrlSearchVehicleDatabase = mainDatabase;
@@ -29,8 +29,7 @@ public class CtrlClientCarRent extends CtrlSearchVehicle
 	
 	public void MakeCarRent(int selectionIndex, CurrentState rentCurrentState)
 	{
-		//JOptionPane.showMessageDialog(null, vehicleList.size());
-		Vehicle selectedVehicle = vehicleList.get(selectionIndex);
+		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		
 		if(selectedVehicle.IsAvailable())
 		{
@@ -39,6 +38,8 @@ public class CtrlClientCarRent extends CtrlSearchVehicle
 			Rent clientRent = new Rent(newCalendar, selectedVehicle.getMileage());
 			selectedVehicle.setIsAvailable(false);
 			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");
+			Client currentClient = (Client) currentUser;
+			currentClient.AddRent(clientRent);
 		}
 		else
 		{

@@ -80,9 +80,11 @@ public class WindowLogin extends ApplicationWindow
 		Button btnLogin = new Button(container, SWT.NONE);
 		btnLogin.setBounds(134, 164, 55, 29);
 		
-		btnLogin.addSelectionListener(new SelectionAdapter() {
+		btnLogin.addSelectionListener(new SelectionAdapter()
+		{
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(SelectionEvent e) 
+			{
 				login();
 			}			
 			
@@ -103,9 +105,7 @@ public class WindowLogin extends ApplicationWindow
 				close();
 			}
 		});
-		btnExit.setText("Sair");
-
-		
+		btnExit.setText("Sair");		
 		
 		return container;
 	}
