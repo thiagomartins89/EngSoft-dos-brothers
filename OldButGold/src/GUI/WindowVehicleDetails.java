@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -24,9 +25,10 @@ import vehicle.Vehicle;
 import control.CtrlSubscribeVehicle;
 import control.CurrentState;
 import db.Database;
+
 import org.eclipse.swt.widgets.Group;
 
-public class WindowSubscribeVehicle extends ApplicationWindow
+public class WindowVehicleDetails extends ApplicationWindow
 {
 	private Text txtVehicleModel;
 	private Text txtVehicleBrand;
@@ -35,17 +37,15 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	private Text txtVehicleEnginePower;
 	private Text txtVehicleLength;
 	private Text txtVehicleWidth;
+	private Text txtCategory;
 	private Text txtVehicleMileage;
-	private CurrentState currentState;
-	private Database subscribeVehicleDatabase;
-	private Combo comboVehicleCategory;
-	private CtrlSubscribeVehicle ctrlSubscribeVehicle;
+	Vehicle selectedVehicle;
+	private Text txtPrice;
 
 	/**
 	 * Create the application window.
 	 */
-	public WindowSubscribeVehicle(CurrentState mainCurrentState,
-			Database mainDatabase)
+	public WindowVehicleDetails(Vehicle vehicle)
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -53,9 +53,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
-		currentState = mainCurrentState;
-		subscribeVehicleDatabase = mainDatabase;
-		ctrlSubscribeVehicle = new CtrlSubscribeVehicle(mainDatabase);
+		selectedVehicle = vehicle;
 	}
 
 	/**
@@ -69,10 +67,6 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(null);
 
-		Button btnSubscribe = new Button(container, SWT.NONE);
-		btnSubscribe.setBounds(251, 181, 76, 25);
-		btnSubscribe.setText("Adicionar");
-
 		Button btnReturn = new Button(container, SWT.NONE);
 		btnReturn.addSelectionListener(new SelectionAdapter()
 		{
@@ -80,119 +74,138 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 			// botão "Voltar"
 			public void widgetSelected(SelectionEvent e)
 			{
-				currentState.setChosenAction("Voltar");
 				close();
 			}
 		});
 		btnReturn.setBounds(334, 181, 76, 25);
 		btnReturn.setText("Voltar");
 
-		Group grpSubscribeVehicle = new Group(container, SWT.NONE);
-		grpSubscribeVehicle.setBounds(10, 10, 400, 165);
-		grpSubscribeVehicle.setText("Cadastro de veículo");
-		grpSubscribeVehicle.setLayout(null);
+		Group grpVehicleDetails = new Group(container, SWT.NONE);
+		grpVehicleDetails.setBounds(10, 23, 400, 156);
+		grpVehicleDetails.setText("Detalhes do veículo");
+		grpVehicleDetails.setLayout(null);
 
-		Label lblVehicleBrand = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleBrand = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleBrand.setBounds(64, 25, 36, 15);
 		lblVehicleBrand.setText("Marca:");
 
-		txtVehicleBrand = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleBrand = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleBrand.setEnabled(false);
+		txtVehicleBrand.setEditable(false);
 		txtVehicleBrand.setBounds(106, 22, 110, 21);
+		txtVehicleBrand.setText(selectedVehicle.getBrand());
 
-		Label lblVehicleModel = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleModel = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleModel.setBounds(56, 52, 44, 15);
 		lblVehicleModel.setText("Modelo:");
 
-		txtVehicleModel = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleModel = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleModel.setEditable(false);
+		txtVehicleModel.setEnabled(false);
 		txtVehicleModel.setBounds(106, 49, 110, 21);
+		txtVehicleModel.setText(selectedVehicle.getModel());
 
-		Label lblVehicleManufacturingDate = new Label(grpSubscribeVehicle,
+		Label lblVehicleManufacturingDate = new Label(grpVehicleDetails,
 				SWT.NONE);
 		lblVehicleManufacturingDate.setBounds(75, 79, 25, 15);
 		lblVehicleManufacturingDate.setText("Ano:");
 
-		txtVehicleManufacturingDate = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleManufacturingDate = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleManufacturingDate.setEnabled(false);
+		txtVehicleManufacturingDate.setEditable(false);
 		txtVehicleManufacturingDate.setBounds(106, 76, 76, 21);
+		txtVehicleManufacturingDate.setText("" + selectedVehicle.getManufacturingDate());
 
-		Label lblVehicleMileage = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleMileage = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleMileage.setBounds(13, 106, 87, 15);
 		lblVehicleMileage.setText("Quilometragem:");
 
-		txtVehicleMileage = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleMileage = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleMileage.setEnabled(false);
+		txtVehicleMileage.setEditable(false);
 		txtVehicleMileage.setBounds(106, 103, 76, 21);
+		txtVehicleMileage.setText("" + selectedVehicle.getMileage());
 
-		Label lblKm = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblKm = new Label(grpVehicleDetails, SWT.NONE);
 		lblKm.setBounds(188, 106, 17, 15);
 		lblKm.setText("km");
 
-		Label lblVehicleLength = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleLength = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleLength.setBounds(22, 133, 78, 15);
 		lblVehicleLength.setText("Comprimento:");
 
-		txtVehicleLength = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleLength = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleLength.setEnabled(false);
+		txtVehicleLength.setEditable(false);
 		txtVehicleLength.setBounds(106, 130, 76, 21);
+		txtVehicleLength.setText("" + selectedVehicle.getLength());
 
-		Label lblM = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblM = new Label(grpVehicleDetails, SWT.NONE);
 		lblM.setBounds(188, 133, 11, 15);
 		lblM.setText("m");
 
-		Label lblVehicleCategory = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleCategory = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleCategory.setBounds(234, 25, 54, 15);
 		lblVehicleCategory.setText("Categoria:");
 
-		comboVehicleCategory = new Combo(grpSubscribeVehicle, SWT.READ_ONLY);
-		comboVehicleCategory.setBounds(294, 21, 76, 23);
-		comboVehicleCategory.setItems(new String[] { "A", "B", "C", "D" });
-
-		Label lblVehiclePlate = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehiclePlate = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehiclePlate.setBounds(257, 52, 31, 15);
 		lblVehiclePlate.setText("Placa:");
 
-		txtVehiclePlate = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehiclePlate = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehiclePlate.setEnabled(false);
+		txtVehiclePlate.setEditable(false);
 		txtVehiclePlate.setBounds(294, 49, 76, 21);
+		txtVehiclePlate.setText(selectedVehicle.getPlate());
 
-		Label lblVehicleEnginePower = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleEnginePower = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleEnginePower.setBounds(239, 79, 49, 15);
-		lblVehicleEnginePower.setText("Pot\u00EAncia:");
+		lblVehicleEnginePower.setText("Potência:");
 
-		txtVehicleEnginePower = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleEnginePower = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleEnginePower.setEnabled(false);
+		txtVehicleEnginePower.setEditable(false);
 		txtVehicleEnginePower.setBounds(294, 76, 76, 21);
+		txtVehicleEnginePower.setText("" + selectedVehicle.getEnginePower());
 
-		Label lblCv = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblCv = new Label(grpVehicleDetails, SWT.NONE);
 		lblCv.setBounds(376, 79, 12, 15);
 		lblCv.setText("cv");
 
-		Label lblVehicleWidth = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblVehicleWidth = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleWidth.setBounds(245, 106, 43, 15);
 		lblVehicleWidth.setText("Largura:");
 
-		txtVehicleWidth = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtVehicleWidth = new Text(grpVehicleDetails, SWT.BORDER);
+		txtVehicleWidth.setEnabled(false);
+		txtVehicleWidth.setEditable(false);
 		txtVehicleWidth.setBounds(294, 103, 76, 21);
+		txtVehicleWidth.setText("" + selectedVehicle.getWidth());
 
-		Label lblM_1 = new Label(grpSubscribeVehicle, SWT.NONE);
+		Label lblM_1 = new Label(grpVehicleDetails, SWT.NONE);
 		lblM_1.setBounds(376, 106, 11, 15);
 		lblM_1.setText("m");
-
-		btnSubscribe.addSelectionListener(new SelectionAdapter()
-		{
-			@Override
-			// Botão Adicionar
-			public void widgetSelected(SelectionEvent e)
-			{
-				String returnMessage = ctrlSubscribeVehicle.subscribeVehicle(
-						txtVehicleBrand.getText(), txtVehicleModel.getText(),
-						txtVehicleManufacturingDate.getText(),
-						txtVehicleMileage.getText(),
-						txtVehicleLength.getText(),
-						comboVehicleCategory.getText(),
-						txtVehiclePlate.getText(),
-						txtVehicleEnginePower.getText(),
-						txtVehicleWidth.getText());
-
-				JOptionPane.showMessageDialog(null, returnMessage);
-			}
-		});
-
+		
+		txtCategory = new Text(grpVehicleDetails, SWT.BORDER);
+		txtCategory.setEditable(false);
+		txtCategory.setEnabled(false);
+		txtCategory.setBounds(294, 22, 76, 21);
+		txtCategory.setText(selectedVehicle.getCategory());
+		
+		Label lblPrice = new Label(grpVehicleDetails, SWT.NONE);
+		lblPrice.setBounds(219, 133, 54, 15);
+		lblPrice.setText("Preço/dia:");
+		
+		txtPrice = new Text(grpVehicleDetails, SWT.BORDER);
+		txtPrice.setEditable(false);
+		txtPrice.setEnabled(false);
+		txtPrice.setBounds(294, 130, 76, 21);
+		txtPrice.setText("" + selectedVehicle.getDailyPrice());
+		
+		Label lblRS = new Label(grpVehicleDetails, SWT.NONE);
+		lblRS.setBounds(276, 133, 25, 15);
+		lblRS.setText("R$");
+		
 		return container;
 	}
 

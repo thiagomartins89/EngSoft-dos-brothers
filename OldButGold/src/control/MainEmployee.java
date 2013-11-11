@@ -2,6 +2,8 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
+import GUI.WindowClientVehicleRent;
+import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowEmployeeMenu;
 import GUI.WindowSubscribeClient;
 import GUI.WindowSubscribeVehicle;
@@ -44,34 +46,17 @@ public class MainEmployee
 					break;
 				
 				case "Cadastrar Cliente":
-					//abre a janela de cadastro de cliente
-					try 
-					{	
-						WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainEmployeeCurrentState, mainEmployeeDatabase);
-						subscribeClientWindow.setBlockOnOpen(true);
-						subscribeClientWindow.open();
-						Display.getCurrent().dispose();			
-					} 
-					catch (Exception e) 
-					{
-						e.printStackTrace();
-					}
+					MakeSubscribeClient();
 					break;
 					
 				//abre a janela de cadastro de veículo
 				case "Adicionar Veículo":
-					try 
-					{	
-						WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainEmployeeCurrentState, mainEmployeeDatabase);
-						subscribeVehicleWindow.setBlockOnOpen(true);
-						subscribeVehicleWindow.open();
-						Display.getCurrent().dispose();			
-					} 
-					catch (Exception e) 
-					{
-						e.printStackTrace();
-					}
+					MakeAddVehicle();
 					break;
+					
+				case "Locação":
+					MakeEmployeeRent();
+					break;		
 					
 			}
 			
@@ -79,6 +64,55 @@ public class MainEmployee
 		//adicionado com sucesso, ou se o funcionário pressionar "voltar".
 		}while(mainEmployeeCurrentState.getChosenAction() == "Voltar" ||
 		       mainEmployeeCurrentState.getChosenAction() == "Adicionar Veículo");
+	}
+	
+	//função que abre a janela de adição de veículos
+	private void MakeAddVehicle()
+	{
+		try 
+		{	
+			WindowSubscribeVehicle subscribeVehicleWindow = new WindowSubscribeVehicle(mainEmployeeCurrentState, mainEmployeeDatabase);
+			subscribeVehicleWindow.setBlockOnOpen(true);
+			subscribeVehicleWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	//função que abre a janela de aluguel de veículos para o funcionário
+	private void MakeEmployeeRent()
+	{
+		try 
+		{	
+			WindowEmployeeVehicleRent employeeCarRentWindow = new WindowEmployeeVehicleRent(mainEmployeeCurrentState, mainEmployeeDatabase);
+			employeeCarRentWindow.setBlockOnOpen(true);
+			employeeCarRentWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//função que abre a janela de adição de veículos
+	private void MakeSubscribeClient()
+	{
+		try 
+		{	
+			WindowSubscribeClient subscribeClientWindow = new WindowSubscribeClient(mainEmployeeCurrentState, mainEmployeeDatabase);
+			subscribeClientWindow.setBlockOnOpen(true);
+			subscribeClientWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -3,8 +3,8 @@ package vehicle;
 public class Vehicle
 {
 
-	public Vehicle(int enginePower, int manufacturingDate, double length,
-			double width, String brand, String model, String plate, String category, int mileage)
+	public Vehicle(int enginePower, int manufacturingDate, int mileage, double length,
+			double width, String brand, String model, String plate, double dailyPrice)
 	{
 		this.enginePower = enginePower;
 		this.manufacturingDate = manufacturingDate;
@@ -13,9 +13,9 @@ public class Vehicle
 		this.brand = brand;
 		this.model = model;
 		this.plate = plate;
-		this.category = category;
-		this.isAvailable = true; //todos os veículos já vêm adicionados como disponíveis
+		this.available = true; //todos os veículos já vêm adicionados como disponíveis
 		this.mileage = mileage;
+		this.dailyPrice = dailyPrice;
 	}
 	
 	
@@ -25,9 +25,9 @@ public class Vehicle
 
 
 	protected String brand, model, plate, category;
-	protected double length, width;
+	protected double length, width, dailyPrice;
 	protected int enginePower, manufacturingDate, mileage;
-	protected Boolean isAvailable;
+	protected Boolean available;
 
 	
 	public int getEnginePower()
@@ -72,12 +72,12 @@ public class Vehicle
 
 	public Boolean IsAvailable()
 	{
-		return isAvailable;
+		return available;
 	}
 
-	public void setIsAvailable(Boolean isAvailable)
+	public void setAvailable(Boolean available)
 	{
-		this.isAvailable = isAvailable;
+		this.available = available;
 	}
 
 	public String getPlate()
@@ -126,6 +126,16 @@ public class Vehicle
 	public void setMileage(int mileage)
 	{
 		this.mileage = mileage;
+	}
+	
+	public double getDailyPrice()
+	{
+		return dailyPrice;
+	}
+
+	public void setDailyPrice(double dailyPrice)
+	{
+		this.dailyPrice = dailyPrice;
 	}
 
 }

@@ -5,6 +5,8 @@ package control;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.JOptionPane;
+
 import vehicle.Vehicle;
 
 import db.Database;
@@ -12,7 +14,7 @@ import db.Database;
 public class CtrlSearchVehicle
 {
 	private Database ctrlSearchVehicleDatabase;
-	ArrayList<Vehicle> vehicleList = new ArrayList<Vehicle>();
+	ArrayList<Vehicle> resultVehiclesList = new ArrayList<Vehicle>();
 	
 	public CtrlSearchVehicle(Database mainDatabase)
 	{
@@ -25,7 +27,7 @@ public class CtrlSearchVehicle
 	//a função retornará uma lista contendo A e B.
 	public ArrayList<String> getSecondComboItems(String optionName) 
 	{
-		vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
+		ArrayList<Vehicle> vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
 		ArrayList<String> secondComboItems = new ArrayList<String>();
 		
 		switch(optionName)
@@ -36,7 +38,8 @@ public class CtrlSearchVehicle
 				
 				for(int i=0; i < vehicleList.size(); i++)
 				{
-					if(!sortCategoryList.contains(vehicleList.get(i).getCategory()))
+					if(vehicleList.get(i).IsAvailable())
+						if(!sortCategoryList.contains(vehicleList.get(i).getCategory()))
 							sortCategoryList.add(vehicleList.get(i).getCategory());
 				}
 				
@@ -50,8 +53,9 @@ public class CtrlSearchVehicle
 				
 				for(int i=0; i < vehicleList.size(); i++)
 				{
-					if(!sortEnginePowerList.contains(vehicleList.get(i).getEnginePower()))
-						sortEnginePowerList.add(vehicleList.get(i).getEnginePower());
+					if(vehicleList.get(i).IsAvailable())
+						if(!sortEnginePowerList.contains(vehicleList.get(i).getEnginePower()))
+							sortEnginePowerList.add(vehicleList.get(i).getEnginePower());
 					
 				}				
 				Collections.sort(sortEnginePowerList);
@@ -68,8 +72,9 @@ public class CtrlSearchVehicle
 				
 				for(int i=0; i < vehicleList.size(); i++)
 				{
-					if(!sortYearList.contains(vehicleList.get(i).getManufacturingDate()))
-						sortYearList.add(vehicleList.get(i).getManufacturingDate());
+					if(vehicleList.get(i).IsAvailable())
+						if(!sortYearList.contains(vehicleList.get(i).getManufacturingDate()))
+							sortYearList.add(vehicleList.get(i).getManufacturingDate());
 				}						
 				Collections.sort(sortYearList);
 				
@@ -85,8 +90,9 @@ public class CtrlSearchVehicle
 				
 				for(int i=0; i < vehicleList.size(); i++)
 				{
-					if(!sortMaxLengthList.contains(vehicleList.get(i).getLength()))
-						sortMaxLengthList.add(vehicleList.get(i).getLength());
+					if(vehicleList.get(i).IsAvailable())
+						if(!sortMaxLengthList.contains(vehicleList.get(i).getLength()))
+							sortMaxLengthList.add(vehicleList.get(i).getLength());
 				}						
 				Collections.sort(sortMaxLengthList);
 				
@@ -102,8 +108,9 @@ public class CtrlSearchVehicle
 				
 				for(int i=0; i < vehicleList.size(); i++)
 				{
-					if(!sortBrandList.contains(vehicleList.get(i).getBrand()))
-						sortBrandList.add(vehicleList.get(i).getBrand());
+					if(vehicleList.get(i).IsAvailable())
+						if(!sortBrandList.contains(vehicleList.get(i).getBrand()))
+							sortBrandList.add(vehicleList.get(i).getBrand());
 				}						
 				Collections.sort(sortBrandList);
 				
@@ -116,8 +123,9 @@ public class CtrlSearchVehicle
 				
 				for(int i=0; i < vehicleList.size(); i++)
 				{
-					if(!sortModelList.contains(vehicleList.get(i).getModel()))
-						sortModelList.add(vehicleList.get(i).getModel());
+					if(vehicleList.get(i).IsAvailable())
+						if(!sortModelList.contains(vehicleList.get(i).getModel()))
+							sortModelList.add(vehicleList.get(i).getModel());
 				}						
 				Collections.sort(sortModelList);
 				
@@ -130,16 +138,19 @@ public class CtrlSearchVehicle
 	
 	public ArrayList<String> getResultsListItems(String chosenOption, String chosenOptionResult)
 	{
-		vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
+		ArrayList<Vehicle> vehicleList = ctrlSearchVehicleDatabase.getVehicleList();
 		ArrayList<String> listItems = new ArrayList<String>();
+		
+		resultVehiclesList.clear();
 		
 		switch(chosenOption)
 		{
 			case "Categoria":						
 				for(int i = 0; i < vehicleList.size(); i++)
 				{
-					if(vehicleList.get(i).getCategory().equals(chosenOptionResult))
+					if(vehicleList.get(i).getCategory().equals(chosenOptionResult) && vehicleList.get(i).IsAvailable())
 					{
+						resultVehiclesList.add(vehicleList.get(i));
 						listItems.add(vehicleList.get(i).getModel());
 					}
 				}
@@ -151,8 +162,9 @@ public class CtrlSearchVehicle
 				{
 					int vehicleEnginePower = vehicleList.get(i).getEnginePower();
 					String strEnginePower = ("" + vehicleEnginePower);
-					if(strEnginePower.equals(chosenOptionResult))
+					if(strEnginePower.equals(chosenOptionResult) && vehicleList.get(i).IsAvailable())
 					{
+						resultVehiclesList.add(vehicleList.get(i));
 						listItems.add(vehicleList.get(i).getModel());
 					}
 					
@@ -164,8 +176,9 @@ public class CtrlSearchVehicle
 				{
 					int vehicleManufacturingYear = vehicleList.get(i).getManufacturingDate();
 					String strManufacturingYear = ("" + vehicleManufacturingYear);
-					if(strManufacturingYear.equals(chosenOptionResult))
+					if(strManufacturingYear.equals(chosenOptionResult) && vehicleList.get(i).IsAvailable())
 					{
+						resultVehiclesList.add(vehicleList.get(i));
 						listItems.add(vehicleList.get(i).getModel());
 					}
 				}
@@ -178,7 +191,11 @@ public class CtrlSearchVehicle
 					String strMaxLength = ("" + vehicleMaxLength);
 					if(strMaxLength.equals(chosenOptionResult) || vehicleMaxLength < Double.parseDouble(chosenOptionResult))
 					{
-						listItems.add(vehicleList.get(i).getModel());
+						if(vehicleList.get(i).IsAvailable())
+						{
+							resultVehiclesList.add(vehicleList.get(i));
+							listItems.add(vehicleList.get(i).getModel());
+						}
 					}
 				}
 				break;
@@ -187,8 +204,9 @@ public class CtrlSearchVehicle
 				for(int i = 0; i < vehicleList.size(); i++)
 				{
 					String vehicleBrand = vehicleList.get(i).getBrand();
-					if(vehicleBrand.equals(chosenOptionResult))
+					if(vehicleBrand.equals(chosenOptionResult) && vehicleList.get(i).IsAvailable())
 					{
+						resultVehiclesList.add(vehicleList.get(i));
 						listItems.add(vehicleList.get(i).getModel());
 					}
 				}			
@@ -198,20 +216,27 @@ public class CtrlSearchVehicle
 				for(int i = 0; i < vehicleList.size(); i++)
 				{
 					String vehicleModel = vehicleList.get(i).getModel();
-					if(vehicleModel.equals(chosenOptionResult))
+					if(vehicleModel.equals(chosenOptionResult) && vehicleList.get(i).IsAvailable())
 					{
+						resultVehiclesList.add(vehicleList.get(i));
 						listItems.add(vehicleModel);
 					}
 				}	
 				break;
 			}
+		
+		if(listItems.size() == 0)
+		{
+			listItems.add("Não há veículos disponíveis");
+			listItems.add("para essa pesquisa");
+		}	
 		return listItems;
 		
 	}
 	
 	public ArrayList<Vehicle> getVehicleList()
 	{
-		return vehicleList;
+		return resultVehiclesList;
 	}
 
 }

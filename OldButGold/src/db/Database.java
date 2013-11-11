@@ -67,32 +67,32 @@ public class Database
 		
 		GregorianCalendar motorcycleDate = new GregorianCalendar();
 		motorcycleDate.set(2009,01,01);
-		Motorcycle motorcycle = new Motorcycle(1000, motorcycleDate.get(Calendar.YEAR), 1.2,
-											   0.8, "Honda", "Biz", "ABC1234");		
+		Motorcycle motorcycle = new Motorcycle(1000, motorcycleDate.get(Calendar.YEAR), 5000, 1.2,
+											   0.8, "Honda", "Biz", "ABC1234", 35);		
 		this.addVehicle(motorcycle);
 		
 		GregorianCalendar carDate = new GregorianCalendar();
 		carDate.set(2010,01,02 );
-		Vehicle car = new Car(2000, carDate.get(Calendar.YEAR), 2.8,
-							 1.9, "Volkswagen", "Gol", "ABC1235");
+		Vehicle car = new Car(2000, carDate.get(Calendar.YEAR), 15000,
+							  2.8, 1.9, "Volkswagen", "Gol", "ABC1235", 60);
 		this.addVehicle(car);
 		
 		GregorianCalendar busDate = new GregorianCalendar();
 		busDate.set(2011, 01, 03);
-		Vehicle bus = new Bus(3000, busDate.get(Calendar.YEAR), 15,
-							  3, "Marcopolo", "Audace", "ABC1236");
+		Vehicle bus = new Bus(3000, busDate.get(Calendar.YEAR), 42000,
+							  15, 3, "Marcopolo", "Audace", "ABC1236", 130);
 		this.addVehicle(bus);
 
 		GregorianCalendar truckDate = new GregorianCalendar();
 		truckDate.set(2012, 01, 04);
-		Vehicle truck = new Truck(4000, truckDate.get(Calendar.YEAR), 20,
-								  3, "Ford", "Cargo", "ABC1237");
+		Vehicle truck = new Truck(4000, truckDate.get(Calendar.YEAR), 23000,
+								  20, 3, "Ford", "Cargo", "ABC1237", 160);
 		this.addVehicle(truck);
 		
 		GregorianCalendar microBusDate = new GregorianCalendar();
 		microBusDate.set(2013, 01, 05);
-		Vehicle microBus = new MicroBus(3500, microBusDate.get(Calendar.YEAR), 10,
-										2.7, "Mercedez-Benz", "LO 915", "ABC1238");	
+		Vehicle microBus = new MicroBus(3500, microBusDate.get(Calendar.YEAR), 27000,
+										10, 2.7, "Mercedez-Benz", "LO 915", "ABC1238", 110);	
 		this.addVehicle(microBus);
 		
 	}

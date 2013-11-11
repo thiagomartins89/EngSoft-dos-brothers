@@ -11,6 +11,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -54,18 +55,23 @@ public class WindowLogin extends ApplicationWindow
 		Composite container = new Composite(parent, SWT.BORDER | SWT.NO_REDRAW_RESIZE);
 		container.setLayout(null);
 		
-		Label lblNomeDeUsurio = new Label(container, SWT.NONE);
+		Group grpLogin = new Group(container, SWT.NONE);
+		grpLogin.setBounds(10, 12, 434, 215);
+		grpLogin.setText("Bem-vindo à Old but Gold!");
+		grpLogin.setLayout(null);
+		
+		Label lblNomeDeUsurio = new Label(grpLogin, SWT.NONE);
 		lblNomeDeUsurio.setBounds(139, 86, 50, 20);
 		lblNomeDeUsurio.setText("Usuário");
 		
-		txtUserLogin = new Text(container, SWT.BORDER);
+		txtUserLogin = new Text(grpLogin, SWT.BORDER);
 		txtUserLogin.setBounds(211, 83, 78, 26);
 		
-		Label lblPassword = new Label(container, SWT.NONE);
+		Label lblPassword = new Label(grpLogin, SWT.NONE);
 		lblPassword.setBounds(144, 126, 40, 20);
 		lblPassword.setText("Senha");
 		
-		txtUserPassword = new Text(container, SWT.BORDER | SWT.PASSWORD);
+		txtUserPassword = new Text(grpLogin, SWT.BORDER | SWT.PASSWORD);
 		txtUserPassword.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -77,12 +83,14 @@ public class WindowLogin extends ApplicationWindow
 		});
 		txtUserPassword.setBounds(211, 120, 78, 26);
 		
-		Button btnLogin = new Button(container, SWT.NONE);
+		Button btnLogin = new Button(grpLogin, SWT.NONE);
 		btnLogin.setBounds(134, 164, 55, 29);
 		
-		btnLogin.addSelectionListener(new SelectionAdapter() {
+		btnLogin.addSelectionListener(new SelectionAdapter()
+		{
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(SelectionEvent e) 
+			{
 				login();
 			}			
 			
@@ -90,7 +98,7 @@ public class WindowLogin extends ApplicationWindow
 		
 		btnLogin.setText("Logar");
 		
-		Button btnExit = new Button(container, SWT.NONE);
+		Button btnExit = new Button(grpLogin, SWT.NONE);
 		btnExit.setBounds(223, 163, 55, 30);
 		btnExit.addSelectionListener(new SelectionAdapter()
 		{
@@ -103,9 +111,7 @@ public class WindowLogin extends ApplicationWindow
 				close();
 			}
 		});
-		btnExit.setText("Sair");
-
-		
+		btnExit.setText("Sair");		
 		
 		return container;
 	}

@@ -2,7 +2,7 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientCarRent;
+import GUI.WindowClientVehicleRent;
 import GUI.WindowClientMenu;
 import GUI.WindowSearchVehicle;
 import db.Database;
@@ -16,7 +16,7 @@ public class MainClient
 	{
 		mainClientDatabase = mainDatabase;
 		mainClientCurrentState = mainCurrentState;
-		this.BeginClientActions();
+		BeginClientActions();
 	}
 
 	private void BeginClientActions() 
@@ -41,37 +41,21 @@ public class MainClient
 					mainClientCurrentState.setCurrentUser(null);
 					break;
 					
-				/*				
-				case "Pesquisar Veículo":
-					try 
-					{	
-						WindowSearchVehicle searchVehicleWindow = new WindowSearchVehicle(mainClientCurrentState, mainClientDatabase);
-						searchVehicleWindow.setBlockOnOpen(true);
-						searchVehicleWindow.open();
-						Display.getCurrent().dispose();			
-					} 
-					catch (Exception e) 
-					{
-						e.printStackTrace();
-					}
-					break;
-					*/
-										
 				case "Locação":
 					MakeClientRent();
-					break;				
-		
+					break;		
 			}
 			
 		//Volta para o início do menu de cliente
 		}while(mainClientCurrentState.getChosenAction() == "Voltar");		
 	}
 	
+	//função que abre a janela de aluguel de veículos para o cliente
 	private void MakeClientRent()
 	{
 		try 
 		{	
-			WindowClientCarRent clientCarRentWindow = new WindowClientCarRent(mainClientCurrentState, mainClientDatabase);
+			WindowClientVehicleRent clientCarRentWindow = new WindowClientVehicleRent(mainClientCurrentState, mainClientDatabase);
 			clientCarRentWindow.setBlockOnOpen(true);
 			clientCarRentWindow.open();
 			Display.getCurrent().dispose();			

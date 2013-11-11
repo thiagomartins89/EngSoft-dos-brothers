@@ -3,17 +3,10 @@ package vehicle;
 public class Truck extends Vehicle 
 {
 
-	public Truck(int enginePower, int manufacturingDate, double length,
-			double width, String brand, String model, String plate)
+	public Truck(int enginePower, int manufacturingDate, int mileage, double length,
+			double width, String brand, String model, String plate, double dailyPrice)
 	{
-		this.enginePower = enginePower;
-		this.manufacturingDate = manufacturingDate;
-		this.length = length;
-		this.width = width;
-		this.brand = brand;
-		this.model = model;
-		this.plate = plate;
+		super(enginePower, manufacturingDate, mileage, length, width, brand, model, plate, dailyPrice);
 		this.category = "C";
-		this.isAvailable = true; //todos os veículos já vêm adicionados como disponíveis
 	}
 }

@@ -17,32 +17,35 @@ import vehicle.Vehicle;
 import db.Database;
 import db.Rent;
 
-public class CtrlClientCarRent extends CtrlSearchVehicle
+public class CtrlClientVehicleRent extends CtrlSearchVehicle
 {
 	private Database ctrlSearchVehicleDatabase;
 
-	public CtrlClientCarRent(Database mainDatabase)
+	public CtrlClientVehicleRent(Database mainDatabase)
 	{
 		super(mainDatabase);
 		this.ctrlSearchVehicleDatabase = mainDatabase;
 	}
 	
-	public void MakeCarRent(int selectionIndex, CurrentState rentCurrentState)
+	public boolean MakeCarRent(int selectionIndex, CurrentState rentCurrentState)
 	{
-		//JOptionPane.showMessageDialog(null, vehicleList.size());
-		Vehicle selectedVehicle = vehicleList.get(selectionIndex);
+		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		
 		if(selectedVehicle.IsAvailable())
 		{
-			Calendar newCalendar = new GregorianCalendar();
+			GregorianCalendar newCalendar = new GregorianCalendar();
 			Person currentUser = rentCurrentState.getCurrentUser();
 			Rent clientRent = new Rent(newCalendar, selectedVehicle.getMileage());
-			selectedVehicle.setIsAvailable(false);
+			selectedVehicle.setAvailable(false);
 			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");
+			Client currentClient = (Client) currentUser;
+			currentClient.AddRent(clientRent);
+			return true;
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Veículo indisponível para locação no momento.");
+			return false;
 		}
 		
 	}

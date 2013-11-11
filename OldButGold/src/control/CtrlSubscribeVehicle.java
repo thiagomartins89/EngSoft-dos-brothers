@@ -67,6 +67,7 @@ public class CtrlSubscribeVehicle
 			vehicle.setPlate(plate);
 			vehicle.setEnginePower(Integer.parseInt(enginePower));
 			vehicle.setWidth(Double.parseDouble(width));
+			vehicle.setAvailable(true);
 
 			mainDatabase.addVehicle(vehicle);
 

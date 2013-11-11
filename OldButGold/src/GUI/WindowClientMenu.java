@@ -9,6 +9,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -44,36 +45,40 @@ public class WindowClientMenu extends ApplicationWindow {
 	protected Control createContents(Composite parent)
 	{
 		Composite container = new Composite(parent, SWT.NONE);
+		
+		Group grpClientMenu = new Group(container, SWT.NONE);
+		grpClientMenu.setBounds(10, 12, 434, 215);
+		grpClientMenu.setText("Selecione uma opção");
+		grpClientMenu.setLayout(null);
+		
+		Button btnCarRental = new Button(grpClientMenu, SWT.NONE);
+		btnCarRental.addSelectionListener(new SelectionAdapter()
 		{
-			Button btnCarRental = new Button(container, SWT.NONE);
-			btnCarRental.addSelectionListener(new SelectionAdapter()
+			@Override
+			//função de ação quando botão "Locação" é pressionado
+			public void widgetSelected(SelectionEvent e) 
 			{
-				@Override
-				//função de ação quando botão "Locação" é pressionado
-				public void widgetSelected(SelectionEvent e) 
-				{
-					currentState.setChosenAction("Locação");
-					close();
-				}
-			});
-			btnCarRental.setBounds(150, 52, 138, 30);
-			btnCarRental.setText("Locação");
-		}
+				currentState.setChosenAction("Locação");
+				close();
+			}
+		});
+		btnCarRental.setBounds(150, 46, 138, 30);
+		btnCarRental.setText("Locação");
 		
 		{
-			Button btnScheduling = new Button(container, SWT.NONE);
-			btnScheduling.setBounds(150, 88, 138, 30);
+			Button btnScheduling = new Button(grpClientMenu, SWT.NONE);
+			btnScheduling.setBounds(150, 82, 138, 30);
 			btnScheduling.setText("Agendamento");
 		}
 				
 		{
-			Button btnVerifyHistory = new Button(container, SWT.NONE);
+			Button btnVerifyHistory = new Button(grpClientMenu, SWT.NONE);
 			btnVerifyHistory.setBounds(150, 124, 138, 30);
 			btnVerifyHistory.setText("Verificar Histórico");
 		}		
 		
 		{
-			Button btnExit = new Button(container, SWT.NONE);
+			Button btnExit = new Button(grpClientMenu, SWT.NONE);
 			btnExit.addSelectionListener(new SelectionAdapter()
 			{
 				@Override
@@ -104,35 +109,11 @@ public class WindowClientMenu extends ApplicationWindow {
 	 * @return the menu manager
 	 */
 	@Override
-	protected MenuManager createMenuManager() {
+	protected MenuManager createMenuManager() 
+	{
 		MenuManager menuManager = new MenuManager("menu");
 		return menuManager;
 	}
-
-	/**
-	 * Create the toolbar manager.
-	 * @return the toolbar manager
-	 */
-	@Override
-	protected ToolBarManager createToolBarManager(int style) {
-		ToolBarManager toolBarManager = new ToolBarManager(style);
-		return toolBarManager;
-	}
-
-	/**
-	 * Create the status line manager.
-	 * @return the status line manager
-	 */
-	@Override
-	protected StatusLineManager createStatusLineManager() {
-		StatusLineManager statusLineManager = new StatusLineManager();
-		return statusLineManager;
-	}
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
 	
 	/**
 	 * Configure the shell.
@@ -153,7 +134,7 @@ public class WindowClientMenu extends ApplicationWindow {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 313);
+		return new Point(450, 289);
 	}
 
 }

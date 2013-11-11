@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
 
-import control.CtrlClientCarRent;
+import control.CtrlClientVehicleRent;
 import control.CurrentState;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,7 +35,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 
 	private CurrentState currentState;
 	private Database searchVehicleDatabase;
-	private CtrlClientCarRent searchVehicleCtrl;
+	private CtrlClientVehicleRent searchVehicleCtrl;
 
 	/**
 	 * Create the application window.
@@ -50,7 +50,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		addStatusLine();
 		currentState = mainCurrentState;
 		searchVehicleDatabase = mainDatabase;
-		searchVehicleCtrl = new CtrlClientCarRent(mainDatabase);
+		searchVehicleCtrl = new CtrlClientVehicleRent(mainDatabase);
 	}
 
 	/**
@@ -179,9 +179,9 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		lblAvailableModels.setBounds(344, 35, 128, 20);
 		lblAvailableModels.setText("Modelos disponíveis:");
 		
-		Button btnDetalhes = new Button(container, SWT.NONE);
-		btnDetalhes.setBounds(175, 119, 96, 30);
-		btnDetalhes.setText("Detalhes");
+		Button btnDetails = new Button(container, SWT.NONE);
+		btnDetails.setBounds(175, 119, 96, 30);
+		btnDetails.setText("Detalhes");
 
 		return container;
 	}

@@ -3,27 +3,30 @@
 package db;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Rent
 {
-	private Calendar withdrawalDate;
-	private Calendar returnDate;
+	private GregorianCalendar withdrawalDate;
+	private GregorianCalendar returnDate;
 	private int withdrawalMileage; //quilometragem com que o carro sai da loja
 	private int returnMileage;	  //quilometragem com que o carro retorna à loja
+	private double withdrawalPayment;
+	private double returnPayment;
 	
-	public Rent(Calendar clientWithdrawalDate, int clientWithdrawalMileage)
+	public Rent(GregorianCalendar clientWithdrawalDate, int clientWithdrawalMileage)
 	{
 		withdrawalDate = clientWithdrawalDate;
 		returnDate = null;
 		withdrawalMileage = clientWithdrawalMileage;		
 	}
 
-	public Calendar getWithdrawalDate() 
+	public GregorianCalendar getWithdrawalDate() 
 	{
 		return withdrawalDate;
 	}
 
-	public void setWithdrawalDate(Calendar withdrawalDate)
+	public void setWithdrawalDate(GregorianCalendar withdrawalDate)
 	{
 		this.withdrawalDate = withdrawalDate;
 	}
@@ -33,7 +36,7 @@ public class Rent
 		return returnDate;
 	}
 
-	public void setReturnDate(Calendar returnDate)
+	public void setReturnDate(GregorianCalendar returnDate)
 	{
 		this.returnDate = returnDate;
 	}
@@ -56,5 +59,21 @@ public class Rent
 	public void setReturnMileage(int returnMileage) 
 	{
 		this.returnMileage = returnMileage;
+	}
+
+	public double getWithdrawalPayment() {
+		return withdrawalPayment;
+	}
+
+	public void setWithdrawalPayment(double withdrawalPayment) {
+		this.withdrawalPayment = withdrawalPayment;
+	}
+
+	public double getReturnPayment() {
+		return returnPayment;
+	}
+
+	public void setReturnPayment(double returnPayment) {
+		this.returnPayment = returnPayment;
 	}
 }

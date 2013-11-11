@@ -9,6 +9,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -47,25 +48,29 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	{
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(null);
-		{
-			Button btnSubscribeClient = new Button(container, SWT.NONE);
-			btnSubscribeClient.setBounds(101, 28, 196, 30);
-			btnSubscribeClient.addSelectionListener(new SelectionAdapter()
-			{
-				@Override
-				//função de ação quando botão "Cadastrar Cliente" é pressionado
-				public void widgetSelected(SelectionEvent e) 
-				{
-					currentState.setChosenAction("Cadastrar Cliente");
-					close();
-					
-				}
-			});
-			btnSubscribeClient.setText("Cadastrar Cliente");
-		}
 		
-		Button btnAddVehicle = new Button(container, SWT.NONE);
-		btnAddVehicle.setBounds(101, 64, 196, 30);
+		Group grpEmployeeMenu = new Group(container, SWT.NONE);
+		grpEmployeeMenu.setBounds(10, 0, 434, 191);
+		grpEmployeeMenu.setText("Selecione uma opção");
+		grpEmployeeMenu.setLayout(null);
+		
+		Button btnSubscribeClient = new Button(grpEmployeeMenu, SWT.NONE);
+		btnSubscribeClient.setBounds(10, 32, 170, 28);
+		btnSubscribeClient.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			//função de ação quando botão "Cadastrar Cliente" é pressionado
+			public void widgetSelected(SelectionEvent e) 
+			{
+				currentState.setChosenAction("Cadastrar Cliente");
+				close();
+				
+			}
+		});
+		btnSubscribeClient.setText("Cadastrar Cliente");
+		
+		Button btnAddVehicle = new Button(grpEmployeeMenu, SWT.NONE);
+		btnAddVehicle.setBounds(10, 112, 170, 28);
 		btnAddVehicle.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
@@ -79,13 +84,18 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		btnAddVehicle.setText("Adicionar Veículo");
 		
 		{
-			Button btnRemoveVehicle = new Button(container, SWT.NONE);
-			btnRemoveVehicle.setBounds(101, 100, 196, 30);
+			Button btnRemoveVehicle = new Button(grpEmployeeMenu, SWT.NONE);
+			btnRemoveVehicle.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+				}
+			});
+			btnRemoveVehicle.setBounds(204, 112, 170, 28);
 			btnRemoveVehicle.setText("Remover Veículo");
 		}
 		
 		{
-			Button btnExit = new Button(container, SWT.NONE);
+			Button btnExit = new Button(grpEmployeeMenu, SWT.NONE);
 			btnExit.addSelectionListener(new SelectionAdapter() {
 				@Override
 				//função de ação quando botão "Sair" é pressionado
@@ -94,10 +104,48 @@ public class WindowEmployeeMenu extends ApplicationWindow
 					close();
 				}
 			});
-			btnExit.setBounds(103, 138, 194, 30);
+			btnExit.setBounds(106, 152, 170, 28);
 			btnExit.setText("Sair");
 		}
-
+		
+		Button btnRent = new Button(grpEmployeeMenu, SWT.NONE);
+		btnRent.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			//função de ação quando botão "Locação" é pressionado
+			public void widgetSelected(SelectionEvent e) 
+			{
+				currentState.setChosenAction("Locação");
+				close();
+			}
+		});
+		btnRent.setBounds(10, 72, 170, 28);
+		btnRent.setText("Locação");
+		
+		Button btnReturn = new Button(grpEmployeeMenu, SWT.NONE);
+		btnReturn.addSelectionListener(new SelectionAdapter() 
+		{
+			@Override
+			//função de ação quando botão "Devolução" é pressionado
+			public void widgetSelected(SelectionEvent e) 
+			{
+				
+			}
+		});
+		btnReturn.setBounds(204, 72, 170, 28);
+		btnReturn.setText("Devolução");
+		
+		Button btnNewButton = new Button(grpEmployeeMenu, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() 
+		{
+			@Override
+			public void widgetSelected(SelectionEvent e)
+			{
+				
+			}
+		});
+		btnNewButton.setBounds(204, 32, 170, 28);
+		btnNewButton.setText("Bloquear/Desbloquear Cliente");
 
 		return container;
 	}
@@ -122,33 +170,6 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	}
 
 	/**
-	 * Create the toolbar manager.
-	 * @return the toolbar manager
-	 */
-	@Override
-	protected ToolBarManager createToolBarManager(int style) 
-	{
-		ToolBarManager toolBarManager = new ToolBarManager(style);
-		return toolBarManager;
-	}
-
-	/**
-	 * Create the status line manager.
-	 * @return the status line manager
-	 */
-	@Override
-	protected StatusLineManager createStatusLineManager()
-	{
-		StatusLineManager statusLineManager = new StatusLineManager();
-		return statusLineManager;
-	}
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-
-	/**
 	 * Configure the shell.
 	 * @param newShell
 	 */
@@ -169,6 +190,6 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(450, 300);
+		return new Point(450, 256);
 	}
 }
