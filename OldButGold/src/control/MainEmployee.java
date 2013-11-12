@@ -1,10 +1,13 @@
 package control;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.widgets.Display;
 
 import GUI.WindowClientVehicleRent;
 import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowEmployeeMenu;
+import GUI.WindowRemoveVehicle;
 import GUI.WindowSubscribeClient;
 import GUI.WindowSubscribeVehicle;
 import db.Database;
@@ -49,15 +52,17 @@ public class MainEmployee
 					MakeSubscribeClient();
 					break;
 					
-				//abre a janela de cadastro de veículo
 				case "Adicionar Veículo":
 					MakeAddVehicle();
 					break;
 					
 				case "Locação":
 					MakeEmployeeRent();
-					break;		
-					
+					break;
+				
+				case "Remover Veículo":
+					MakeRemoveVehicle();
+					break;
 			}
 			
 		//Volta para o início do menu de funcionário caso o veículo seja
@@ -108,6 +113,22 @@ public class MainEmployee
 			subscribeClientWindow.setBlockOnOpen(true);
 			subscribeClientWindow.open();
 			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	//Função para a Remoção de um veículo (se não locado)
+	private void MakeRemoveVehicle()
+	{
+		try 
+		{	
+			WindowRemoveVehicle removeVehicleWindow = new WindowRemoveVehicle(mainEmployeeCurrentState, mainEmployeeDatabase);
+			removeVehicleWindow.setBlockOnOpen(true);
+			removeVehicleWindow.open();
+			Display.getCurrent().dispose();
 		} 
 		catch (Exception e) 
 		{

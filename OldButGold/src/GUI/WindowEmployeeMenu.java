@@ -87,7 +87,10 @@ public class WindowEmployeeMenu extends ApplicationWindow
 			Button btnRemoveVehicle = new Button(grpEmployeeMenu, SWT.NONE);
 			btnRemoveVehicle.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(SelectionEvent e) 
+				{
+					currentState.setChosenAction("Remover Veículo");
+					close();		
 				}
 			});
 			btnRemoveVehicle.setBounds(204, 112, 170, 28);

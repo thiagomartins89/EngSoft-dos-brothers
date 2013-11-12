@@ -95,6 +95,23 @@ public class Database
 										10, 2.7, "Mercedez-Benz", "LO 915", "ABC1238", 110);	
 		this.addVehicle(microBus);
 		
+		/*
+		Vehicle lol = new Vehicle();
+		
+		lol.setAvailable(truck.IsAvailable());
+		lol.setBrand(truck.getBrand());
+		lol.setCategory(truck.getCategory());
+		lol.setEnginePower(truck.getEnginePower());
+		lol.setLength(truck.getLength());
+		lol.setManufacturingDate(truck.getManufacturingDate());
+		lol.setMileage(truck.getMileage());		
+		lol.setModel(truck.getModel());
+		lol.setPlate(truck.getPlate());
+		lol.setWidth(truck.getWidth());
+
+		this.addVehicle(lol); 
+		*/
+		
 	}
 
 	public Person getUser(String login)
@@ -131,5 +148,14 @@ public class Database
 	public ArrayList<Vehicle> getVehicleList()
 	{
 		return vehicleList;
+	}
+	
+	public boolean removeVehicleList(Vehicle vehicle)
+	{
+		if(vehicleList.contains(vehicle))
+			if(vehicleList.remove(vehicle)) 
+				return true;
+
+		return false; 
 	}
 }
