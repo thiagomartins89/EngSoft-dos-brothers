@@ -35,7 +35,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 
 	private CurrentState rentCurrentState;
 	private Database clientCarRentDatabase;
-	private CtrlClientVehicleRent clientCarRentCtrl;
+	private CtrlClientVehicleRent clientVehicleRentCtrl;
 	
 	public WindowClientVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
@@ -47,7 +47,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		addStatusLine();
 		rentCurrentState = mainCurrentState;
 		clientCarRentDatabase = mainDatabase;
-		clientCarRentCtrl = new CtrlClientVehicleRent(mainDatabase);
+		clientVehicleRentCtrl = new CtrlClientVehicleRent(mainDatabase);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			//função de ação quando se clica duas vezes em um veículo da lista
 			public void mouseDoubleClick(MouseEvent e)
 			{
-				ArrayList<Vehicle> vehicleList = clientCarRentCtrl.getVehicleList();			
+				ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();			
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();	
 				
@@ -99,11 +99,31 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			//função de ação quando botão Locar é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
+				boolean rentSucess = false;
+				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					clientCarRentCtrl.MakeCarRent(selectionIndex, rentCurrentState);				
+					rentSucess = clientVehicleRentCtrl.MakeCarRent(selectionIndex, rentCurrentState);				
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
+				
+				if(rentSucess)
+				{             
+                    listSearchResults.remove(selectionIndex);
+                    ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
+                    vehicleList.remove(selectionIndex);
+                    
+                    if(listSearchResults.getItemCount() == 0)
+                    {
+                            listSearchResults.add("Não há veículos disponíveis");
+                            listSearchResults.add("para essa pesquisa");
+                            listSearchResults.setEnabled(false);
+                            return;
+                    }                                        
+					
+					WindowWithdrawalReceipt generateReceiptWindow = new WindowWithdrawalReceipt(rentCurrentState);
+					generateReceiptWindow.open();
+				}
 			}
 		});
 		
@@ -124,7 +144,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = clientCarRentCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = clientVehicleRentCtrl.getSecondComboItems(optionName);
 				
 				if(optionName.equals("Potência do motor"))
 					lblUnity.setText("cv");
@@ -161,14 +181,14 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = clientCarRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = clientVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
 					listSearchResults.add(resultsListItems.get(i));
 				}
 				
-				ArrayList<Vehicle> vehicleList = clientCarRentCtrl.getVehicleList();
+				ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
 				if(vehicleList.isEmpty())
 				{
 					listSearchResults.setEnabled(false);
@@ -220,7 +240,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				
 				if(selectionIndex != -1)
 				{
-					ArrayList<Vehicle> vehicleList = clientCarRentCtrl.getVehicleList();
+					ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
 					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
 					vehicleDeitalsWindow.open();
