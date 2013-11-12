@@ -29,15 +29,13 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import vehicle.Vehicle;
-import org.eclipse.swt.widgets.Text;
 
 public class WindowClientVehicleRent extends ApplicationWindow
 {
 
 	private CurrentState rentCurrentState;
-	private Database clientVehicleRentDatabase;
+	private Database clientCarRentDatabase;
 	private CtrlClientVehicleRent clientVehicleRentCtrl;
-	private Text txtRentPeriod;
 	
 	public WindowClientVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
@@ -48,7 +46,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		addMenuBar();
 		addStatusLine();
 		rentCurrentState = mainCurrentState;
-		clientVehicleRentDatabase = mainDatabase;
+		clientCarRentDatabase = mainDatabase;
 		clientVehicleRentCtrl = new CtrlClientVehicleRent(mainDatabase);
 	}
 
@@ -110,8 +108,8 @@ public class WindowClientVehicleRent extends ApplicationWindow
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 				
 				if(rentSucess)
-				{
-					listSearchResults.remove(selectionIndex);
+				{             
+                    listSearchResults.remove(selectionIndex);
                     ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
                     vehicleList.remove(selectionIndex);
                     
@@ -121,17 +119,15 @@ public class WindowClientVehicleRent extends ApplicationWindow
                             listSearchResults.add("para essa pesquisa");
                             listSearchResults.setEnabled(false);
                             return;
-                    }  
-					/*
-					listSearchResults.remove(selectionIndex); 
+                    }                                        
+					
 					WindowWithdrawalReceipt generateReceiptWindow = new WindowWithdrawalReceipt(rentCurrentState);
 					generateReceiptWindow.open();
-					*/
 				}
 			}
 		});
 		
-		btnRent.setBounds(55, 149, 96, 30);
+		btnRent.setBounds(52, 119, 96, 30);
 		btnRent.setText("Locar");
 		
 		
@@ -253,15 +249,8 @@ public class WindowClientVehicleRent extends ApplicationWindow
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 			}
 		});
-		btnDetails.setBounds(177, 149, 96, 30);
+		btnDetails.setBounds(175, 119, 96, 30);
 		btnDetails.setText("Detalhes");
-		
-		txtRentPeriod = new Text(container, SWT.BORDER);
-		txtRentPeriod.setBounds(154, 106, 51, 21);
-		
-		Label lblRentPeriod = new Label(container, SWT.NONE);
-		lblRentPeriod.setBounds(10, 109, 141, 15);
-		lblRentPeriod.setText("Tempo de locação(dias):");
 
 		return container;
 	}
@@ -276,7 +265,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 	protected void configureShell(Shell newShell) 
 	{
 		super.configureShell(newShell);
-		newShell.setText("Old but Gold");
+		newShell.setText("New Application");
 	}
 
 	/**
