@@ -5,6 +5,8 @@ package db;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import vehicle.Vehicle;
+
 public class Rent
 {
 	private GregorianCalendar withdrawalDate;
@@ -13,12 +15,17 @@ public class Rent
 	private int returnMileage;	  //quilometragem com que o carro retorna à loja
 	private double withdrawalPayment;
 	private double returnPayment;
+	private Vehicle rentVehicle;
+	private int rentTime;
 	
-	public Rent(GregorianCalendar clientWithdrawalDate, int clientWithdrawalMileage)
+	public Rent(Vehicle selectedVehicle, int rentTime)
 	{
-		withdrawalDate = clientWithdrawalDate;
+		withdrawalDate = new GregorianCalendar();
 		returnDate = null;
-		withdrawalMileage = clientWithdrawalMileage;		
+		withdrawalMileage = selectedVehicle.getMileage();
+		this.rentVehicle = selectedVehicle;
+		this.rentTime = rentTime;
+		this.withdrawalPayment = rentTime * selectedVehicle.getDailyPrice();
 	}
 
 	public GregorianCalendar getWithdrawalDate() 
@@ -75,5 +82,21 @@ public class Rent
 
 	public void setReturnPayment(double returnPayment) {
 		this.returnPayment = returnPayment;
+	}
+
+	public Vehicle getRentVehicle() {
+		return rentVehicle;
+	}
+
+	public void setRentVehicle(Vehicle rentVehicle) {
+		this.rentVehicle = rentVehicle;
+	}
+
+	public int getRentTime() {
+		return rentTime;
+	}
+
+	public void setRentTime(int rentTime) {
+		this.rentTime = rentTime;
 	}
 }

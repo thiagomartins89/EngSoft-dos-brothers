@@ -27,7 +27,7 @@ public class CtrlClientVehicleRent extends CtrlSearchVehicle
 		this.ctrlSearchVehicleDatabase = mainDatabase;
 	}
 	
-	public boolean MakeCarRent(int selectionIndex, CurrentState rentCurrentState)
+	public Rent MakeCarRent(int selectionIndex, CurrentState rentCurrentState, int rentTime)
 	{
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		
@@ -35,17 +35,17 @@ public class CtrlClientVehicleRent extends CtrlSearchVehicle
 		{
 			GregorianCalendar newCalendar = new GregorianCalendar();
 			Person currentUser = rentCurrentState.getCurrentUser();
-			Rent clientRent = new Rent(newCalendar, selectedVehicle.getMileage());
+			Rent clientRent = new Rent(selectedVehicle, rentTime);
 			selectedVehicle.setAvailable(false);
 			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");
 			Client currentClient = (Client) currentUser;
 			currentClient.AddRent(clientRent);
-			return true;
+			return clientRent;
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Veículo indisponível para locação no momento.");
-			return false;
+			return null;
 		}
 		
 	}

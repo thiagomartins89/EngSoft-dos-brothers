@@ -25,25 +25,26 @@ import db.Rent;
 import person.Client;
 import person.Person;
 
-public class WindowWithdrawalReceipt extends ApplicationWindow {
-
-	
-	private CurrentState receiptCurrentState;
+public class WindowWithdrawalReceipt extends ApplicationWindow
+{
 	private Text txtWithdrawalDate;
 	private Text txtWithdrawalTime;
 	private Text txtMileage;
+	private Text txtChargedValue;
+	private Rent receiptRent;
 	
 	/**
 	 * Create the application window.
 	 * @param rentCurrentState 
 	 */
-	public WindowWithdrawalReceipt(CurrentState receiptCurrentState) {
+	public WindowWithdrawalReceipt(Rent newRent) 
+	{
 		super(null);
 		createActions();
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
-		this.receiptCurrentState = receiptCurrentState;
+		this.receiptRent = newRent;		
 	}
 
 	/**
@@ -54,11 +55,6 @@ public class WindowWithdrawalReceipt extends ApplicationWindow {
 	protected Control createContents(Composite parent) 
 	{
 		Composite container = new Composite(parent, SWT.NONE);
-
-		Person currentPerson = receiptCurrentState.getCurrentUser();
-		Client currentClient = (Client) currentPerson;
-		ArrayList<Rent> rentList = currentClient.getRentList();
-		Rent lastRent = rentList.get(rentList.size() -1);		
 		
 		Group grpWithdrawalReceipt = new Group(container, SWT.NONE);
 		grpWithdrawalReceipt.setBounds(10, 12, 434, 215);
@@ -78,21 +74,46 @@ public class WindowWithdrawalReceipt extends ApplicationWindow {
 		lblMileage.setText("Quilometragem:");
 		
 		txtWithdrawalDate = new Text(grpWithdrawalReceipt, SWT.BORDER);
-		txtWithdrawalDate.setBounds(138, 38, 126, 21);
+		txtWithdrawalDate.setBounds(138, 38, 80, 21);
 		txtWithdrawalDate.setEnabled(false);
 		txtWithdrawalDate.setEditable(false);
-		txtWithdrawalDate.setText("" + lastRent.getWithdrawalDate().getTime().toString());
-		//JOptionPane.showMessageDialog(null, lastRent.getWithdrawalDate().getTime().toString());
-		
+		String strDate = receiptRent.getWithdrawalDate().getTime().getDay() + 
+						 "/" + receiptRent.getWithdrawalDate().getTime().getMonth() + 
+						 "/" + receiptRent.getWithdrawalDate().getTime().getYear();						 
+		txtWithdrawalDate.setText(strDate);
+			
 		txtWithdrawalTime = new Text(grpWithdrawalReceipt, SWT.BORDER);
-		txtWithdrawalTime.setBounds(138, 68, 126, 21);
+		txtWithdrawalTime.setBounds(138, 68, 80, 21);
 		txtWithdrawalTime.setEnabled(false);
 		txtWithdrawalTime.setEditable(false);
+		String strTime = receiptRent.getWithdrawalDate().getTime().getHours() + 
+						 ":" + receiptRent.getWithdrawalDate().getTime().getMinutes() + 
+						 ":" + receiptRent.getWithdrawalDate().getTime().getSeconds();
+		txtWithdrawalTime.setText(strTime.toString());
 		
 		txtMileage = new Text(grpWithdrawalReceipt, SWT.BORDER);
-		txtMileage.setBounds(138, 97, 126, 21);
+		txtMileage.setBounds(138, 97, 80, 21);
 		txtMileage.setEnabled(false);
 		txtMileage.setEditable(false);
+		txtMileage.setText("" + receiptRent.getRentVehicle().getMileage());
+		
+		String strDays = null;
+		
+		if(receiptRent.getRentTime() == 1)
+			strDays = "dia";
+		else
+			strDays = "dias";
+		
+		Label lblChargedValue = new Label(grpWithdrawalReceipt, SWT.NONE);
+		lblChargedValue.setBounds(36, 138, 100, 40);
+		lblChargedValue.setText("Valor cobrado:  R$\n" +
+				 receiptRent.getRentTime() + " " + strDays + " x " + "R$" + receiptRent.getRentVehicle().getDailyPrice()); 
+		
+		txtChargedValue = new Text(grpWithdrawalReceipt, SWT.BORDER);
+		txtChargedValue.setEnabled(false);
+		txtChargedValue.setEditable(false);
+		txtChargedValue.setBounds(138, 135, 80, 21);
+		txtChargedValue.setText("" + receiptRent.getWithdrawalPayment());
 		
 		return container;
 	}

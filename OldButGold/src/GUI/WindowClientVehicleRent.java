@@ -24,11 +24,13 @@ import org.eclipse.swt.widgets.Shell;
 import control.CtrlClientVehicleRent;
 import control.CurrentState;
 import db.Database;
+import db.Rent;
 
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import vehicle.Vehicle;
+import org.eclipse.swt.widgets.Text;
 
 public class WindowClientVehicleRent extends ApplicationWindow
 {
@@ -36,6 +38,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 	private CurrentState rentCurrentState;
 	private Database clientCarRentDatabase;
 	private CtrlClientVehicleRent clientVehicleRentCtrl;
+	private Text txtRentTime;
 	
 	public WindowClientVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
@@ -92,6 +95,9 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		final Label lblUnity = new Label(container, SWT.NONE);
 		lblUnity.setBounds(304, 64, 30, 25);
 		
+		txtRentTime = new Text(container, SWT.BORDER);
+		txtRentTime.setBounds(130, 105, 76, 21);
+		
 		Button btnRent = new Button(container, SWT.NONE);
 		btnRent.addSelectionListener(new SelectionAdapter() 
 		{
@@ -99,15 +105,23 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			//função de ação quando botão Locar é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
-				boolean rentSucess = false;
+				Rent newRent = null;
+				
+				if(txtRentTime.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Por favor, indique por quantos dias você deseja locar.");
+					return;
+				}
+				
+				int rentTime = Integer.parseInt(txtRentTime.getText());
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					rentSucess = clientVehicleRentCtrl.MakeCarRent(selectionIndex, rentCurrentState);				
+					newRent = clientVehicleRentCtrl.MakeCarRent(selectionIndex, rentCurrentState, rentTime);				
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 				
-				if(rentSucess)
+				if(newRent != null)
 				{             
                     listSearchResults.remove(selectionIndex);
                     ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
@@ -115,19 +129,19 @@ public class WindowClientVehicleRent extends ApplicationWindow
                     
                     if(listSearchResults.getItemCount() == 0)
                     {
-                            listSearchResults.add("Não há veículos disponíveis");
-                            listSearchResults.add("para essa pesquisa");
-                            listSearchResults.setEnabled(false);
-                            return;
+                        listSearchResults.add("Não há veículos disponíveis");
+                        listSearchResults.add("para essa pesquisa");
+                        listSearchResults.setEnabled(false);
                     }                                        
 					
-					WindowWithdrawalReceipt generateReceiptWindow = new WindowWithdrawalReceipt(rentCurrentState);
+                    //Gera o comprovante de retirada do veículo para o cliente
+					WindowWithdrawalReceipt generateReceiptWindow = new WindowWithdrawalReceipt(newRent);
 					generateReceiptWindow.open();
 				}
 			}
 		});
 		
-		btnRent.setBounds(52, 119, 96, 30);
+		btnRent.setBounds(62, 160, 96, 30);
 		btnRent.setText("Locar");
 		
 		
@@ -145,6 +159,14 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
 				ArrayList<String> secondComboItems = clientVehicleRentCtrl.getSecondComboItems(optionName);
+				
+                if(secondComboItems.isEmpty())
+                {
+                		comboSearchOptionsResults.add("Não há veículos disponíveis");
+                        comboSearchOptionsResults.setEnabled(false);
+                        comboSearchOptionsResults.select(0);
+                }
+                
 				
 				if(optionName.equals("Potência do motor"))
 					lblUnity.setText("cv");
@@ -170,6 +192,9 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			{
 				if(comboSearchOptionsResults.getItemCount() == 0)
 					return;
+				
+                if(comboSearchOptionsResults.getItem(0).equals("Não há veículos disponíveis"))
+                	return;
 				
 				//limpa a lista para inserir os novos resultados				
 				listSearchResults.removeAll();
@@ -249,8 +274,12 @@ public class WindowClientVehicleRent extends ApplicationWindow
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 			}
 		});
-		btnDetails.setBounds(175, 119, 96, 30);
+		btnDetails.setBounds(184, 160, 96, 30);
 		btnDetails.setText("Detalhes");
+		
+		Label lblRentTime = new Label(container, SWT.NONE);
+		lblRentTime.setBounds(10, 105, 114, 38);
+		lblRentTime.setText("Tempo de locação:\n            (dias)");
 
 		return container;
 	}
