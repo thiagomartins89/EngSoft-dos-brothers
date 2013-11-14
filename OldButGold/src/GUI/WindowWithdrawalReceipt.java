@@ -1,6 +1,7 @@
 package GUI;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
@@ -17,11 +18,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import control.CurrentState;
+
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import db.Rent;
-
 import person.Client;
 import person.Person;
 
@@ -32,6 +33,8 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 	private Text txtMileage;
 	private Text txtChargedValue;
 	private Rent receiptRent;
+	private Text txtCode;
+	private Text txtReturnDate;
 	
 	/**
 	 * Create the application window.
@@ -62,37 +65,37 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 		grpWithdrawalReceipt.setLayout(null);
 		
 		Label lblWithdrawalDate = new Label(grpWithdrawalReceipt, SWT.NONE);
-		lblWithdrawalDate.setBounds(36, 44, 100, 15);
+		lblWithdrawalDate.setBounds(10, 41, 100, 21);
 		lblWithdrawalDate.setText("Data da retirada:");
 		
 		Label lblWithdrawalTime = new Label(grpWithdrawalReceipt, SWT.NONE);
-		lblWithdrawalTime.setBounds(36, 74, 100, 15);
+		lblWithdrawalTime.setBounds(10, 68, 100, 15);
 		lblWithdrawalTime.setText("Hora da retirada:");
 		
 		Label lblMileage = new Label(grpWithdrawalReceipt, SWT.NONE);
-		lblMileage.setBounds(36, 103, 100, 15);
+		lblMileage.setBounds(10, 100, 100, 15);
 		lblMileage.setText("Quilometragem:");
 		
 		txtWithdrawalDate = new Text(grpWithdrawalReceipt, SWT.BORDER);
-		txtWithdrawalDate.setBounds(138, 38, 80, 21);
+		txtWithdrawalDate.setBounds(116, 38, 80, 21);
 		txtWithdrawalDate.setEnabled(false);
 		txtWithdrawalDate.setEditable(false);
-		String strDate = receiptRent.getWithdrawalDate().getTime().getDay() + 
-						 "/" + receiptRent.getWithdrawalDate().getTime().getMonth() + 
-						 "/" + receiptRent.getWithdrawalDate().getTime().getYear();						 
+		String strDate = receiptRent.getWithdrawalDate().get(Calendar.DAY_OF_MONTH) + 
+						 "/" + (receiptRent.getWithdrawalDate().get(Calendar.MONTH) + 1) +  //soma-se um porque janeiro = 0
+						 "/" + receiptRent.getWithdrawalDate().get(Calendar.YEAR);						 
 		txtWithdrawalDate.setText(strDate);
 			
 		txtWithdrawalTime = new Text(grpWithdrawalReceipt, SWT.BORDER);
-		txtWithdrawalTime.setBounds(138, 68, 80, 21);
+		txtWithdrawalTime.setBounds(116, 65, 80, 21);
 		txtWithdrawalTime.setEnabled(false);
 		txtWithdrawalTime.setEditable(false);
-		String strTime = receiptRent.getWithdrawalDate().getTime().getHours() + 
-						 ":" + receiptRent.getWithdrawalDate().getTime().getMinutes() + 
-						 ":" + receiptRent.getWithdrawalDate().getTime().getSeconds();
-		txtWithdrawalTime.setText(strTime.toString());
+		String strWithdrawalTime = receiptRent.getWithdrawalDate().get(Calendar.HOUR_OF_DAY) + 
+						 ":" + receiptRent.getWithdrawalDate().get(Calendar.MINUTE) + 
+						 ":" + receiptRent.getWithdrawalDate().get(Calendar.SECOND);
+		txtWithdrawalTime.setText(strWithdrawalTime);
 		
 		txtMileage = new Text(grpWithdrawalReceipt, SWT.BORDER);
-		txtMileage.setBounds(138, 97, 80, 21);
+		txtMileage.setBounds(116, 97, 80, 21);
 		txtMileage.setEnabled(false);
 		txtMileage.setEditable(false);
 		txtMileage.setText("" + receiptRent.getRentVehicle().getMileage());
@@ -105,15 +108,39 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 			strDays = "dias";
 		
 		Label lblChargedValue = new Label(grpWithdrawalReceipt, SWT.NONE);
-		lblChargedValue.setBounds(36, 138, 100, 40);
+		lblChargedValue.setBounds(10, 132, 100, 40);
 		lblChargedValue.setText("Valor cobrado:  R$\n" +
 				 receiptRent.getRentTime() + " " + strDays + " x " + "R$" + receiptRent.getRentVehicle().getDailyPrice()); 
 		
 		txtChargedValue = new Text(grpWithdrawalReceipt, SWT.BORDER);
 		txtChargedValue.setEnabled(false);
 		txtChargedValue.setEditable(false);
-		txtChargedValue.setBounds(138, 135, 80, 21);
+		txtChargedValue.setBounds(116, 140, 80, 21);
 		txtChargedValue.setText("" + receiptRent.getWithdrawalPayment());
+		
+		Label lblCode = new Label(grpWithdrawalReceipt, SWT.NONE);
+		lblCode.setBounds(248, 44, 60, 20);
+		lblCode.setText("Código:");
+		
+		txtCode = new Text(grpWithdrawalReceipt, SWT.BORDER);
+		txtCode.setEnabled(false);
+		txtCode.setEditable(false);
+		txtCode.setBounds(318, 38, 80, 21);
+		txtCode.setText("" + receiptRent.getRentCode());
+		
+		Label lblReturnDate = new Label(grpWithdrawalReceipt, SWT.NONE);
+		lblReturnDate.setBounds(218, 74, 90, 20);
+		lblReturnDate.setText("Devolver dia:");
+		
+		txtReturnDate = new Text(grpWithdrawalReceipt, SWT.BORDER);
+		txtReturnDate.setEnabled(false);
+		txtReturnDate.setEditable(false);
+		txtReturnDate.setBounds(318, 71, 80, 21);
+		
+		String strReturnTime = receiptRent.getReturnDate().get(Calendar.DAY_OF_MONTH) + 
+				 "/" + (receiptRent.getReturnDate().get(Calendar.MONTH) + 1) + 
+				 "/" + receiptRent.getReturnDate().get(Calendar.YEAR);
+		txtReturnDate.setText(strReturnTime);
 		
 		return container;
 	}
@@ -155,5 +182,4 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 	protected Point getInitialSize() {
 		return new Point(450, 300);
 	}
-
 }

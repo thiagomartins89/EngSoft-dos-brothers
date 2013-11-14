@@ -38,7 +38,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 	private CurrentState rentCurrentState;
 	private Database clientCarRentDatabase;
 	private CtrlClientVehicleRent clientVehicleRentCtrl;
-	private Text txtRentTime;
+	private Text txtRentDuration;
 	
 	public WindowClientVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
 	{
@@ -95,8 +95,8 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		final Label lblUnity = new Label(container, SWT.NONE);
 		lblUnity.setBounds(304, 64, 30, 25);
 		
-		txtRentTime = new Text(container, SWT.BORDER);
-		txtRentTime.setBounds(130, 105, 76, 21);
+		txtRentDuration = new Text(container, SWT.BORDER);
+		txtRentDuration.setBounds(130, 105, 76, 21);
 		
 		Button btnRent = new Button(container, SWT.NONE);
 		btnRent.addSelectionListener(new SelectionAdapter() 
@@ -107,17 +107,17 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			{
 				Rent newRent = null;
 				
-				if(txtRentTime.getText().equals(""))
+				if(txtRentDuration.getText().equals(""))
 				{
 					JOptionPane.showMessageDialog(null, "Por favor, indique por quantos dias você deseja locar.");
 					return;
 				}
 				
-				int rentTime = Integer.parseInt(txtRentTime.getText());
+				int rentDuration = Integer.parseInt(txtRentDuration.getText());
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					newRent = clientVehicleRentCtrl.MakeCarRent(selectionIndex, rentCurrentState, rentTime);				
+					newRent = clientVehicleRentCtrl.MakeCarRent(selectionIndex, rentCurrentState, rentDuration);				
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 				
@@ -277,9 +277,9 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		btnDetails.setBounds(184, 160, 96, 30);
 		btnDetails.setText("Detalhes");
 		
-		Label lblRentTime = new Label(container, SWT.NONE);
-		lblRentTime.setBounds(10, 105, 114, 38);
-		lblRentTime.setText("Tempo de locação:\n            (dias)");
+		Label lblRentDuration = new Label(container, SWT.NONE);
+		lblRentDuration.setBounds(10, 105, 114, 38);
+		lblRentDuration.setText("Tempo de locação:\n            (dias)");
 
 		return container;
 	}

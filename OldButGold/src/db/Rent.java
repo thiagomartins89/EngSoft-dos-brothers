@@ -5,6 +5,8 @@ package db;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.JOptionPane;
+
 import vehicle.Vehicle;
 
 public class Rent
@@ -16,16 +18,28 @@ public class Rent
 	private double withdrawalPayment;
 	private double returnPayment;
 	private Vehicle rentVehicle;
-	private int rentTime;
+	private int rentDuration;
+	private String rentCode;	//toda locação deve ter um código associado
 	
-	public Rent(Vehicle selectedVehicle, int rentTime)
+	public Rent(Vehicle selectedVehicle, int rentDuration)
 	{
 		withdrawalDate = new GregorianCalendar();
-		returnDate = null;
+		returnDate = new GregorianCalendar();
+		returnDate.add(returnDate.DAY_OF_MONTH, rentDuration);
 		withdrawalMileage = selectedVehicle.getMileage();
 		this.rentVehicle = selectedVehicle;
-		this.rentTime = rentTime;
-		this.withdrawalPayment = rentTime * selectedVehicle.getDailyPrice();
+		this.rentDuration = rentDuration;
+		this.withdrawalPayment = rentDuration * selectedVehicle.getDailyPrice();
+		
+		//O código de cada locação é a sua data e hora de ocorrência.
+		//Dia, mês, ano, hora, minutos, segundos.
+		String code = "" + withdrawalDate.get(Calendar.DAY_OF_MONTH) + (withdrawalDate.get(Calendar.MONTH) + 1)
+				  		 + withdrawalDate.get(Calendar.YEAR) + withdrawalDate.get(Calendar.HOUR_OF_DAY) 
+				  		 + withdrawalDate.get(Calendar.MINUTE) + withdrawalDate.get(Calendar.SECOND);		
+		this.setRentCode(code);
+		
+		//int comparison = returnDate.compareTo(withdrawalDate);
+			//JOptionPane.showMessageDialog(null, comparison);
 	}
 
 	public GregorianCalendar getWithdrawalDate() 
@@ -93,10 +107,26 @@ public class Rent
 	}
 
 	public int getRentTime() {
-		return rentTime;
+		return rentDuration;
 	}
 
 	public void setRentTime(int rentTime) {
-		this.rentTime = rentTime;
+		this.rentDuration = rentTime;
+	}
+
+	public int getRentDuration() {
+		return rentDuration;
+	}
+
+	public void setRentDuration(int rentDuration) {
+		this.rentDuration = rentDuration;
+	}
+
+	public String getRentCode() {
+		return rentCode;
+	}
+
+	public void setRentCode(String rentCode) {
+		this.rentCode = rentCode;
 	}
 }
