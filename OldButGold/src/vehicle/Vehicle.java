@@ -1,5 +1,7 @@
 package vehicle;
 
+import person.Client;
+
 public class Vehicle
 {
 
@@ -28,6 +30,7 @@ public class Vehicle
 	protected double length, width, dailyPrice;
 	protected int enginePower, manufacturingDate, mileage;
 	protected Boolean available;
+	protected Client currentClient;
 
 	
 	public int getEnginePower()
@@ -136,6 +139,16 @@ public class Vehicle
 	public void setDailyPrice(double dailyPrice)
 	{
 		this.dailyPrice = dailyPrice;
+	}
+
+
+	public Client getCurrentClient() {
+		return currentClient;
+	}
+
+
+	public void setCurrentClient(Client currentClient) {
+		this.currentClient = currentClient;
 	}
 
 }

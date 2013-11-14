@@ -82,7 +82,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 				{
 					ArrayList<Vehicle> vehicleList = removeVehicleCtrl.getVehicleList();
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, true);
 					vehicleDeitalsWindow.open();
 				}	
 				else
@@ -116,7 +116,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 						int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 						String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 						
-						ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+						ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, true);
 						
 						for(int i = 0; i < resultsListItems.size(); i++)
 						{
@@ -156,7 +156,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = removeVehicleCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = removeVehicleCtrl.getSecondComboItems(optionName, true);
 				
 				if(optionName.equals("Potência do motor"))
 					lblUnity.setText("cv");
@@ -194,7 +194,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, true);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
@@ -248,7 +248,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 				{
 					ArrayList<Vehicle> vehicleList = removeVehicleCtrl.getVehicleList();
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, true);
 					vehicleDeitalsWindow.open();
 				}	
 				else

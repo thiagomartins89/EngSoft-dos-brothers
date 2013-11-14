@@ -83,7 +83,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				if(selectionIndex != -1)
 				{
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, false);
 					vehicleDeitalsWindow.open();
 				}	
 				else
@@ -158,7 +158,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = clientVehicleRentCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = clientVehicleRentCtrl.getSecondComboItems(optionName, false);
 				
                 if(secondComboItems.isEmpty())
                 {
@@ -206,7 +206,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = clientVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = clientVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult, false);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
@@ -267,7 +267,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				{
 					ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, false);
 					vehicleDeitalsWindow.open();
 				}	
 				else

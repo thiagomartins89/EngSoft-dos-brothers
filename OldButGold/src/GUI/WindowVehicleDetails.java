@@ -41,11 +41,14 @@ public class WindowVehicleDetails extends ApplicationWindow
 	private Text txtVehicleMileage;
 	Vehicle selectedVehicle;
 	private Text txtPrice;
+	private boolean isEmployee;
+	private Text txtIsAvailable;
+	private Text txtRentedBy;
 
 	/**
 	 * Create the application window.
 	 */
-	public WindowVehicleDetails(Vehicle vehicle)
+	public WindowVehicleDetails(Vehicle vehicle, boolean isEmployee)
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -54,6 +57,7 @@ public class WindowVehicleDetails extends ApplicationWindow
 		addMenuBar();
 		addStatusLine();
 		selectedVehicle = vehicle;
+		this.isEmployee = isEmployee;
 	}
 
 	/**
@@ -67,21 +71,8 @@ public class WindowVehicleDetails extends ApplicationWindow
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(null);
 
-		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.addSelectionListener(new SelectionAdapter()
-		{
-			@Override
-			// botão "Voltar"
-			public void widgetSelected(SelectionEvent e)
-			{
-				close();
-			}
-		});
-		btnReturn.setBounds(334, 181, 76, 25);
-		btnReturn.setText("Voltar");
-
 		Group grpVehicleDetails = new Group(container, SWT.NONE);
-		grpVehicleDetails.setBounds(10, 23, 400, 156);
+		grpVehicleDetails.setBounds(10, 23, 400, 220);
 		grpVehicleDetails.setText("Detalhes do veículo");
 		grpVehicleDetails.setLayout(null);
 
@@ -131,7 +122,7 @@ public class WindowVehicleDetails extends ApplicationWindow
 		lblKm.setText("km");
 
 		Label lblVehicleLength = new Label(grpVehicleDetails, SWT.NONE);
-		lblVehicleLength.setBounds(22, 133, 78, 15);
+		lblVehicleLength.setBounds(22, 133, 78, 21);
 		lblVehicleLength.setText("Comprimento:");
 
 		txtVehicleLength = new Text(grpVehicleDetails, SWT.BORDER);
@@ -145,66 +136,111 @@ public class WindowVehicleDetails extends ApplicationWindow
 		lblM.setText("m");
 
 		Label lblVehicleCategory = new Label(grpVehicleDetails, SWT.NONE);
-		lblVehicleCategory.setBounds(234, 25, 54, 15);
+		lblVehicleCategory.setBounds(32, 160, 54, 15);
 		lblVehicleCategory.setText("Categoria:");
 
 		Label lblVehiclePlate = new Label(grpVehicleDetails, SWT.NONE);
-		lblVehiclePlate.setBounds(257, 52, 31, 15);
+		lblVehiclePlate.setBounds(245, 25, 31, 15);
 		lblVehiclePlate.setText("Placa:");
 
 		txtVehiclePlate = new Text(grpVehicleDetails, SWT.BORDER);
 		txtVehiclePlate.setEnabled(false);
 		txtVehiclePlate.setEditable(false);
-		txtVehiclePlate.setBounds(294, 49, 76, 21);
+		txtVehiclePlate.setBounds(294, 22, 76, 21);
 		txtVehiclePlate.setText(selectedVehicle.getPlate());
 
 		Label lblVehicleEnginePower = new Label(grpVehicleDetails, SWT.NONE);
-		lblVehicleEnginePower.setBounds(239, 79, 49, 15);
+		lblVehicleEnginePower.setBounds(227, 52, 49, 15);
 		lblVehicleEnginePower.setText("Potência:");
 
 		txtVehicleEnginePower = new Text(grpVehicleDetails, SWT.BORDER);
 		txtVehicleEnginePower.setEnabled(false);
 		txtVehicleEnginePower.setEditable(false);
-		txtVehicleEnginePower.setBounds(294, 76, 76, 21);
+		txtVehicleEnginePower.setBounds(294, 49, 76, 21);
 		txtVehicleEnginePower.setText("" + selectedVehicle.getEnginePower());
 
 		Label lblCv = new Label(grpVehicleDetails, SWT.NONE);
-		lblCv.setBounds(376, 79, 12, 15);
+		lblCv.setBounds(376, 52, 12, 15);
 		lblCv.setText("cv");
 
 		Label lblVehicleWidth = new Label(grpVehicleDetails, SWT.NONE);
-		lblVehicleWidth.setBounds(245, 106, 43, 15);
+		lblVehicleWidth.setBounds(245, 79, 43, 15);
 		lblVehicleWidth.setText("Largura:");
 
 		txtVehicleWidth = new Text(grpVehicleDetails, SWT.BORDER);
 		txtVehicleWidth.setEnabled(false);
 		txtVehicleWidth.setEditable(false);
-		txtVehicleWidth.setBounds(294, 103, 76, 21);
+		txtVehicleWidth.setBounds(294, 76, 76, 21);
 		txtVehicleWidth.setText("" + selectedVehicle.getWidth());
 
 		Label lblM_1 = new Label(grpVehicleDetails, SWT.NONE);
-		lblM_1.setBounds(376, 106, 11, 15);
+		lblM_1.setBounds(376, 79, 11, 15);
 		lblM_1.setText("m");
 		
 		txtCategory = new Text(grpVehicleDetails, SWT.BORDER);
 		txtCategory.setEditable(false);
 		txtCategory.setEnabled(false);
-		txtCategory.setBounds(294, 22, 76, 21);
+		txtCategory.setBounds(106, 157, 76, 21);
 		txtCategory.setText(selectedVehicle.getCategory());
 		
 		Label lblPrice = new Label(grpVehicleDetails, SWT.NONE);
-		lblPrice.setBounds(219, 133, 54, 15);
+		lblPrice.setBounds(222, 106, 54, 15);
 		lblPrice.setText("Preço/dia:");
 		
 		txtPrice = new Text(grpVehicleDetails, SWT.BORDER);
 		txtPrice.setEditable(false);
 		txtPrice.setEnabled(false);
-		txtPrice.setBounds(294, 130, 76, 21);
+		txtPrice.setBounds(294, 103, 76, 21);
 		txtPrice.setText("" + selectedVehicle.getDailyPrice());
 		
 		Label lblRS = new Label(grpVehicleDetails, SWT.NONE);
-		lblRS.setBounds(276, 133, 25, 15);
+		lblRS.setBounds(278, 106, 25, 15);
 		lblRS.setText("R$");
+		
+		if(isEmployee) //só o funcionário pode ver os carros locados, e com quem eles estão.
+		{
+			Label lblAvailable = new Label(grpVehicleDetails, SWT.NONE);
+			lblAvailable.setBounds(218, 133, 70, 20);
+			lblAvailable.setText("Disponível:");
+			
+
+			
+			txtIsAvailable = new Text(grpVehicleDetails, SWT.BORDER);
+			txtIsAvailable.setEditable(false);
+			txtIsAvailable.setEnabled(false);
+			txtIsAvailable.setBounds(294, 130, 76, 21);
+			if(selectedVehicle.IsAvailable())
+				txtIsAvailable.setText("Sim");
+			
+			else
+			{
+				Label lblRentedBy = new Label(grpVehicleDetails, SWT.NONE);
+				lblRentedBy.setBounds(218, 158, 70, 20);
+				lblRentedBy.setText("Locado por:");
+				
+				txtIsAvailable.setText("Não");
+				txtRentedBy = new Text(grpVehicleDetails, SWT.BORDER);
+				txtRentedBy.setEditable(false);
+				txtRentedBy.setEnabled(false);
+				txtRentedBy.setBounds(294, 157, 76, 21);
+				txtRentedBy.setText(selectedVehicle.getCurrentClient().getId());
+			}
+			
+	
+		}
+		
+		Button btnReturn = new Button(grpVehicleDetails, SWT.NONE);
+		btnReturn.setBounds(304, 185, 76, 25);
+		btnReturn.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			// botão "Voltar"
+			public void widgetSelected(SelectionEvent e)
+			{
+				close();
+			}
+		});
+		btnReturn.setText("Voltar");
 		
 		return container;
 	}
@@ -257,6 +293,6 @@ public class WindowVehicleDetails extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(425, 269);
+		return new Point(425, 320);
 	}
 }
