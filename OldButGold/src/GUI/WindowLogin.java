@@ -7,25 +7,22 @@ import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
-import person.Person;
-
-import db.Database;
 import control.CtrlUserLogin;
 import control.CurrentState;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
+import db.Database;
 
 public class WindowLogin extends ApplicationWindow
 {
@@ -46,7 +43,7 @@ public class WindowLogin extends ApplicationWindow
 		
 		currentState = mainCurrentState;
 		loginDatabase = mainDatabase;
-		userLoginCtrl = new CtrlUserLogin(mainDatabase);
+		userLoginCtrl = new CtrlUserLogin(loginDatabase);
 	}
 
 	@Override

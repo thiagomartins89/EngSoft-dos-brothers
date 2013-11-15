@@ -2,9 +2,8 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientVehicleRent;
 import GUI.WindowClientMenu;
-import GUI.WindowSearchVehicle;
+import GUI.WindowClientVehicleRent;
 import db.Database;
 
 public class MainClient

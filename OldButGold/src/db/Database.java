@@ -1,12 +1,7 @@
 package db;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
-
-import javax.swing.JOptionPane;
-
-import com.ibm.icu.util.Calendar;
 
 import person.Client;
 import person.Employee;
@@ -17,6 +12,8 @@ import vehicle.MicroBus;
 import vehicle.Motorcycle;
 import vehicle.Truck;
 import vehicle.Vehicle;
+
+import com.ibm.icu.util.Calendar;
 
 public class Database
 {
