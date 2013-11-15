@@ -70,6 +70,13 @@ public class WindowClientMenu extends ApplicationWindow {
 				
 		{
 			Button btnVerifyHistory = new Button(grpClientMenu, SWT.NONE);
+			btnVerifyHistory.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					currentState.setChosenAction("Verificar Histórico");
+					close();
+				}
+			});
 			btnVerifyHistory.setBounds(150, 124, 138, 30);
 			btnVerifyHistory.setText("Verificar Histórico");
 		}		

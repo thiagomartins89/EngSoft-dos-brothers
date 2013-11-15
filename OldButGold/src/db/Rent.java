@@ -101,7 +101,7 @@ public class Rent
 	}
 
 	public void setRentVehicle(Vehicle rentVehicle) {
-		this.rentVehicle = rentVehicle;
+		this.rentVehicle = rentVehicle.clone(); //novo objeto, cópia do veículo original
 	}
 
 	public int getRentTime() {
