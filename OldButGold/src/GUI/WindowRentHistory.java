@@ -1,7 +1,5 @@
 package GUI;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
@@ -28,10 +26,7 @@ public class WindowRentHistory extends ApplicationWindow
 	private Table tblRentHistory;
 	
 	private CurrentState rentCurrentState;
-	//private Database clientVehicleRentDatabase;
 	private CtrlRentHistory ctrlRentHistory;
-	
-	private ArrayList<String> rentHistoryList;
 
 	/**
 	 * Create the application window.
@@ -45,9 +40,7 @@ public class WindowRentHistory extends ApplicationWindow
 		addMenuBar();
 		addStatusLine();
 		rentCurrentState = mainCurrentState;
-		//clientVehicleRentDatabase = mainDatabase;
-		//ctrlRentHistory = new CtrlRentHistory(clientVehicleRentDatabase);
-		ctrlRentHistory = new CtrlRentHistory();
+		ctrlRentHistory = new CtrlRentHistory(mainCurrentState);
 	}
 
 	/**
@@ -105,21 +98,18 @@ public class WindowRentHistory extends ApplicationWindow
 	 */
 	private void fillRentHistoryTable()
 	{
-		//gambiarras de teste
-/*		rentHistoryList = ctrlRentHistory.getRentHistoryList(rentCurrentState);
+		int rentListSize = ctrlRentHistory.getRentListSize();
 		
-		for(int i = 0; i < rentHistoryList.size() / 3; i = i + 3)
+		for(int i = 0; i < rentListSize; i++)
 		{
-			String[] text = { rentHistoryList.get(i), rentHistoryList.get(i+1), rentHistoryList.get(i+2) };
+			String rentWithdrawalDate = ctrlRentHistory.getRentWithdrawalDate(i);
+			String rentReturnDate = ctrlRentHistory.getRentReturnDate(i);
+			String rentVehicleModel = ctrlRentHistory.getRentVehicleModel(i);
+			
+			String[] rentData = { rentWithdrawalDate, rentReturnDate, rentVehicleModel };
+			
 			TableItem tableItem = new TableItem(tblRentHistory, SWT.NONE);
-			tableItem.setText(text);
-		}*/
-		
-		for(int i = 0; i < 3; i++)
-		{
-			String[] text = { "Isso é", "só um", "TESTE" };
-			TableItem tableItem = new TableItem(tblRentHistory, SWT.NONE);
-			tableItem.setText(text);
+			tableItem.setText(rentData);
 		}
 	}
 
@@ -181,6 +171,6 @@ public class WindowRentHistory extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(450, 373);
+		return new Point(440, 363);
 	}
 }
