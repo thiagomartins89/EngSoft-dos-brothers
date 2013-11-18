@@ -7,6 +7,7 @@ package control;
 import java.text.SimpleDateFormat;
 
 import person.Client;
+import vehicle.Vehicle;
 import db.Rent;
 
 public class CtrlRentHistory
@@ -58,6 +59,17 @@ public class CtrlRentHistory
 		Rent rent = currentClient.getRentList().get(index);
 		
 		return rent.getRentVehicle().getModel();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return veículo locado
+	 */
+	public Vehicle getRentVehicle(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle();
 	}
 	
 	/**

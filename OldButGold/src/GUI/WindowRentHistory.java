@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+import vehicle.Vehicle;
 import control.CtrlRentHistory;
 import control.CurrentState;
 import db.Database;
@@ -74,6 +75,15 @@ public class WindowRentHistory extends ApplicationWindow
 		tblclmnVehicle.setText("Veículo");
 		
 		Button btnDetails = new Button(container, SWT.NONE);
+		btnDetails.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int tableIndex = tblRentHistory.getSelectionIndex();
+				Vehicle vehicle = ctrlRentHistory.getRentVehicle(tableIndex);
+				WindowVehicleDetails windowVehicleDetails = new WindowVehicleDetails(vehicle, false);
+				windowVehicleDetails.open();
+			}
+		});
 		btnDetails.setBounds(268, 237, 75, 25);
 		btnDetails.setText("Detalhes");
 		
