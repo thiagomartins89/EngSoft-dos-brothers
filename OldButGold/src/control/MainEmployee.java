@@ -8,6 +8,7 @@ import GUI.WindowClientVehicleRent;
 import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowEmployeeMenu;
 import GUI.WindowRemoveVehicle;
+import GUI.WindowReturnVehicle;
 import GUI.WindowSubscribeClient;
 import GUI.WindowSubscribeVehicle;
 import db.Database;
@@ -59,6 +60,10 @@ public class MainEmployee
 				case "Locação":
 					MakeEmployeeRent();
 					break;
+					
+				case "Devolução":
+					MakeReturnVehicle();
+					break;
 				
 				case "Remover Veículo":
 					MakeRemoveVehicle();
@@ -71,6 +76,22 @@ public class MainEmployee
 		       mainEmployeeCurrentState.getChosenAction() == "Adicionar Veículo");
 	}
 	
+	//função que abre a janela de devolução de veículos
+	private void MakeReturnVehicle()
+	{
+		try 
+		{	
+			WindowReturnVehicle returnVehicleWindow = new WindowReturnVehicle(mainEmployeeCurrentState, mainEmployeeDatabase);
+			returnVehicleWindow.setBlockOnOpen(true);
+			returnVehicleWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}		
+	}
+
 	//função que abre a janela de adição de veículos
 	private void MakeAddVehicle()
 	{

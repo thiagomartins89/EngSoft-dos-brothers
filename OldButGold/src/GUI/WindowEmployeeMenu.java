@@ -132,7 +132,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 			//função de ação quando botão "Devolução" é pressionado
 			public void widgetSelected(SelectionEvent e) 
 			{
-				
+				currentState.setChosenAction("Devolução");
+				close();				
 			}
 		});
 		btnReturn.setBounds(204, 72, 170, 28);

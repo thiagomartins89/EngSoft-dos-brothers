@@ -158,4 +158,26 @@ public class Database
 
 		return false; 
 	}
+
+	public ArrayList<Person> getUserList()
+	{
+		return userList;
+	}
+
+	public void setUserList(ArrayList<Person> userList)
+	{
+		this.userList = userList;
+	}
+	
+	public ArrayList<Client> getClientList()
+	{
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		
+		for(int i = 0; i < userList.size(); i++)
+		{
+			if(userList.get(i).getClass().getName().equals("person.Client"))
+				clientList.add((Client)userList.get(i));			
+		}
+		return clientList;
+	}
 }
