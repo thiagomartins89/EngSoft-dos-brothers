@@ -1,17 +1,9 @@
 package control;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.swt.widgets.Display;
 
-import db.Database;
-
-import GUI.WindowClientMenu;
-import GUI.WindowEmployeeMenu;
 import GUI.WindowLogin;
-import GUI.WindowSearchVehicle;
-import GUI.WindowSubscribeClient;
-import GUI.WindowSubscribeVehicle;
+import db.Database;
 
 //classe em que o programa inicia.
 public class Main

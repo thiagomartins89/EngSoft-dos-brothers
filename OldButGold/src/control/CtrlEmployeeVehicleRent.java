@@ -1,6 +1,5 @@
 package control;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;

@@ -2,9 +2,9 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientVehicleRent;
 import GUI.WindowClientMenu;
-import GUI.WindowSearchVehicle;
+import GUI.WindowClientVehicleRent;
+import GUI.WindowRentHistory;
 import db.Database;
 
 public class MainClient
@@ -43,7 +43,11 @@ public class MainClient
 					
 				case "Locação":
 					MakeClientRent();
-					break;		
+					break;
+					
+				case "Verificar Histórico":
+					OpenRentHistory();
+					break;
 			}
 			
 		//Volta para o início do menu de cliente
@@ -65,6 +69,22 @@ public class MainClient
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//função que abre a janela do histórico de locações do cliente
+	private void OpenRentHistory()
+	{
+		try
+		{
+			WindowRentHistory windowRentHistory = new WindowRentHistory(mainClientCurrentState, mainClientDatabase);
+			windowRentHistory.setBlockOnOpen(true);
+			windowRentHistory.open();
+			Display.getCurrent().dispose();
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 }

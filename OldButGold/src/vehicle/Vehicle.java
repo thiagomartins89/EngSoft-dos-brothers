@@ -141,14 +141,32 @@ public class Vehicle
 		this.dailyPrice = dailyPrice;
 	}
 
-
 	public Client getCurrentClient() {
 		return currentClient;
 	}
 
-
 	public void setCurrentClient(Client currentClient) {
 		this.currentClient = currentClient;
+	}
+	
+	@Override
+	public Vehicle clone()
+	{
+		Vehicle vehicle = new Vehicle();
+		
+		vehicle.setAvailable(this.IsAvailable());
+		vehicle.setBrand(this.getBrand());
+		vehicle.setCategory(this.getCategory());
+		vehicle.setDailyPrice(this.getDailyPrice());
+		vehicle.setEnginePower(this.getEnginePower());
+		vehicle.setLength(this.getLength());
+		vehicle.setManufacturingDate(this.getManufacturingDate());
+		vehicle.setMileage(this.getMileage());		
+		vehicle.setModel(this.getModel());
+		vehicle.setPlate(this.getPlate());
+		vehicle.setWidth(this.getWidth());
+		
+		return vehicle;
 	}
 
 }

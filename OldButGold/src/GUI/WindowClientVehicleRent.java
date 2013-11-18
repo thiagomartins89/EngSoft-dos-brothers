@@ -10,6 +10,8 @@ import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -20,17 +22,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
+import vehicle.Vehicle;
 import control.CtrlClientVehicleRent;
 import control.CurrentState;
 import db.Database;
 import db.Rent;
-
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-
-import vehicle.Vehicle;
-import org.eclipse.swt.widgets.Text;
 
 public class WindowClientVehicleRent extends ApplicationWindow
 {
@@ -50,7 +48,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		addStatusLine();
 		rentCurrentState = mainCurrentState;
 		clientCarRentDatabase = mainDatabase;
-		clientVehicleRentCtrl = new CtrlClientVehicleRent(mainDatabase);
+		clientVehicleRentCtrl = new CtrlClientVehicleRent(clientCarRentDatabase);
 	}
 
 	/**

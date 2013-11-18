@@ -1,12 +1,9 @@
 package control;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientVehicleRent;
-import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowEmployeeMenu;
+import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowRemoveVehicle;
 import GUI.WindowReturnVehicle;
 import GUI.WindowSubscribeClient;

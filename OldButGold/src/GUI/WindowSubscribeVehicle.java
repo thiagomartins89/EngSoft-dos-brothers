@@ -1,8 +1,5 @@
 package GUI;
 
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-
 import javax.swing.JOptionPane;
 
 import org.eclipse.jface.action.StatusLineManager;
@@ -10,21 +7,19 @@ import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import vehicle.Vehicle;
 import control.CtrlSubscribeVehicle;
 import control.CurrentState;
 import db.Database;
-import org.eclipse.swt.widgets.Group;
 
 public class WindowSubscribeVehicle extends ApplicationWindow
 {
@@ -55,7 +50,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		addStatusLine();
 		currentState = mainCurrentState;
 		subscribeVehicleDatabase = mainDatabase;
-		ctrlSubscribeVehicle = new CtrlSubscribeVehicle(mainDatabase);
+		ctrlSubscribeVehicle = new CtrlSubscribeVehicle(subscribeVehicleDatabase);
 	}
 
 	/**

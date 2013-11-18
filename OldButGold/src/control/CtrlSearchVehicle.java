@@ -5,10 +5,7 @@ package control;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.JOptionPane;
-
 import vehicle.Vehicle;
-
 import db.Database;
 
 public class CtrlSearchVehicle

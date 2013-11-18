@@ -1,34 +1,24 @@
 package GUI;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import javax.swing.JOptionPane;
-
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.StatusLineManager;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
 
 import control.CtrlClientVehicleRent;
 import control.CurrentState;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-
-import vehicle.Vehicle;
-
 import db.Database;
 
 public class WindowSearchVehicle extends ApplicationWindow {
@@ -50,7 +40,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 		addStatusLine();
 		currentState = mainCurrentState;
 		searchVehicleDatabase = mainDatabase;
-		searchVehicleCtrl = new CtrlClientVehicleRent(mainDatabase);
+		searchVehicleCtrl = new CtrlClientVehicleRent(searchVehicleDatabase);
 	}
 
 	/**

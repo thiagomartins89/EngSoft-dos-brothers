@@ -5,8 +5,6 @@ package db;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.JOptionPane;
-
 import vehicle.Vehicle;
 
 public class Rent
@@ -25,7 +23,7 @@ public class Rent
 	{
 		withdrawalDate = new GregorianCalendar();
 		returnDate = new GregorianCalendar();
-		returnDate.add(returnDate.DAY_OF_MONTH, rentDuration);
+		returnDate.add(Calendar.DAY_OF_MONTH, rentDuration);
 		withdrawalMileage = selectedVehicle.getMileage();
 		this.rentVehicle = selectedVehicle;
 		this.rentDuration = rentDuration;
@@ -103,7 +101,7 @@ public class Rent
 	}
 
 	public void setRentVehicle(Vehicle rentVehicle) {
-		this.rentVehicle = rentVehicle;
+		this.rentVehicle = rentVehicle.clone(); //novo objeto, cópia do veículo original
 	}
 
 	public int getRentTime() {
