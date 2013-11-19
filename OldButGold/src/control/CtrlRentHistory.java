@@ -1,25 +1,173 @@
+/**
+ * Classe que serve de controle à janela que exibe o histórico de locações.
+ */
+
 package control;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import person.Client;
+import vehicle.Vehicle;
+import db.Rent;
 
 public class CtrlRentHistory
 {
-	public ArrayList<String> getRentHistoryList(CurrentState rentCurrentState)
+	CurrentState rentCurrentState;
+	Client currentClient;
+	
+	public CtrlRentHistory(CurrentState rentCurrentState) {
+		super();
+		this.rentCurrentState = rentCurrentState;
+		this.currentClient = (Client) rentCurrentState.getCurrentUser();
+	}
+
+	public int getRentListSize()
 	{
-		ArrayList<String> rentHistoryList = new ArrayList<String>();
-		Client client = (Client) rentCurrentState.getCurrentUser();
-		
+		return currentClient.getRentList().size();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return data de locação do veículo
+	 */
+	public String getRentWithdrawalDate(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
-		for(int i = 0; i < client.getRentList().size(); i++)
-		{
-			rentHistoryList.add("05/12/2013");
-			rentHistoryList.add("08/12/2013");
-			rentHistoryList.add(client.getRentList().get(i).getRentVehicle().getModel());
-		}
+		return simpleDateFormat.format(rent.getWithdrawalDate().getTime());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return data prevista para devolução do veículo
+	 */
+	public String getRentReturnDate(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
-		return rentHistoryList;
+		return simpleDateFormat.format(rent.getReturnDate().getTime());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return modelo do veículo
+	 */
+	public String getRentVehicleModel(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle().getModel();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return veículo locado
+	 */
+	public Vehicle getRentVehicle(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return marca do veículo
+	 */
+	public String getRentVehicleBrand(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle().getBrand();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return categoria do veículo
+	 */
+	public String getRentVehicleCategory(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle().getCategory();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return valor da diária do veículo
+	 */
+	public String getRentVehicleDailyPrice(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return String.valueOf(rent.getRentVehicle().getDailyPrice());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return potência do veículo
+	 */
+	public String getRentVehicleEnginePower(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return String.valueOf(rent.getRentVehicle().getEnginePower());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return comprimento do veículo
+	 */
+	public String getRentVehicleLength(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return String.valueOf(rent.getRentVehicle().getLength());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return ano de fabricação do veículo
+	 */
+	public String getRentVehicleManufacturingDate(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return String.valueOf(rent.getRentVehicle().getManufacturingDate());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return quilometragem do veículo
+	 */
+	public String getRentVehicleMileage(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return String.valueOf(rent.getRentVehicle().getMileage());
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return placa do veículo
+	 */
+	public String getRentVehiclePlate(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle().getPlate();
+	}
+	
+	/**
+	 * @param index (índice da locação na lista de locações do cliente)
+	 * @return largura do veículo
+	 */
+	public String getRentVehicleWidth(int index)
+	{
+		Rent rent = currentClient.getRentList().get(index);
+		
+		return String.valueOf(rent.getRentVehicle().getWidth());
 	}
 }
