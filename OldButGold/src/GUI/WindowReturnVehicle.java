@@ -123,22 +123,25 @@ public class WindowReturnVehicle extends ApplicationWindow
         
         comboClientList.select(0); //Coloca a primeira opção como default
         
-        Button btnReturn = new Button(grpReturnVehicle, SWT.NONE);
-        btnReturn.addSelectionListener(new SelectionAdapter()
+        Button btnReturnVehicle = new Button(grpReturnVehicle, SWT.NONE);
+        btnReturnVehicle.addSelectionListener(new SelectionAdapter()
         {
         	@Override
         	//função de ação quando botão "Devolver" é pressionado
-        	public void widgetSelected(SelectionEvent e)
+        	public void widgetSelected(SelectionEvent e)        	
         	{
+        		/*
                 int selectionIndex = comboClientList.getSelectionIndex();
                 if(selectionIndex != -1) 
                 	newReturn = returnVehicleCtrl.makeVehicleReturn(selectionIndex, clientUsername);                                
                 else
                         JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
+                        */
         	}
+        	
         });
-        btnReturn.setBounds(40, 153, 96, 30);
-        btnReturn.setText("Devolver");
+        btnReturnVehicle.setBounds(40, 153, 96, 30);
+        btnReturnVehicle.setText("Devolver");
 		
 		return container;
 	}
