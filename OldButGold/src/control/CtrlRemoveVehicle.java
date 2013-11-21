@@ -1,14 +1,7 @@
 package control;
 
-import java.util.GregorianCalendar;
-
-import javax.swing.JOptionPane;
-
-import person.Client;
-import person.Person;
 import vehicle.Vehicle;
 import db.Database;
-import db.Rent;
 
 public class CtrlRemoveVehicle extends CtrlSearchVehicle 
 {

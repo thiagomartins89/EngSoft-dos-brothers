@@ -2,10 +2,9 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientScheduling;
-import GUI.WindowClientVehicleRent;
 import GUI.WindowClientMenu;
-import GUI.WindowSearchVehicle;
+import GUI.WindowClientVehicleRent;
+import GUI.WindowRentHistory;
 import db.Database;
 
 public class MainClient
@@ -17,10 +16,10 @@ public class MainClient
 	{
 		mainClientDatabase = mainDatabase;
 		mainClientCurrentState = mainCurrentState;
-		beginClientActions();
+		BeginClientActions();
 	}
 
-	private void beginClientActions() 
+	private void BeginClientActions() 
 	{
 		do
 		{
@@ -43,11 +42,12 @@ public class MainClient
 					break;
 					
 				case "Locação":
-					makeClientRent();
-					break;	
-				
-				case "Agendamento":
-					makeClientScheduling();
+					MakeClientRent();
+					break;
+					
+				case "Verificar Histórico":
+					OpenRentHistory();
+					break;
 			}
 			
 		//Volta para o início do menu de cliente
@@ -55,7 +55,7 @@ public class MainClient
 	}
 	
 	//função que abre a janela de aluguel de veículos para o cliente
-	private void makeClientRent()
+	private void MakeClientRent()
 	{
 		try 
 		{	
@@ -71,20 +71,20 @@ public class MainClient
 		
 	}
 	
-	private void makeClientScheduling() 
+	//função que abre a janela do histórico de locações do cliente
+	private void OpenRentHistory()
 	{
-		try 
-		{	
-			WindowClientScheduling clientSchedulingWindow = new WindowClientScheduling(mainClientCurrentState, mainClientDatabase);
-			clientSchedulingWindow.setBlockOnOpen(true);
-			clientSchedulingWindow.open();
-			Display.getCurrent().dispose();			
-		} 
+		try
+		{
+			WindowRentHistory windowRentHistory = new WindowRentHistory(mainClientCurrentState, mainClientDatabase);
+			windowRentHistory.setBlockOnOpen(true);
+			windowRentHistory.open();
+			Display.getCurrent().dispose();
+		}
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
-		
 	}
 	
 }

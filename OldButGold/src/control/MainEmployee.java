@@ -1,13 +1,11 @@
 package control;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.swt.widgets.Display;
 
-import GUI.WindowClientVehicleRent;
-import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowEmployeeMenu;
+import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowRemoveVehicle;
+import GUI.WindowReturnVehicle;
 import GUI.WindowSubscribeClient;
 import GUI.WindowSubscribeVehicle;
 import db.Database;
@@ -59,6 +57,10 @@ public class MainEmployee
 				case "Locação":
 					makeEmployeeRent();
 					break;
+					
+				case "Devolução":
+					MakeReturnVehicle();
+					break;
 				
 				case "Remover Veículo":
 					makeRemoveVehicle();
@@ -71,6 +73,22 @@ public class MainEmployee
 		       mainEmployeeCurrentState.getChosenAction() == "Adicionar Veículo");
 	}
 	
+	//função que abre a janela de devolução de veículos
+	private void MakeReturnVehicle()
+	{
+		try 
+		{	
+			WindowReturnVehicle returnVehicleWindow = new WindowReturnVehicle(mainEmployeeCurrentState, mainEmployeeDatabase);
+			returnVehicleWindow.setBlockOnOpen(true);
+			returnVehicleWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}		
+	}
+
 	//função que abre a janela de adição de veículos
 	private void makeAddVehicle()
 	{

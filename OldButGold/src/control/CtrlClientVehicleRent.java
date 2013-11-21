@@ -2,18 +2,13 @@
 
 package control;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
 import person.Client;
 import person.Person;
-
 import vehicle.Vehicle;
-
 import db.Database;
 import db.Rent;
 
@@ -40,6 +35,7 @@ public class CtrlClientVehicleRent extends CtrlSearchVehicle
 			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");
 			Client currentClient = (Client) currentUser;
 			currentClient.AddRent(clientRent);
+			selectedVehicle.setCurrentClient(currentClient);
 			return clientRent;
 		}
 		else

@@ -20,17 +20,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
-import control.CtrlClientVehicleRent;
+import vehicle.Vehicle;
 import control.CtrlEmployeeVehicleRent;
 import control.CurrentState;
 import db.Database;
 import db.Rent;
-
-import org.eclipse.swt.widgets.Text;
-
-import person.Person;
-import vehicle.Vehicle;
 
 public class WindowEmployeeVehicleRent extends ApplicationWindow
 {
@@ -50,7 +46,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                 addStatusLine();
                 rentCurrentState = mainCurrentState;
                 employeeVehicleRentDatabase = mainDatabase;
-                employeeVehicleRentCtrl = new CtrlEmployeeVehicleRent(mainDatabase);
+                employeeVehicleRentCtrl = new CtrlEmployeeVehicleRent(employeeVehicleRentDatabase);
         }
 
         /**
@@ -82,7 +78,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                                 {
                                         ArrayList<Vehicle> vehicleList = employeeVehicleRentCtrl.getVehicleList();
                                         Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-                                        WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+                                        WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, true);
                                         vehicleDeitalsWindow.open();
                                 }        
                                 else
@@ -123,7 +119,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                         
                         int selectionIndex = listSearchResults.getSelectionIndex();
                         if(selectionIndex != -1) 
-                        	newRent = employeeVehicleRentCtrl.makeCarRent(selectionIndex, clientUsername, rentDuration);                                
+                        	newRent = employeeVehicleRentCtrl.MakeCarRent(selectionIndex, clientUsername, rentDuration);                                
                         else
                                 JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
                         
@@ -163,7 +159,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                         int optionIndex = comboSearchOptions.getSelectionIndex();
                         String optionName = comboSearchOptions.getItem(optionIndex);
                         
-                        ArrayList<String> secondComboItems = employeeVehicleRentCtrl.getSecondComboItems(optionName);
+                        ArrayList<String> secondComboItems = employeeVehicleRentCtrl.getSecondComboItems(optionName, true);
                         
                         if(secondComboItems.isEmpty())
                         {
@@ -210,7 +206,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                                 int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
                                 String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-                                ArrayList<String> resultsListItems = employeeVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+                                ArrayList<String> resultsListItems = employeeVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult, true);
                                 
                                 for(int i = 0; i < resultsListItems.size(); i++)
                                 {
@@ -271,7 +267,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                                 {
                                         ArrayList<Vehicle> vehicleList = employeeVehicleRentCtrl.getVehicleList();
                                         Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-                                        WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+                                        WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, true);
                                         vehicleDeitalsWindow.open();
                                 }
                                 else

@@ -1,12 +1,7 @@
 package db;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
-
-import javax.swing.JOptionPane;
-
-import com.ibm.icu.util.Calendar;
 
 import person.Client;
 import person.Employee;
@@ -17,6 +12,8 @@ import vehicle.MicroBus;
 import vehicle.Motorcycle;
 import vehicle.Truck;
 import vehicle.Vehicle;
+
+import com.ibm.icu.util.Calendar;
 
 public class Database
 {
@@ -157,5 +154,27 @@ public class Database
 				return true;
 
 		return false; 
+	}
+
+	public ArrayList<Person> getUserList()
+	{
+		return userList;
+	}
+
+	public void setUserList(ArrayList<Person> userList)
+	{
+		this.userList = userList;
+	}
+	
+	public ArrayList<Client> getClientList()
+	{
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		
+		for(int i = 0; i < userList.size(); i++)
+		{
+			if(userList.get(i).getClass().getName().equals("person.Client"))
+				clientList.add((Client)userList.get(i));			
+		}
+		return clientList;
 	}
 }

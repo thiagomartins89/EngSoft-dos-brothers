@@ -1,19 +1,16 @@
 package GUI;
 
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.StatusLineManager;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
 import control.CurrentState;
 import db.Database;
@@ -83,6 +80,13 @@ public class WindowClientMenu extends ApplicationWindow {
 				
 		{
 			Button btnVerifyHistory = new Button(grpClientMenu, SWT.NONE);
+			btnVerifyHistory.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					currentState.setChosenAction("Verificar Histórico");
+					close();
+				}
+			});
 			btnVerifyHistory.setBounds(150, 124, 138, 30);
 			btnVerifyHistory.setText("Verificar Histórico");
 		}		
