@@ -3,6 +3,7 @@ package control;
 import org.eclipse.swt.widgets.Display;
 
 import GUI.WindowClientMenu;
+import GUI.WindowClientScheduling;
 import GUI.WindowClientVehicleRent;
 import GUI.WindowRentHistory;
 import db.Database;
@@ -42,11 +43,15 @@ public class MainClient
 					break;
 					
 				case "Locação":
-					MakeClientRent();
+					makeClientRent();
 					break;
 					
 				case "Verificar Histórico":
-					OpenRentHistory();
+					openRentHistory();
+					break;
+					
+				case "Agendamento":
+					makeClientScheduling();
 					break;
 			}
 			
@@ -54,8 +59,24 @@ public class MainClient
 		}while(mainClientCurrentState.getChosenAction() == "Voltar");		
 	}
 	
+	private void makeClientScheduling() 
+	{
+		try 
+		{	
+			WindowClientScheduling clientSchedulingWindow = new WindowClientScheduling(mainClientCurrentState, mainClientDatabase);
+			clientSchedulingWindow.setBlockOnOpen(true);
+			clientSchedulingWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+				
+	}
+
 	//função que abre a janela de aluguel de veículos para o cliente
-	private void MakeClientRent()
+	private void makeClientRent()
 	{
 		try 
 		{	
@@ -72,7 +93,7 @@ public class MainClient
 	}
 	
 	//função que abre a janela do histórico de locações do cliente
-	private void OpenRentHistory()
+	private void openRentHistory()
 	{
 		try
 		{

@@ -73,7 +73,9 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 						 "/" + (receiptRent.getWithdrawalDate().get(Calendar.MONTH) + 1) +  //soma-se um porque janeiro = 0
 						 "/" + receiptRent.getWithdrawalDate().get(Calendar.YEAR);						 
 		txtWithdrawalDate.setText(strDate);
-			
+		
+		//Arrumar isso aqui pra setar a hora em que a operação foi realizada,
+		//seja ela agendamento ou locação.
 		txtWithdrawalTime = new Text(grpWithdrawalReceipt, SWT.BORDER);
 		txtWithdrawalTime.setBounds(116, 65, 80, 21);
 		txtWithdrawalTime.setEnabled(false);

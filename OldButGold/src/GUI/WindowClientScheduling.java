@@ -1,7 +1,12 @@
 package GUI;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
@@ -44,6 +49,7 @@ public class WindowClientScheduling extends ApplicationWindow
 	private Database searchVehicleDatabase;
 	private CtrlClientScheduling searchVehicleCtrl;
 	private Text txtRentDuration;
+	private Text txtWithdrawalDate;
 	
 	/**
 	 * Create the application window.
@@ -72,10 +78,10 @@ public class WindowClientScheduling extends ApplicationWindow
 		container.setLayout(null);
 		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptions.setBounds(106, 32, 192, 23);
+		comboSearchOptions.setBounds(106, 10, 192, 23);
 		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptionsResults.setBounds(106, 61, 192, 23);
+		comboSearchOptionsResults.setBounds(106, 39, 192, 23);
 		final List listSearchResults = new List(container, SWT.BORDER);
 		
 		listSearchResults.addMouseListener(new MouseAdapter() 
@@ -91,29 +97,54 @@ public class WindowClientScheduling extends ApplicationWindow
 				if(selectionIndex != -1)
 				{
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, false);
 					vehicleDeitalsWindow.open();
 				}	
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 			}
 		});
-		listSearchResults.setBounds(337, 60, 216, 105);
+		listSearchResults.setBounds(340, 38, 216, 105);
 		
 		final Label lblUnity = new Label(container, SWT.NONE);
 		lblUnity.setBounds(304, 64, 30, 25);
 		
 		txtRentDuration = new Text(container, SWT.BORDER);
-		txtRentDuration.setBounds(130, 105, 76, 21);
+		txtRentDuration.setBounds(130, 115, 76, 21);
 		
-		Button btnRent = new Button(container, SWT.NONE);
-		btnRent.addSelectionListener(new SelectionAdapter() 
+		Button btnScheduling = new Button(container, SWT.NONE);
+		btnScheduling.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
 			//função de ação quando botão Agendar é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
 				Rent newRent = null;
+				
+				String strChosenDate = txtWithdrawalDate.getText();
+				
+				if(strChosenDate.equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Por favor, indique a data de retirada.");
+					return;
+				}
+
+				Date date = null;
+				
+				//Verificação se o usuário digitou uma data válida
+				DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+				try
+				{
+					date = (Date)dateFormatter.parse(strChosenDate);
+				} 
+				catch (ParseException e1) 
+				{
+					
+					e1.printStackTrace();
+				}
+				
+				GregorianCalendar chosenDate = new GregorianCalendar();
+				chosenDate.setTime(date);
 				
 				if(txtRentDuration.getText().equals(""))
 				{
@@ -125,7 +156,7 @@ public class WindowClientScheduling extends ApplicationWindow
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					newRent = searchVehicleCtrl.makeClientScheduling(selectionIndex, currentState, rentDuration);				
+					newRent = searchVehicleCtrl.makeClientScheduling(selectionIndex, currentState, rentDuration, chosenDate);				
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 				
@@ -147,10 +178,9 @@ public class WindowClientScheduling extends ApplicationWindow
 					generateReceiptWindow.open();
 				}
 			}
-		});
-		
-		btnRent.setBounds(62, 160, 96, 30);
-		btnRent.setText("Agendar");
+		});		
+		btnScheduling.setBounds(62, 160, 96, 30);
+		btnScheduling.setText("Agendar");
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -166,7 +196,7 @@ public class WindowClientScheduling extends ApplicationWindow
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName, false);
 				
                 if(secondComboItems.isEmpty())
                 {
@@ -214,7 +244,7 @@ public class WindowClientScheduling extends ApplicationWindow
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, false);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
@@ -241,7 +271,7 @@ public class WindowClientScheduling extends ApplicationWindow
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-		lblSearchOptions.setBounds(10, 35, 90, 25);
+		lblSearchOptions.setBounds(10, 13, 90, 25);
 		lblSearchOptions.setText("Pesquisar por :");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
@@ -259,7 +289,7 @@ public class WindowClientScheduling extends ApplicationWindow
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-		lblAvailableModels.setBounds(358, 35, 147, 20);
+		lblAvailableModels.setBounds(355, 13, 147, 20);
 		lblAvailableModels.setText("Modelos disponíveis:");
 		
 		Button btnDetails = new Button(container, SWT.NONE);
@@ -275,7 +305,7 @@ public class WindowClientScheduling extends ApplicationWindow
 				{
 					ArrayList<Vehicle> vehicleList = searchVehicleCtrl.getVehicleList();
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
-					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
+					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle, false);
 					vehicleDeitalsWindow.open();
 				}	
 				else
@@ -286,8 +316,15 @@ public class WindowClientScheduling extends ApplicationWindow
 		btnDetails.setText("Detalhes");
 		
 		Label lblRentDuration = new Label(container, SWT.NONE);
-		lblRentDuration.setBounds(10, 105, 114, 38);
+		lblRentDuration.setBounds(10, 118, 114, 38);
 		lblRentDuration.setText("Tempo de locação:\n            (dias)");
+		
+		Label lblWithdrawalDate = new Label(container, SWT.NONE);
+		lblWithdrawalDate.setBounds(22, 82, 90, 15);
+		lblWithdrawalDate.setText("Data da retirada:");
+		
+		txtWithdrawalDate = new Text(container, SWT.BORDER);
+		txtWithdrawalDate.setBounds(130, 82, 76, 21);
 
 		return container;
 	}
@@ -311,6 +348,6 @@ public class WindowClientScheduling extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(500, 273);
+		return new Point(563, 273);
 	}
 }

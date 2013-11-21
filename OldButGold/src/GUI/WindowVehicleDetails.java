@@ -1,5 +1,7 @@
 package GUI;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
@@ -206,6 +208,7 @@ public class WindowVehicleDetails extends ApplicationWindow
 				lblRentedBy.setBounds(218, 158, 70, 20);
 				lblRentedBy.setText("Locado por:");
 				
+				JOptionPane.showMessageDialog(null, selectedVehicle.getCurrentClient().getName());
 				txtIsAvailable.setText("Não");
 				txtRentedBy = new Text(grpVehicleDetails, SWT.BORDER);
 				txtRentedBy.setEditable(false);

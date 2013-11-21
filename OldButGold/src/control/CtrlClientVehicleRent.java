@@ -28,9 +28,8 @@ public class CtrlClientVehicleRent extends CtrlSearchVehicle
 		
 		if(selectedVehicle.IsAvailable())
 		{
-			GregorianCalendar newCalendar = new GregorianCalendar();
 			Person currentUser = rentCurrentState.getCurrentUser();
-			Rent clientRent = new Rent(selectedVehicle, rentTime);
+			Rent clientRent = new Rent(selectedVehicle, rentTime, null);
 			selectedVehicle.setAvailable(false);
 			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");
 			Client currentClient = (Client) currentUser;

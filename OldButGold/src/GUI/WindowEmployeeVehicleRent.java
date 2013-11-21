@@ -119,7 +119,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                         
                         int selectionIndex = listSearchResults.getSelectionIndex();
                         if(selectionIndex != -1) 
-                        	newRent = employeeVehicleRentCtrl.MakeCarRent(selectionIndex, clientUsername, rentDuration);                                
+                        	newRent = employeeVehicleRentCtrl.makeVehicleRent(selectionIndex, clientUsername, rentDuration);                                
                         else
                                 JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
                         

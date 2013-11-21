@@ -20,7 +20,7 @@ public class CtrlEmployeeVehicleRent extends CtrlSearchVehicle
 		this.ctrlSearchVehicleDatabase = mainDatabase;
 	}
 	
-	public Rent makeCarRent(int selectionIndex, String clientUsername, int rentTime)
+	public Rent makeVehicleRent(int selectionIndex, String clientUsername, int rentTime)
 	{
 		
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);		
@@ -41,7 +41,7 @@ public class CtrlEmployeeVehicleRent extends CtrlSearchVehicle
 		{
 			
 			GregorianCalendar newCalendar = new GregorianCalendar();
-			employeeRent = new Rent(selectedVehicle, rentTime);
+			employeeRent = new Rent(selectedVehicle, rentTime, null);
 			selectedVehicle.setAvailable(false);			
 			Client client = (Client) person;
 			client.AddRent(employeeRent);

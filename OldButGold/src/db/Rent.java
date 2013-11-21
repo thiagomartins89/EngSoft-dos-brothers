@@ -5,6 +5,8 @@ package db;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.JOptionPane;
+
 import vehicle.Vehicle;
 
 public class Rent
@@ -19,11 +21,18 @@ public class Rent
 	private int rentDuration;
 	private String rentCode;	//toda locação deve ter um código associado
 	
-	public Rent(Vehicle selectedVehicle, int rentDuration)
-	{
-		withdrawalDate = new GregorianCalendar();
+	public Rent(Vehicle selectedVehicle, int rentDuration, GregorianCalendar rentDate)
+	{		
+		if(rentDate != null)
+			withdrawalDate = rentDate;		
+		else
+			withdrawalDate = new GregorianCalendar();
+		
 		returnDate = new GregorianCalendar();
+		returnDate.setTime(withdrawalDate.getTime());	
+		
 		returnDate.add(Calendar.DAY_OF_MONTH, rentDuration);
+		
 		withdrawalMileage = selectedVehicle.getMileage();
 		this.rentVehicle = selectedVehicle;
 		this.rentDuration = rentDuration;
@@ -35,9 +44,7 @@ public class Rent
 				  		 + withdrawalDate.get(Calendar.YEAR) + withdrawalDate.get(Calendar.HOUR_OF_DAY) 
 				  		 + withdrawalDate.get(Calendar.MINUTE) + withdrawalDate.get(Calendar.SECOND);		
 		this.setRentCode(code);
-		
-		//int comparison = returnDate.compareTo(withdrawalDate);
-			//JOptionPane.showMessageDialog(null, comparison);
+
 	}
 
 	public GregorianCalendar getWithdrawalDate() 

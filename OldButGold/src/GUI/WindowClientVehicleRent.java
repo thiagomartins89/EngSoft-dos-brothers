@@ -48,7 +48,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		addStatusLine();
 		rentCurrentState = mainCurrentState;
 		clientVehicleRentDatabase = mainDatabase;
-		clientVehicleRentCtrl = new CtrlClientVehicleRent(clientCarRentDatabase);
+		clientVehicleRentCtrl = new CtrlClientVehicleRent(clientVehicleRentDatabase);
 	}
 
 	/**
@@ -115,8 +115,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					newRent = clientVehicleRentCtrl.makeVehicleRent(selectionIndex, rentCurrentState, rentDuration);				
-					newRent = clientVehicleRentCtrl.MakeCarRent(selectionIndex, rentCurrentState, rentDuration);				
+					newRent = clientVehicleRentCtrl.makeVehicleRent(selectionIndex, rentCurrentState, rentDuration);							
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 				
