@@ -1,4 +1,5 @@
-//Classe que serve de controle à janela WindowSearchVehicle
+//Classe que serve de controle à janela WindowScheduleRent,
+//a janela de agendamento.
 
 package control;
 
@@ -17,17 +18,17 @@ import vehicle.Vehicle;
 import db.Database;
 import db.Rent;
 
-public class CtrlClientVehicleRent extends CtrlSearchVehicle
+public class CtrlClientScheduling extends CtrlSearchVehicle
 {
 	private Database ctrlSearchVehicleDatabase;
 
-	public CtrlClientVehicleRent(Database mainDatabase)
+	public CtrlClientScheduling(Database mainDatabase)
 	{
 		super(mainDatabase);
 		this.ctrlSearchVehicleDatabase = mainDatabase;
 	}
 	
-	public Rent makeVehicleRent(int selectionIndex, CurrentState rentCurrentState, int rentTime)
+	public Rent makeClientScheduling(int selectionIndex, CurrentState rentCurrentState, int rentTime)
 	{
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		

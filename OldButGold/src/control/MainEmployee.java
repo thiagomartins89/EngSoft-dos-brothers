@@ -22,10 +22,10 @@ public class MainEmployee
 	{
 		mainEmployeeDatabase = mainDatabase;
 		mainEmployeeCurrentState = mainCurrentState;
-		this.BeginEmployeeActions();
+		this.beginEmployeeActions();
 	}
 	
-	private void BeginEmployeeActions()
+	private void beginEmployeeActions()
 	{
 		do
 		{
@@ -49,19 +49,19 @@ public class MainEmployee
 					break;
 				
 				case "Cadastrar Cliente":
-					MakeSubscribeClient();
+					makeSubscribeClient();
 					break;
 					
 				case "Adicionar Veículo":
-					MakeAddVehicle();
+					makeAddVehicle();
 					break;
 					
 				case "Locação":
-					MakeEmployeeRent();
+					makeEmployeeRent();
 					break;
 				
 				case "Remover Veículo":
-					MakeRemoveVehicle();
+					makeRemoveVehicle();
 					break;
 			}
 			
@@ -72,7 +72,7 @@ public class MainEmployee
 	}
 	
 	//função que abre a janela de adição de veículos
-	private void MakeAddVehicle()
+	private void makeAddVehicle()
 	{
 		try 
 		{	
@@ -88,7 +88,7 @@ public class MainEmployee
 	}
 	
 	//função que abre a janela de aluguel de veículos para o funcionário
-	private void MakeEmployeeRent()
+	private void makeEmployeeRent()
 	{
 		try 
 		{	
@@ -105,7 +105,7 @@ public class MainEmployee
 	}
 	
 	//função que abre a janela de adição de veículos
-	private void MakeSubscribeClient()
+	private void makeSubscribeClient()
 	{
 		try 
 		{	
@@ -121,7 +121,7 @@ public class MainEmployee
 	}
 	
 	//Função para a Remoção de um veículo (se não locado)
-	private void MakeRemoveVehicle()
+	private void makeRemoveVehicle()
 	{
 		try 
 		{	

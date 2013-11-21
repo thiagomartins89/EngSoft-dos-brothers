@@ -21,7 +21,7 @@ public class CtrlEmployeeVehicleRent extends CtrlSearchVehicle
 		this.ctrlSearchVehicleDatabase = mainDatabase;
 	}
 	
-	public Rent MakeCarRent(int selectionIndex, String clientUsername, int rentTime)
+	public Rent makeCarRent(int selectionIndex, String clientUsername, int rentTime)
 	{
 		
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);		

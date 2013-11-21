@@ -1,46 +1,54 @@
-//Esta classe funciona da mesma forma que a WindowSearchVehicle.
-
 package GUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.StatusLineManager;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
+import control.CtrlClientScheduling;
 import control.CtrlClientVehicleRent;
 import control.CurrentState;
-import db.Database;
-import db.Rent;
 
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 import vehicle.Vehicle;
-import org.eclipse.swt.widgets.Text;
 
-public class WindowClientVehicleRent extends ApplicationWindow
+import db.Database;
+import db.Rent;
+
+public class WindowClientScheduling extends ApplicationWindow 
 {
 
-	private CurrentState rentCurrentState;
-	private Database clientVehicleRentDatabase;
-	private CtrlClientVehicleRent clientVehicleRentCtrl;
+	private CurrentState currentState;
+	private Database searchVehicleDatabase;
+	private CtrlClientScheduling searchVehicleCtrl;
 	private Text txtRentDuration;
 	
-	public WindowClientVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
+	/**
+	 * Create the application window.
+	 */
+	public WindowClientScheduling(CurrentState mainCurrentState, Database mainDatabase) 
 	{
 		super(null);
 		setShellStyle(SWT.MAX);
@@ -48,9 +56,9 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		addToolBar(SWT.FLAT | SWT.WRAP);
 		addMenuBar();
 		addStatusLine();
-		rentCurrentState = mainCurrentState;
-		clientVehicleRentDatabase = mainDatabase;
-		clientVehicleRentCtrl = new CtrlClientVehicleRent(mainDatabase);
+		currentState = mainCurrentState;
+		searchVehicleDatabase = mainDatabase;
+		searchVehicleCtrl = new CtrlClientScheduling(mainDatabase);
 	}
 
 	/**
@@ -76,7 +84,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			//função de ação quando se clica duas vezes em um veículo da lista
 			public void mouseDoubleClick(MouseEvent e)
 			{
-				ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();			
+				ArrayList<Vehicle> vehicleList = searchVehicleCtrl.getVehicleList();			
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();	
 				
@@ -102,7 +110,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		btnRent.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
-			//função de ação quando botão Locar é pressionado
+			//função de ação quando botão Agendar é pressionado
 			public void widgetSelected(SelectionEvent e)
 			{
 				Rent newRent = null;
@@ -117,14 +125,14 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				
 				int selectionIndex = listSearchResults.getSelectionIndex();
 				if(selectionIndex != -1) 
-					newRent = clientVehicleRentCtrl.makeVehicleRent(selectionIndex, rentCurrentState, rentDuration);				
+					newRent = searchVehicleCtrl.makeClientScheduling(selectionIndex, currentState, rentDuration);				
 				else
 					JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
 				
 				if(newRent != null)
 				{             
                     listSearchResults.remove(selectionIndex);
-                    ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
+                    ArrayList<Vehicle> vehicleList = searchVehicleCtrl.getVehicleList();
                     vehicleList.remove(selectionIndex);
                     
                     if(listSearchResults.getItemCount() == 0)
@@ -142,7 +150,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 		});
 		
 		btnRent.setBounds(62, 160, 96, 30);
-		btnRent.setText("Locar");
+		btnRent.setText("Agendar");
 		
 		
 		//função que executa o que acontece quando o usuário
@@ -158,7 +166,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = clientVehicleRentCtrl.getSecondComboItems(optionName);
+				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName);
 				
                 if(secondComboItems.isEmpty())
                 {
@@ -206,14 +214,14 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = clientVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult);
+				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
 					listSearchResults.add(resultsListItems.get(i));
 				}
 				
-				ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
+				ArrayList<Vehicle> vehicleList = searchVehicleCtrl.getVehicleList();
 				if(vehicleList.isEmpty())
 				{
 					listSearchResults.setEnabled(false);
@@ -244,7 +252,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 			//função de ação quando botão "Voltar" é pressionado
 			public void widgetSelected(SelectionEvent e) 
 			{
-				rentCurrentState.setChosenAction("Voltar");
+				currentState.setChosenAction("Voltar");
 				close();
 			}
 		});
@@ -265,7 +273,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 				
 				if(selectionIndex != -1)
 				{
-					ArrayList<Vehicle> vehicleList = clientVehicleRentCtrl.getVehicleList();
+					ArrayList<Vehicle> vehicleList = searchVehicleCtrl.getVehicleList();
 					Vehicle selectedVehicle = vehicleList.get(selectionIndex);
 					WindowVehicleDetails vehicleDeitalsWindow = new WindowVehicleDetails(selectedVehicle);
 					vehicleDeitalsWindow.open();
@@ -294,7 +302,7 @@ public class WindowClientVehicleRent extends ApplicationWindow
 	protected void configureShell(Shell newShell) 
 	{
 		super.configureShell(newShell);
-		newShell.setText("New Application");
+		newShell.setText("Old but Gold");
 	}
 
 	/**
@@ -303,6 +311,6 @@ public class WindowClientVehicleRent extends ApplicationWindow
 	@Override
 	protected Point getInitialSize()
 	{
-		return new Point(569, 280);
+		return new Point(500, 273);
 	}
 }

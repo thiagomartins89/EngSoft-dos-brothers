@@ -38,7 +38,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
         private CurrentState rentCurrentState;
         private Database employeeVehicleRentDatabase;
         private CtrlEmployeeVehicleRent employeeVehicleRentCtrl;
-        private Text txtRentTime;
+        private Text txtRentDuration;
         
         public WindowEmployeeVehicleRent(CurrentState mainCurrentState, Database mainDatabase) 
         {
@@ -98,8 +98,8 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                 final Text textClientUsername = new Text(container, SWT.BORDER);
                 textClientUsername.setBounds(125, 100, 121, 26);
                 
-        		txtRentTime = new Text(container, SWT.BORDER);
-        		txtRentTime.setBounds(125, 148, 121, 26);
+        		txtRentDuration = new Text(container, SWT.BORDER);
+        		txtRentDuration.setBounds(125, 148, 121, 26);
                 
                 Button btnRent = new Button(container, SWT.NONE);
                 btnRent.setBounds(64, 197, 96, 30);
@@ -113,17 +113,17 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                         
                         Rent newRent = null;
                         
-        				if(txtRentTime.getText().equals(""))
+        				if(txtRentDuration.getText().equals(""))
         				{
         					JOptionPane.showMessageDialog(null, "Por favor, indique por quantos dias você deseja locar.");
         					return;
         				}
         				
-        				int rentTime = Integer.parseInt(txtRentTime.getText());
+        				int rentDuration = Integer.parseInt(txtRentDuration.getText());
                         
                         int selectionIndex = listSearchResults.getSelectionIndex();
                         if(selectionIndex != -1) 
-                        	newRent = employeeVehicleRentCtrl.MakeCarRent(selectionIndex, clientUsername, rentTime);                                
+                        	newRent = employeeVehicleRentCtrl.makeCarRent(selectionIndex, clientUsername, rentDuration);                                
                         else
                                 JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
                         
@@ -286,9 +286,9 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                 lblRentToClient.setBounds(10, 103, 114, 30);
                 lblRentToClient.setText("Locar para o cliente:\r\n       (Username)");
                 
-        		Label lblRentTime = new Label(container, SWT.NONE);
-        		lblRentTime.setBounds(10, 151, 114, 38);
-        		lblRentTime.setText("Tempo de locação:\n            (dias)");
+        		Label lblRentDuration = new Label(container, SWT.NONE);
+        		lblRentDuration.setBounds(10, 151, 114, 38);
+        		lblRentDuration.setText("Tempo de locação:\n            (dias)");
 
                 return container;
         }

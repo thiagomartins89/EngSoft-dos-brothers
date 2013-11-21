@@ -67,6 +67,16 @@ public class WindowClientMenu extends ApplicationWindow {
 		
 		{
 			Button btnScheduling = new Button(grpClientMenu, SWT.NONE);
+			btnScheduling.addSelectionListener(new SelectionAdapter()
+			{
+				@Override
+				//função de ação quando botão "Agendamento" é pressionado
+				public void widgetSelected(SelectionEvent e) 
+				{
+					currentState.setChosenAction("Agendamento");
+					close();
+				}
+			});
 			btnScheduling.setBounds(150, 82, 138, 30);
 			btnScheduling.setText("Agendamento");
 		}

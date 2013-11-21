@@ -2,6 +2,7 @@ package control;
 
 import org.eclipse.swt.widgets.Display;
 
+import GUI.WindowClientScheduling;
 import GUI.WindowClientVehicleRent;
 import GUI.WindowClientMenu;
 import GUI.WindowSearchVehicle;
@@ -16,10 +17,10 @@ public class MainClient
 	{
 		mainClientDatabase = mainDatabase;
 		mainClientCurrentState = mainCurrentState;
-		BeginClientActions();
+		beginClientActions();
 	}
 
-	private void BeginClientActions() 
+	private void beginClientActions() 
 	{
 		do
 		{
@@ -42,8 +43,11 @@ public class MainClient
 					break;
 					
 				case "Locação":
-					MakeClientRent();
-					break;		
+					makeClientRent();
+					break;	
+				
+				case "Agendamento":
+					makeClientScheduling();
 			}
 			
 		//Volta para o início do menu de cliente
@@ -51,13 +55,29 @@ public class MainClient
 	}
 	
 	//função que abre a janela de aluguel de veículos para o cliente
-	private void MakeClientRent()
+	private void makeClientRent()
 	{
 		try 
 		{	
 			WindowClientVehicleRent clientCarRentWindow = new WindowClientVehicleRent(mainClientCurrentState, mainClientDatabase);
 			clientCarRentWindow.setBlockOnOpen(true);
 			clientCarRentWindow.open();
+			Display.getCurrent().dispose();			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void makeClientScheduling() 
+	{
+		try 
+		{	
+			WindowClientScheduling clientSchedulingWindow = new WindowClientScheduling(mainClientCurrentState, mainClientDatabase);
+			clientSchedulingWindow.setBlockOnOpen(true);
+			clientSchedulingWindow.open();
 			Display.getCurrent().dispose();			
 		} 
 		catch (Exception e) 
