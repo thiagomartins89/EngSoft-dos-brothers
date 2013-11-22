@@ -37,7 +37,7 @@ public class CtrlEmployeeVehicleRent extends CtrlSearchVehicle
 			JOptionPane.showMessageDialog(null, "Apenas clientes podem locar veículos!");
 		
 		
-		else if(selectedVehicle.IsAvailable())
+		else if(selectedVehicle.isAvailable())
 		{
 			
 			GregorianCalendar newCalendar = new GregorianCalendar();

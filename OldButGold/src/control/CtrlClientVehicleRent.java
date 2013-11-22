@@ -26,7 +26,7 @@ public class CtrlClientVehicleRent extends CtrlSearchVehicle
 	{
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		
-		if(selectedVehicle.IsAvailable())
+		if(selectedVehicle.isAvailable())
 		{
 			Person currentUser = rentCurrentState.getCurrentUser();
 			Rent clientRent = new Rent(selectedVehicle, rentTime, null);

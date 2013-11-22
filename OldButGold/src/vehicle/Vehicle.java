@@ -1,5 +1,8 @@
 package vehicle;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import person.Client;
 
 public class Vehicle
@@ -18,10 +21,12 @@ public class Vehicle
 		this.available = true; //todos os veículos já vêm adicionados como disponíveis
 		this.mileage = mileage;
 		this.dailyPrice = dailyPrice;
+		this.availableDate = new GregorianCalendar();
 	}
 	
 	
-	public Vehicle() {
+	public Vehicle()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
@@ -31,6 +36,7 @@ public class Vehicle
 	protected int enginePower, manufacturingDate, mileage;
 	protected Boolean available;
 	protected Client currentClient;
+	protected GregorianCalendar availableDate;
 
 	
 	public int getEnginePower()
@@ -73,7 +79,7 @@ public class Vehicle
 		this.brand = brand;
 	}
 
-	public Boolean IsAvailable()
+	public Boolean isAvailable()
 	{
 		return available;
 	}
@@ -81,6 +87,27 @@ public class Vehicle
 	public void setAvailable(Boolean available)
 	{
 		this.available = available;
+	}
+	
+	//Verifica se o carro estará disponível na data dada.
+	//Se null for dado como parâmetro, testa se está disponível 
+	//nesse exato momento.
+	public Boolean isAvailableAt(GregorianCalendar availableDate)
+	{
+		boolean isAvailableAt = false;
+		
+		if (availableDate == null)
+			isAvailableAt = this.isAvailable();	
+			
+		else if(availableDate.compareTo(this.availableDate) > 0)
+			isAvailableAt = true;
+		
+		return isAvailableAt;
+	}
+
+	public void setAvailableAt(GregorianCalendar availableDate)
+	{
+		this.availableDate = availableDate;
 	}
 
 	public String getPlate()
@@ -154,7 +181,7 @@ public class Vehicle
 	{
 		Vehicle vehicle = new Vehicle();
 		
-		vehicle.setAvailable(this.IsAvailable());
+		vehicle.setAvailable(this.isAvailable());
 		vehicle.setBrand(this.getBrand());
 		vehicle.setCategory(this.getCategory());
 		vehicle.setDailyPrice(this.getDailyPrice());

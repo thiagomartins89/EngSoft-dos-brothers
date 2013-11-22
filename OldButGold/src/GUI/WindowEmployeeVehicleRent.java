@@ -124,17 +124,9 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                                 JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
                         
                         if(newRent != null)
-                        {
-                            listSearchResults.remove(selectionIndex);
+                        {     
                             ArrayList<Vehicle> vehicleList = employeeVehicleRentCtrl.getVehicleList();
                             vehicleList.remove(selectionIndex);
-                            
-                            if(listSearchResults.getItemCount() == 0)
-                            {
-                                listSearchResults.add("Não há veículos disponíveis");
-                                listSearchResults.add("para essa pesquisa");
-                                listSearchResults.setEnabled(false);
-                            }
                             
                             //Gera o comprovante de retirada do veículo para o cliente
         					WindowWithdrawalReceipt generateReceiptWindow = new WindowWithdrawalReceipt(newRent);
@@ -159,7 +151,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                         int optionIndex = comboSearchOptions.getSelectionIndex();
                         String optionName = comboSearchOptions.getItem(optionIndex);
                         
-                        ArrayList<String> secondComboItems = employeeVehicleRentCtrl.getSecondComboItems(optionName, true);
+                        ArrayList<String> secondComboItems = employeeVehicleRentCtrl.getSecondComboItems(optionName, true, null);
                         
                         if(secondComboItems.isEmpty())
                         {
@@ -206,7 +198,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                                 int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
                                 String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-                                ArrayList<String> resultsListItems = employeeVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult, true);
+                                ArrayList<String> resultsListItems = employeeVehicleRentCtrl.getResultsListItems(chosenOption, chosenOptionResult, true, null);
                                 
                                 for(int i = 0; i < resultsListItems.size(); i++)
                                 {

@@ -78,10 +78,10 @@ public class WindowClientScheduling extends ApplicationWindow
 		container.setLayout(null);
 		
 		final Combo comboSearchOptions = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptions.setBounds(106, 10, 192, 23);
+		comboSearchOptions.setBounds(117, 49, 192, 23);
 		
 		final Combo comboSearchOptionsResults = new Combo(container, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-		comboSearchOptionsResults.setBounds(106, 39, 192, 23);
+		comboSearchOptionsResults.setBounds(117, 78, 192, 23);
 		final List listSearchResults = new List(container, SWT.BORDER);
 		
 		listSearchResults.addMouseListener(new MouseAdapter() 
@@ -107,7 +107,7 @@ public class WindowClientScheduling extends ApplicationWindow
 		listSearchResults.setBounds(340, 38, 216, 105);
 		
 		final Label lblUnity = new Label(container, SWT.NONE);
-		lblUnity.setBounds(304, 64, 30, 25);
+		lblUnity.setBounds(315, 78, 23, 25);
 		
 		txtRentDuration = new Text(container, SWT.BORDER);
 		txtRentDuration.setBounds(130, 115, 76, 21);
@@ -123,28 +123,11 @@ public class WindowClientScheduling extends ApplicationWindow
 				
 				String strChosenDate = txtWithdrawalDate.getText();
 				
-				if(strChosenDate.equals(""))
-				{
-					JOptionPane.showMessageDialog(null, "Por favor, indique a data de retirada.");
+				//Verifica se o usuário digitou uma data válida.
+				GregorianCalendar chosenDate = checkDate(strChosenDate);
+				
+				if(chosenDate == null)
 					return;
-				}
-
-				Date date = null;
-				
-				//Verificação se o usuário digitou uma data válida
-				DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
-				try
-				{
-					date = (Date)dateFormatter.parse(strChosenDate);
-				} 
-				catch (ParseException e1) 
-				{
-					
-					e1.printStackTrace();
-				}
-				
-				GregorianCalendar chosenDate = new GregorianCalendar();
-				chosenDate.setTime(date);
 				
 				if(txtRentDuration.getText().equals(""))
 				{
@@ -178,10 +161,13 @@ public class WindowClientScheduling extends ApplicationWindow
 					generateReceiptWindow.open();
 				}
 			}
+
 		});		
 		btnScheduling.setBounds(62, 160, 96, 30);
-		btnScheduling.setText("Agendar");
+		btnScheduling.setText("Agendar");	
 		
+		txtWithdrawalDate = new Text(container, SWT.BORDER);
+		txtWithdrawalDate.setBounds(130, 10, 76, 21);
 		
 		//função que executa o que acontece quando o usuário
 		//seleciona as opções da primeira combo box.
@@ -196,7 +182,17 @@ public class WindowClientScheduling extends ApplicationWindow
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName, false);
+				String strChosenDate = txtWithdrawalDate.getText();
+				if(strChosenDate.equals(""))
+					return;
+				
+				//Verifica se o usuário digitou uma data válida.
+				GregorianCalendar chosenDate = checkDate(strChosenDate);
+				
+				if(chosenDate == null)
+					return;
+				
+				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName, false, chosenDate);
 				
                 if(secondComboItems.isEmpty())
                 {
@@ -222,6 +218,8 @@ public class WindowClientScheduling extends ApplicationWindow
 		
 		//função que executa o que acontece quando o usuário
 		//seleciona as opções da segunda combo box.
+		//Preenche a lista com os veículos disponíveis na data
+		//escolhida pelo usuário.
 		comboSearchOptionsResults.addModifyListener(new ModifyListener() 
 		{
 			//função que preenche a lista com as opções de veículos
@@ -244,7 +242,15 @@ public class WindowClientScheduling extends ApplicationWindow
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, false);
+				String strChosenDate = txtWithdrawalDate.getText();
+				
+				//Verifica se o usuário digitou uma data válida.
+				GregorianCalendar chosenDate = checkDate(strChosenDate);
+				
+				if(chosenDate == null)
+					return;
+
+				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, false, chosenDate);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{
@@ -271,7 +277,7 @@ public class WindowClientScheduling extends ApplicationWindow
 		comboSearchOptions.select(0); //Coloca a primeira opção como default
 		
 		Label lblSearchOptions = new Label(container, SWT.NONE);
-		lblSearchOptions.setBounds(10, 13, 90, 25);
+		lblSearchOptions.setBounds(23, 52, 83, 20);
 		lblSearchOptions.setText("Pesquisar por :");
 		
 		Button btnReturn = new Button(container, SWT.NONE);
@@ -289,8 +295,8 @@ public class WindowClientScheduling extends ApplicationWindow
 		btnReturn.setText("Voltar");
 		
 		Label lblAvailableModels = new Label(container, SWT.NONE);
-		lblAvailableModels.setBounds(355, 13, 147, 20);
-		lblAvailableModels.setText("Modelos disponíveis:");
+		lblAvailableModels.setBounds(355, 13, 192, 20);
+		lblAvailableModels.setText("Modelos disponíveis nesta data:");
 		
 		Button btnDetails = new Button(container, SWT.NONE);
 		btnDetails.addSelectionListener(new SelectionAdapter()
@@ -316,15 +322,12 @@ public class WindowClientScheduling extends ApplicationWindow
 		btnDetails.setText("Detalhes");
 		
 		Label lblRentDuration = new Label(container, SWT.NONE);
-		lblRentDuration.setBounds(10, 118, 114, 38);
+		lblRentDuration.setBounds(23, 118, 101, 35);
 		lblRentDuration.setText("Tempo de locação:\n            (dias)");
 		
 		Label lblWithdrawalDate = new Label(container, SWT.NONE);
-		lblWithdrawalDate.setBounds(22, 82, 90, 15);
+		lblWithdrawalDate.setBounds(23, 13, 90, 15);
 		lblWithdrawalDate.setText("Data da retirada:");
-		
-		txtWithdrawalDate = new Text(container, SWT.BORDER);
-		txtWithdrawalDate.setBounds(130, 82, 76, 21);
 
 		return container;
 	}
@@ -333,7 +336,58 @@ public class WindowClientScheduling extends ApplicationWindow
 	{
 		// Create the actions
 	}
-
+	
+	//Função que pega como parâmetro uma data inserida pelo usuário
+	//e faz as verificações necessárias.
+	private GregorianCalendar checkDate(String strChosenDate) 
+	{
+		Date date = null;
+		GregorianCalendar chosenDate = new GregorianCalendar();
+		chosenDate.setLenient(false);
+		
+		if(strChosenDate.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Por favor, indique a data de retirada.");
+			return null;
+		}				
+		
+		else
+		{
+			DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy");
+			try
+			{
+				date = (Date)dateFormatter.parse(strChosenDate);
+			} 
+			catch (ParseException e1) 
+			{
+				JOptionPane.showMessageDialog(null, "Data deve ser no formato dd/mm/aaaa.");
+				return null;
+			}
+			
+			try
+			{
+				chosenDate.setTime(date);
+			} 
+			catch (Exception e1) 
+			{
+				JOptionPane.showMessageDialog(null, "Data inválida.");
+				chosenDate =  null;
+			}
+			
+		}
+		
+		if(chosenDate != null)
+		{
+			GregorianCalendar auxDate = new GregorianCalendar();
+			if (chosenDate.compareTo(auxDate) < 0)
+			{
+				JOptionPane.showMessageDialog(null, "Data inválida! Indique uma data a partir de amanhã.");
+				chosenDate = null;
+			}
+		}
+		
+		return chosenDate;
+	}
 
 	@Override
 	protected void configureShell(Shell newShell) 

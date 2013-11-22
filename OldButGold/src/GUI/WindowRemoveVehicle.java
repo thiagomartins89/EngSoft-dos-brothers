@@ -108,7 +108,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 						int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 						String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 						
-						ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, true);
+						ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, true, null);
 						
 						for(int i = 0; i < resultsListItems.size(); i++)
 						{
@@ -148,7 +148,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = removeVehicleCtrl.getSecondComboItems(optionName, true);
+				ArrayList<String> secondComboItems = removeVehicleCtrl.getSecondComboItems(optionName, true, null);
 				
 				if(optionName.equals("Potência do motor"))
 					lblUnity.setText("cv");
@@ -186,7 +186,7 @@ public class WindowRemoveVehicle extends ApplicationWindow {
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, true);
+				ArrayList<String> resultsListItems = removeVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, true, null);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{

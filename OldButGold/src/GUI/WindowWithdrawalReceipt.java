@@ -14,6 +14,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import db.Rent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class WindowWithdrawalReceipt extends ApplicationWindow
 {
@@ -106,11 +109,11 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 		txtChargedValue = new Text(grpWithdrawalReceipt, SWT.BORDER);
 		txtChargedValue.setEnabled(false);
 		txtChargedValue.setEditable(false);
-		txtChargedValue.setBounds(116, 140, 80, 21);
+		txtChargedValue.setBounds(116, 129, 80, 21);
 		txtChargedValue.setText("" + receiptRent.getWithdrawalPayment());
 		
 		Label lblCode = new Label(grpWithdrawalReceipt, SWT.NONE);
-		lblCode.setBounds(248, 44, 60, 20);
+		lblCode.setBounds(263, 41, 49, 20);
 		lblCode.setText("Código:");
 		
 		txtCode = new Text(grpWithdrawalReceipt, SWT.BORDER);
@@ -120,7 +123,7 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 		txtCode.setText("" + receiptRent.getRentCode());
 		
 		Label lblReturnDate = new Label(grpWithdrawalReceipt, SWT.NONE);
-		lblReturnDate.setBounds(218, 74, 90, 20);
+		lblReturnDate.setBounds(237, 74, 73, 20);
 		lblReturnDate.setText("Devolver dia:");
 		
 		txtReturnDate = new Text(grpWithdrawalReceipt, SWT.BORDER);
@@ -129,9 +132,22 @@ public class WindowWithdrawalReceipt extends ApplicationWindow
 		txtReturnDate.setBounds(318, 71, 80, 21);
 		
 		String strReturnTime = receiptRent.getReturnDate().get(Calendar.DAY_OF_MONTH) + 
-				 "/" + (receiptRent.getReturnDate().get(Calendar.MONTH) + 1) + 
-				 "/" + receiptRent.getReturnDate().get(Calendar.YEAR);
+				 		 "/" + (receiptRent.getReturnDate().get(Calendar.MONTH) + 1) + 
+				 		 "/" + receiptRent.getReturnDate().get(Calendar.YEAR);
 		txtReturnDate.setText(strReturnTime);
+		
+		Button btnClose = new Button(grpWithdrawalReceipt, SWT.NONE);
+		btnClose.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			//função de ação quando o botão "Fechar" é pressionado.
+			public void widgetSelected(SelectionEvent e) 
+			{
+				close();
+			}
+		});
+		btnClose.setBounds(277, 132, 75, 25);
+		btnClose.setText("Fechar");
 		
 		return container;
 	}

@@ -86,8 +86,7 @@ public class WindowVehicleDetails extends ApplicationWindow
 		txtVehicleModel.setBounds(106, 49, 110, 21);
 		txtVehicleModel.setText(selectedVehicle.getModel());
 
-		Label lblVehicleManufacturingDate = new Label(grpVehicleDetails,
-				SWT.NONE);
+		Label lblVehicleManufacturingDate = new Label(grpVehicleDetails, SWT.NONE);
 		lblVehicleManufacturingDate.setBounds(75, 79, 25, 15);
 		lblVehicleManufacturingDate.setText("Ano:");
 
@@ -199,7 +198,7 @@ public class WindowVehicleDetails extends ApplicationWindow
 			txtIsAvailable.setEditable(false);
 			txtIsAvailable.setEnabled(false);
 			txtIsAvailable.setBounds(294, 130, 76, 21);
-			if(selectedVehicle.IsAvailable())
+			if(selectedVehicle.isAvailable())
 				txtIsAvailable.setText("Sim");
 			
 			else
@@ -207,8 +206,7 @@ public class WindowVehicleDetails extends ApplicationWindow
 				Label lblRentedBy = new Label(grpVehicleDetails, SWT.NONE);
 				lblRentedBy.setBounds(218, 158, 70, 20);
 				lblRentedBy.setText("Locado por:");
-				
-				JOptionPane.showMessageDialog(null, selectedVehicle.getCurrentClient().getName());
+			
 				txtIsAvailable.setText("Não");
 				txtRentedBy = new Text(grpVehicleDetails, SWT.BORDER);
 				txtRentedBy.setEditable(false);

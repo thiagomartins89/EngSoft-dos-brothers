@@ -92,7 +92,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				int optionIndex = comboSearchOptions.getSelectionIndex();
 				String optionName = comboSearchOptions.getItem(optionIndex);
 				
-				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName, false);
+				ArrayList<String> secondComboItems = searchVehicleCtrl.getSecondComboItems(optionName, false, null);
 				
 				if(optionName.equals("Potência do motor"))
 					lblUnity.setText("cv");
@@ -128,7 +128,7 @@ public class WindowSearchVehicle extends ApplicationWindow {
 				int optionResultIndex = comboSearchOptionsResults.getSelectionIndex();
 				String chosenOptionResult = comboSearchOptionsResults.getItem(optionResultIndex);
 
-				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, false);
+				ArrayList<String> resultsListItems = searchVehicleCtrl.getResultsListItems(chosenOption, chosenOptionResult, false, null);
 				
 				for(int i = 0; i < resultsListItems.size(); i++)
 				{

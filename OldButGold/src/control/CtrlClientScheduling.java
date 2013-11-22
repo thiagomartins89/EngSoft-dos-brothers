@@ -33,14 +33,24 @@ public class CtrlClientScheduling extends CtrlSearchVehicle
 	{
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		
-		if(selectedVehicle.IsAvailable())
+		if(selectedVehicle.isAvailableAt(chosenDate))
 		{
 			Person currentUser = rentCurrentState.getCurrentUser();
 			Rent clientRent = new Rent(selectedVehicle, rentTime, chosenDate);
+			
+			GregorianCalendar availableDate = new GregorianCalendar();
+			availableDate.setTime(chosenDate.getTime());	
+			
+			availableDate.add(Calendar.DAY_OF_MONTH, rentTime);
+			selectedVehicle.setAvailableAt(availableDate);
 			selectedVehicle.setAvailable(false);
-			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");
+			
 			Client currentClient = (Client) currentUser;
 			currentClient.AddRent(clientRent);
+			selectedVehicle.setCurrentClient(currentClient);
+			
+			JOptionPane.showMessageDialog(null, "Veículo agendado com sucesso!");
+			
 			return clientRent;
 		}
 		else

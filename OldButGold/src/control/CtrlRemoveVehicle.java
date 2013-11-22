@@ -17,7 +17,7 @@ public class CtrlRemoveVehicle extends CtrlSearchVehicle
 	{
 		Vehicle selectedVehicle = resultVehiclesList.get(selectionIndex);
 		
-		if(!selectedVehicle.IsAvailable())
+		if(!selectedVehicle.isAvailable())
 			return false;
 		
 		else
