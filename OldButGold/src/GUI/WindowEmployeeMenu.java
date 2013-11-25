@@ -21,6 +21,8 @@ public class WindowEmployeeMenu extends ApplicationWindow
 	private CurrentState currentState;
 	@SuppressWarnings("unused")
 	private Database employeeMenuDatabase;
+	private Button btnRemoveVehicle;
+	private Button btnExit;
 	/**
 	 * Create the application window.
 	 */
@@ -81,7 +83,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		btnAddVehicle.setText("Adicionar Veículo");
 		
 		{
-			Button btnRemoveVehicle = new Button(grpEmployeeMenu, SWT.NONE);
+			btnRemoveVehicle = new Button(grpEmployeeMenu, SWT.NONE);
 			btnRemoveVehicle.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) 
@@ -95,7 +97,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		}
 		
 		{
-			Button btnExit = new Button(grpEmployeeMenu, SWT.NONE);
+			btnExit = new Button(grpEmployeeMenu, SWT.NONE);
 			btnExit.addSelectionListener(new SelectionAdapter() {
 				@Override
 				//função de ação quando botão "Sair" é pressionado
@@ -147,6 +149,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		});
 		btnNewButton.setBounds(204, 32, 170, 28);
 		btnNewButton.setText("Bloquear/Desbloquear Cliente");
+		grpEmployeeMenu.setTabList(new Control[]{btnSubscribeClient, btnRent, btnAddVehicle, btnNewButton, btnReturn, btnRemoveVehicle, btnExit});
 
 		return container;
 	}

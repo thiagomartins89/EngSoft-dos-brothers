@@ -23,19 +23,25 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.PojoProperties;
 
 public class WindowSubscribeClient extends ApplicationWindow
 {
+	private DataBindingContext m_bindingContext;
 	private Text txtUserName;
 	private Text txtUserCPF;
 	private Text textUserBirth;
 	private Text textUserCNH;
 	private Text txtUserId;
-	private Text txtUserPassword;
+	private Text txtUserPassword1;
 	
 	private CurrentState currentState;
 	private Database subscribeClientDatabase;
 	private CtrlSubscribeClient ctrlSubscribeClient;
+	private Text txtUserPassword2;
 	
 	
 	/**
@@ -119,21 +125,28 @@ public class WindowSubscribeClient extends ApplicationWindow
 		
 		Group grpInformaesCadastrais = new Group(grpCadastroDeCliente, SWT.NONE);
 		grpInformaesCadastrais.setText("Informa\u00E7\u00F5es Cadastrais");
-		grpInformaesCadastrais.setBounds(251, 27, 173, 109);
+		grpInformaesCadastrais.setBounds(251, 27, 173, 124);
 		
 		txtUserId = new Text(grpInformaesCadastrais, SWT.BORDER);
-		txtUserId.setBounds(56, 26, 76, 21);
+		txtUserId.setBounds(87, 26, 76, 21);
 		
 		Label lblUserId = new Label(grpInformaesCadastrais, SWT.NONE);
-		lblUserId.setBounds(10, 29, 40, 15);
+		lblUserId.setBounds(33, 29, 40, 15);
 		lblUserId.setText("Usuário");
 		
 		Label lblUserPassword = new Label(grpInformaesCadastrais, SWT.NONE);
-		lblUserPassword.setBounds(18, 56, 32, 15);
+		lblUserPassword.setBounds(41, 56, 32, 15);
 		lblUserPassword.setText("Senha");
 		
-		txtUserPassword = new Text(grpInformaesCadastrais, SWT.BORDER);
-		txtUserPassword.setBounds(56, 53, 76, 21);
+		txtUserPassword1 = new Text(grpInformaesCadastrais, SWT.BORDER | SWT.PASSWORD);
+		txtUserPassword1.setBounds(87, 53, 76, 21);
+		
+		txtUserPassword2 = new Text(grpInformaesCadastrais, SWT.BORDER | SWT.PASSWORD);
+		txtUserPassword2.setBounds(87, 82, 76, 21);
+		
+		Label lblConfirmarSenha = new Label(grpInformaesCadastrais, SWT.NONE);
+		lblConfirmarSenha.setBounds(5, 85, 76, 15);
+		lblConfirmarSenha.setText("Repetir Senha");
 		
 		Button btnSubscribe = new Button(grpCadastroDeCliente, SWT.NONE);
 		btnSubscribe.addSelectionListener(new SelectionAdapter()
@@ -142,20 +155,21 @@ public class WindowSubscribeClient extends ApplicationWindow
 			// Botão Cadastrar
 			public void widgetSelected(SelectionEvent e)
 			{				
-				String returnMessage = ctrlSubscribeClient.subscribeVehicle(
+				String returnMessage = ctrlSubscribeClient.subscribeClient(
 						txtUserName.getText(),
 						txtUserCPF.getText(),
 						textUserCNH.getText(),
 						textUserBirth.getText(),
 						txtUserId.getText(),
-						txtUserPassword.getText());
+						txtUserPassword1.getText(),
+						txtUserPassword2.getText());
 
 				JOptionPane.showMessageDialog(null, returnMessage);
 			}
 		});
 		btnSubscribe.setBounds(270, 157, 75, 25);
 		btnSubscribe.setText("Cadastrar");
-		grpCadastroDeCliente.setTabList(new Control[]{btnSubscribe, grpInformaesPessoais, grpInformaesCadastrais, btnReturn});
+		grpCadastroDeCliente.setTabList(new Control[]{grpInformaesPessoais, grpInformaesCadastrais, btnSubscribe, btnReturn});
 
 		return container;
 	}

@@ -2,6 +2,7 @@ package control;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
@@ -20,35 +21,34 @@ public class CtrlSubscribeClient
 		this.mainDatabase = mainDatabase;
 	}
 
-	public String subscribeVehicle(String name, String cpf, String cnh,
-			String birthdate, String id, String password) 
+	public String subscribeClient(String name, String cpf, String cnh,
+			String birthdate, String id, String password1, String password2) 
 	{
-		if (checkEntries(name, cpf, cnh, birthdate, id, password) == false)
+		if (checkEntries(name, cpf, cnh, birthdate, id, password1, password2) == false)
 			return "Todos os campos devem estar preenchidos.";
 
-		switch (checkBirthdate(birthdate)) {
-		case 1:
+		if(checkBirthdate(birthdate) == false) {
+		
 			return "A data de nascimento deve estar no formato 'DD/MM/AAAA'.";
-		case 2:
-			return "O cliente deve ser maior de 18 anos.";
-		case 3:
-			return "Ano inválido.";
 		}
 
+		
 		if (checkName(name) == false)
 			return "Nome inválido.";
 
 		if (checkCPF(cpf) == false)
-			return "CPF inválido.";
+			return "O CPF deve ter 11 dígitos.";
 
 		if (checkCNH(cnh) == false)
-			return "CNH inválida.";
+			return "A CNH deve ter 11 dígitos.";
 
 		if (checkID(id) == false)
-			return "Nome de usuário inválido.";
+			return "O Nome de Usuário deve ter no mínimo 6 dígitos.";
 		
-		if (checkPassword(password) == false)
-			return "Password inválido.";
+		if (checkPassword(password1, password2) == "tamanho")
+			return "A Senha deve ter no mínimo 6 dígitos.";
+		else if (checkPassword(password1, password2) == "diferentes")
+			return "As Senhas devem coincidir.";
 
 		Client client = new Client();
 
@@ -57,19 +57,13 @@ public class CtrlSubscribeClient
 			client.setCpf(Long.parseLong(cpf));
 			client.setCnh(Long.parseLong(cnh));
 			client.setId(id);
-			client.setPassword(password);
+			client.setPassword(password1);
 			
-			Calendar date = new GregorianCalendar();
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Calendar birth = new GregorianCalendar();  
+			birth.setTime(formatter.parse(birthdate));
 			
-			String day = birthdate.substring(2);
-			birthdate.substring(1);
-			String month = birthdate.substring(2);
-			birthdate.substring(1);
-			String year = birthdate.substring(4);
-			
-			date.set(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
-			
-			client.setBirthDate(date);
+			client.setBirthDate(birth);
 			
 			mainDatabase.addUser(client);
 
@@ -81,28 +75,36 @@ public class CtrlSubscribeClient
 		}
 	}
 	
-	private boolean checkPassword(String password) 
+	private String checkPassword(String password1, String password2) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (!password1.equals(password2))
+			return "diferentes";	
+		if(password1.length() < 6)
+			return "tamanho";
+		
+		return "ok";
 	}
 
 	private boolean checkID(String id) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (id.length()<6)
+			return false;	
+		
+		return true;
 	}
 
 	private boolean checkCNH(String cnh) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if(cnh.length()!=11) 
+			return false;
+		
+		return true;
 	}
 
 	private boolean checkCPF(String cpf) 
 	{
 		String auxiliaryString = cpf.replace(".", "");
-		auxiliaryString = cpf.replace("-", "");			//?
+		auxiliaryString = auxiliaryString.replace("-", "");
 		
 		if(auxiliaryString.length() != 11)
 			return false;
@@ -124,46 +126,33 @@ public class CtrlSubscribeClient
 	 * 2, caso o cliente seja menor de idade (incapaz de dirigir por lei). Retorna 3, para outros
 	 * problemas.
 	 */
-	private int checkBirthdate(String birthdate)
+	boolean checkBirthdate(String birthdate)
 	{
 		try
 		{
 			if (birthdate.length() != 10)		
-				return 1;
+				return false;
 			
-			SimpleDateFormat dataCompleta = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			
-			Calendar calendar = new GregorianCalendar();
-			calendar.setTime(dataCompleta.parse(birthdate));
-
-			if(Integer.parseInt(dataCompleta.format(calendar.getTime())) == 10)
-			{
-				
-			}
+			GregorianCalendar birth = new GregorianCalendar();  
 			
-			//transformar/usar datas
-			//JOptionPane.showMessageDialog(null, simpleDateFormat.format(calendar.getTime()));
-
-			
-			/*
-			if (birthdate.equals("00/00/0000"))
-				return 3;
-			 */
+			birth.setTime(formatter.parse(birthdate)); 
 		} 
 		catch (Exception e1)
 		{
-			return 1;
+			return false;
 		}
 
-		return 0;
+		return true;
 	}
 	
 	/**
 	 * Verifica se todos os campos recebidos como parâmetro estão preenchidos.
 	 */
-	private boolean checkEntries(String name, String cpf, String cnh, String birthdate, String id, String password)
+	private boolean checkEntries(String name, String cpf, String cnh, String birthdate, String id, String password1, String password2)
 	{
-		if (name.isEmpty() || cpf.isEmpty() || cnh.isEmpty() || birthdate.isEmpty() || id.isEmpty() || password.isEmpty())
+		if (name.isEmpty() || cpf.isEmpty() || cnh.isEmpty() || birthdate.isEmpty() || id.isEmpty() || password1.isEmpty() || password2.isEmpty())
 			return false;
 
 		return true;
