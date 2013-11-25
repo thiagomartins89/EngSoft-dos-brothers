@@ -1,32 +1,42 @@
 package GUI;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.GridLayout;
 
+import control.CtrlSubscribeClient;
 import control.CurrentState;
 import db.Database;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.layout.GridData;
 
 public class WindowSubscribeClient extends ApplicationWindow
 {
 	private Text txtUserName;
 	private Text txtUserCPF;
+	private Text textUserBirth;
+	private Text textUserCNH;
 	private Text txtUserId;
 	private Text txtUserPassword;
+	
 	private CurrentState currentState;
 	private Database subscribeClientDatabase;
+	private CtrlSubscribeClient ctrlSubscribeClient;
+	
 	
 	/**
 	 * Create the application window.
@@ -41,6 +51,7 @@ public class WindowSubscribeClient extends ApplicationWindow
 		addStatusLine();
 		currentState = mainCurrentState;
 		subscribeClientDatabase = mainDatabase;
+		ctrlSubscribeClient = new CtrlSubscribeClient(mainDatabase);
 	}
 
 	/**
@@ -50,54 +61,101 @@ public class WindowSubscribeClient extends ApplicationWindow
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout(5, false));
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		container.setLayout(new GridLayout(4, false));
 		
-		Label lblUserName = new Label(container, SWT.NONE);
-		lblUserName.setText("Nome");
+		Group grpCadastroDeCliente = new Group(container, SWT.NONE);
+		GridData gd_grpCadastroDeCliente = new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 5);
+		gd_grpCadastroDeCliente.widthHint = 428;
+		gd_grpCadastroDeCliente.heightHint = 178;
+		grpCadastroDeCliente.setLayoutData(gd_grpCadastroDeCliente);
+		grpCadastroDeCliente.setText("Cadastro de Cliente");
 		
-		txtUserName = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		
-		Label lblUserCPF = new Label(container, SWT.NONE);
-		lblUserCPF.setText("CPF");
-		
-		txtUserCPF = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		
-		Label lblUserId = new Label(container, SWT.NONE);
-		lblUserId.setText("Usuário");
-		
-		txtUserId = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		
-		Label lblUserPassword = new Label(container, SWT.NONE);
-		lblUserPassword.setText("Senha");
-		
-		txtUserPassword = new Text(container, SWT.BORDER);
-		new Label(container, SWT.NONE);
-		
-		Button btnReturn = new Button(container, SWT.NONE);
-		btnReturn.addSelectionListener(new SelectionAdapter() {
+		Button btnReturn = new Button(grpCadastroDeCliente, SWT.NONE);
+		btnReturn.setBounds(351, 157, 43, 25);
+		btnReturn.addSelectionListener(new SelectionAdapter()
+		{
 			@Override
-			//Botão Voltar
-			public void widgetSelected(SelectionEvent e) 
+			// botão "Voltar"
+			public void widgetSelected(SelectionEvent e)
 			{
+				currentState.setChosenAction("Voltar");
 				close();
 			}
 		});
 		btnReturn.setText("Voltar");
+		
+		Group grpInformaesPessoais = new Group(grpCadastroDeCliente, SWT.NONE);
+		grpInformaesPessoais.setText("Informa\u00E7\u00F5es Pessoais");
+		grpInformaesPessoais.setBounds(10, 27, 235, 155);
+		
+		txtUserName = new Text(grpInformaesPessoais, SWT.BORDER);
+		txtUserName.setBounds(49, 29, 176, 21);
+		
+		Label lblUserName = new Label(grpInformaesPessoais, SWT.NONE);
+		lblUserName.setBounds(10, 32, 33, 15);
+		lblUserName.setText("Nome");
+		
+		Label lblUserCPF = new Label(grpInformaesPessoais, SWT.NONE);
+		lblUserCPF.setBounds(10, 59, 21, 15);
+		lblUserCPF.setText("CPF");
+		
+		txtUserCPF = new Text(grpInformaesPessoais, SWT.BORDER);
+		txtUserCPF.setBounds(128, 56, 97, 21);
+		
+		textUserBirth = new Text(grpInformaesPessoais, SWT.BORDER);
+		textUserBirth.setBounds(128, 110, 97, 21);
+		
+		Label lblBirthDate = new Label(grpInformaesPessoais, SWT.NONE);
+		lblBirthDate.setBounds(10, 113, 112, 15);
+		lblBirthDate.setText("Data de Nascimento");
+		
+		textUserCNH = new Text(grpInformaesPessoais, SWT.BORDER);
+		textUserCNH.setBounds(128, 83, 97, 21);
+		
+		Label lblUserCNH = new Label(grpInformaesPessoais, SWT.NONE);
+		lblUserCNH.setBounds(10, 86, 55, 15);
+		lblUserCNH.setText("CNH");
+		grpInformaesPessoais.setTabList(new Control[]{txtUserName, txtUserCPF, textUserCNH, textUserBirth});
+		
+		Group grpInformaesCadastrais = new Group(grpCadastroDeCliente, SWT.NONE);
+		grpInformaesCadastrais.setText("Informa\u00E7\u00F5es Cadastrais");
+		grpInformaesCadastrais.setBounds(251, 27, 173, 109);
+		
+		txtUserId = new Text(grpInformaesCadastrais, SWT.BORDER);
+		txtUserId.setBounds(56, 26, 76, 21);
+		
+		Label lblUserId = new Label(grpInformaesCadastrais, SWT.NONE);
+		lblUserId.setBounds(10, 29, 40, 15);
+		lblUserId.setText("Usuário");
+		
+		Label lblUserPassword = new Label(grpInformaesCadastrais, SWT.NONE);
+		lblUserPassword.setBounds(18, 56, 32, 15);
+		lblUserPassword.setText("Senha");
+		
+		txtUserPassword = new Text(grpInformaesCadastrais, SWT.BORDER);
+		txtUserPassword.setBounds(56, 53, 76, 21);
+		
+		Button btnSubscribe = new Button(grpCadastroDeCliente, SWT.NONE);
+		btnSubscribe.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			// Botão Cadastrar
+			public void widgetSelected(SelectionEvent e)
+			{				
+				String returnMessage = ctrlSubscribeClient.subscribeVehicle(
+						txtUserName.getText(),
+						txtUserCPF.getText(),
+						textUserCNH.getText(),
+						textUserBirth.getText(),
+						txtUserId.getText(),
+						txtUserPassword.getText());
+
+				JOptionPane.showMessageDialog(null, returnMessage);
+			}
+		});
+		btnSubscribe.setBounds(270, 157, 75, 25);
+		btnSubscribe.setText("Cadastrar");
+		grpCadastroDeCliente.setTabList(new Control[]{btnSubscribe, grpInformaesPessoais, grpInformaesCadastrais, btnReturn});
 
 		return container;
 	}
@@ -163,6 +221,6 @@ public class WindowSubscribeClient extends ApplicationWindow
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(448, 299);
+		return new Point(448, 303);
 	}
 }
