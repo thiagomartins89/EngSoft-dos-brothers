@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Combo;
 
 import person.Client;
+import vehicle.Vehicle;
 
 public class WindowReturnVehicle extends ApplicationWindow 
 {
@@ -110,11 +111,11 @@ public class WindowReturnVehicle extends ApplicationWindow
             	
                 int clientIndex = comboClientList.getSelectionIndex();
                 Client chosenClient = clientList.get(clientIndex);
-                ArrayList<Rent> clientRentList = chosenClient.getRentList();
+                ArrayList<Vehicle> clientVehicleList = chosenClient.getRentedVehiclesList();
                 
-                for(int i = 0; i < clientRentList.size(); i++)
+                for(int i = 0; i < clientVehicleList.size(); i++)
                 {                	
-                	String vehicleModel = clientRentList.get(i).getRentVehicle().getModel();
+                	String vehicleModel = clientVehicleList.get(i).getModel();
                 	comboVehicleList.add(vehicleModel);
                 }
                 
@@ -130,13 +131,17 @@ public class WindowReturnVehicle extends ApplicationWindow
         	//função de ação quando botão "Devolver" é pressionado
         	public void widgetSelected(SelectionEvent e)        	
         	{
-        		/*
-                int selectionIndex = comboClientList.getSelectionIndex();
-                if(selectionIndex != -1) 
-                	newReturn = returnVehicleCtrl.makeVehicleReturn(selectionIndex, clientUsername);                                
+        		
+                int selectedVehicleIndex = comboVehicleList.getSelectionIndex();
+                int selectedClientIndex = comboClientList.getSelectionIndex();
+                if(selectedVehicleIndex != -1)                	
+                		if(selectedClientIndex != -1)                	
+                			returnVehicleCtrl.makeVehicleReturn(selectedVehicleIndex, clientList.get(selectedClientIndex));
+                		else
+                            JOptionPane.showMessageDialog(null, "Você precisa selecionar um cliente!");
                 else
-                        JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
-                        */
+                    JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
+                        
         	}
         	
         });

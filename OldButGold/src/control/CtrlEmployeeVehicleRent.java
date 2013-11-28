@@ -45,6 +45,7 @@ public class CtrlEmployeeVehicleRent extends CtrlSearchVehicle
 			selectedVehicle.setAvailable(false);			
 			Client client = (Client) person;
 			client.AddRent(employeeRent);
+			client.AddRentedVehicle(selectedVehicle);
 			selectedVehicle.setCurrentClient(client);
 			
 			JOptionPane.showMessageDialog(null, "Veículo locado com sucesso!");

@@ -47,6 +47,7 @@ public class CtrlClientScheduling extends CtrlSearchVehicle
 			
 			Client currentClient = (Client) currentUser;
 			currentClient.AddRent(clientRent);
+			currentClient.AddRentedVehicle(selectedVehicle);
 			selectedVehicle.setCurrentClient(currentClient);
 			
 			JOptionPane.showMessageDialog(null, "Veículo agendado com sucesso!");

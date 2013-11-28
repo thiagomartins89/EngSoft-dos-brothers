@@ -124,10 +124,7 @@ public class WindowEmployeeVehicleRent extends ApplicationWindow
                                 JOptionPane.showMessageDialog(null, "Você precisa selecionar um veículo!");
                         
                         if(newRent != null)
-                        {     
-                            ArrayList<Vehicle> vehicleList = employeeVehicleRentCtrl.getVehicleList();
-                            vehicleList.remove(selectionIndex);
-                            
+                        {                                 
                             //Gera o comprovante de retirada do veículo para o cliente
         					WindowWithdrawalReceipt generateReceiptWindow = new WindowWithdrawalReceipt(newRent);
         					generateReceiptWindow.open();
