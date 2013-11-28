@@ -3,6 +3,7 @@ package control;
 import org.eclipse.swt.widgets.Display;
 
 import GUI.WindowEmployeeMenu;
+import GUI.WindowEmployeeRentHistory;
 import GUI.WindowEmployeeVehicleRent;
 import GUI.WindowRemoveVehicle;
 import GUI.WindowReturnVehicle;
@@ -64,6 +65,10 @@ public class MainEmployee
 				
 				case "Remover Veículo":
 					makeRemoveVehicle();
+					break;
+					
+				case "Verificar Histórico":
+					openRentHistory();
 					break;
 			}
 			
@@ -148,6 +153,22 @@ public class MainEmployee
 			removeVehicleWindow.open();
 			Display.getCurrent().dispose();
 		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	//função que abre a janela do histórico de locações
+	private void openRentHistory()
+	{
+		try
+		{
+			WindowEmployeeRentHistory windowRentHistory = new WindowEmployeeRentHistory(mainEmployeeCurrentState, mainEmployeeDatabase);
+			windowRentHistory.setBlockOnOpen(true);
+			windowRentHistory.open();
+			Display.getCurrent().dispose();
+		}
 		catch (Exception e) 
 		{
 			e.printStackTrace();

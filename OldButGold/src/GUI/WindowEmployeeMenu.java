@@ -106,7 +106,7 @@ public class WindowEmployeeMenu extends ApplicationWindow
 					close();
 				}
 			});
-			btnExit.setBounds(106, 152, 170, 28);
+			btnExit.setBounds(204, 153, 170, 28);
 			btnExit.setText("Sair");
 		}
 		
@@ -149,6 +149,18 @@ public class WindowEmployeeMenu extends ApplicationWindow
 		});
 		btnNewButton.setBounds(204, 32, 170, 28);
 		btnNewButton.setText("Bloquear/Desbloquear Cliente");
+		
+		Button btnVerifyHistory = new Button(grpEmployeeMenu, SWT.NONE);
+		btnVerifyHistory.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//verificar histórico
+				currentState.setChosenAction("Verificar Histórico");
+				close();
+			}
+		});
+		btnVerifyHistory.setText("Verificar Histórico");
+		btnVerifyHistory.setBounds(10, 153, 170, 28);
 		grpEmployeeMenu.setTabList(new Control[]{btnSubscribeClient, btnRent, btnAddVehicle, btnNewButton, btnReturn, btnRemoveVehicle, btnExit});
 
 		return container;
