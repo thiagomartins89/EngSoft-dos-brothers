@@ -8,22 +8,38 @@ import java.text.SimpleDateFormat;
 
 import person.Client;
 import vehicle.Vehicle;
+import db.Database;
 import db.Rent;
 
 public class CtrlRentHistory
 {
 	CurrentState rentCurrentState;
 	Client currentClient;
+	Database mainDatabase;
 	
 	public CtrlRentHistory(CurrentState rentCurrentState) {
-		super();
+		//super();
 		this.rentCurrentState = rentCurrentState;
 		this.currentClient = (Client) rentCurrentState.getCurrentUser();
+	}
+	
+	public CtrlRentHistory(CurrentState rentCurrentState, Database mainDatabase) {
+		//super();
+		this.rentCurrentState = rentCurrentState;
+		this.mainDatabase = mainDatabase;
 	}
 
 	public int getRentListSize()
 	{
 		return currentClient.getRentList().size();
+	}
+	
+	public int getRentListSize(String clientUsername)
+	{
+		Client client = (Client) mainDatabase.getUser(clientUsername);
+		if(client != null)
+			return client.getRentList().size();
+		return 0;
 	}
 	
 	/**
@@ -33,6 +49,18 @@ public class CtrlRentHistory
 	public String getRentWithdrawalDate(int index)
 	{
 		Rent rent = currentClient.getRentList().get(index);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return simpleDateFormat.format(rent.getWithdrawalDate().getTime());
+	}
+	
+	public String getRentWithdrawalDate(String clientUsername, int index)
+	{
+		Client client = (Client) mainDatabase.getUser(clientUsername);
+		if(client == null)
+			return "";
+		
+		Rent rent = client.getRentList().get(index);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
 		return simpleDateFormat.format(rent.getWithdrawalDate().getTime());
@@ -50,6 +78,18 @@ public class CtrlRentHistory
 		return simpleDateFormat.format(rent.getReturnDate().getTime());
 	}
 	
+	public String getRentReturnDate(String clientUsername, int index)
+	{
+		Client client = (Client) mainDatabase.getUser(clientUsername);
+		if(client == null)
+			return "";
+		
+		Rent rent = client.getRentList().get(index);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return simpleDateFormat.format(rent.getReturnDate().getTime());
+	}
+	
 	/**
 	 * @param index (índice da locação na lista de locações do cliente)
 	 * @return modelo do veículo
@@ -61,6 +101,17 @@ public class CtrlRentHistory
 		return rent.getRentVehicle().getModel();
 	}
 	
+	public String getRentVehicleModel(String clientUsername, int index)
+	{
+		Client client = (Client) mainDatabase.getUser(clientUsername);
+		if(client == null)
+			return "";
+		
+		Rent rent = client.getRentList().get(index);
+		
+		return rent.getRentVehicle().getModel();
+	}
+	
 	/**
 	 * @param index (índice da locação na lista de locações do cliente)
 	 * @return veículo locado
@@ -68,6 +119,17 @@ public class CtrlRentHistory
 	public Vehicle getRentVehicle(int index)
 	{
 		Rent rent = currentClient.getRentList().get(index);
+		
+		return rent.getRentVehicle();
+	}
+	
+	public Vehicle getRentVehicle(String clientUsername, int index)
+	{
+		Client client = (Client) mainDatabase.getUser(clientUsername);
+		if(client == null)
+			return null;
+		
+		Rent rent = client.getRentList().get(index);
 		
 		return rent.getRentVehicle();
 	}

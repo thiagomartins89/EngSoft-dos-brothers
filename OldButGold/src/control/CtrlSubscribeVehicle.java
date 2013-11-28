@@ -22,10 +22,10 @@ public class CtrlSubscribeVehicle
 	 */
 	public String subscribeVehicle(String brand, String model,
 			String manufacturingDate, String mileage, String length,
-			String category, String plate, String enginePower, String width)
+			String category, String plate, String enginePower, String width, String price)
 	{
 		if (checkEntries(brand, model, manufacturingDate, mileage, length,
-				category, plate, enginePower, width) == false)
+				category, plate, enginePower, width, price) == false)
 			return "Todos os campos devem estar preenchidos.";
 
 		switch (checkManufacturingDate(manufacturingDate))
@@ -53,6 +53,11 @@ public class CtrlSubscribeVehicle
 
 		if (checkWidth(width) == false)
 			return "Largura inválida.";
+		
+		price = price.replace(",", ".");
+		
+		if (checkPrice(price) == false)
+			return "Preço inválido.";
 
 		Vehicle vehicle = new Vehicle();
 
@@ -68,6 +73,7 @@ public class CtrlSubscribeVehicle
 			vehicle.setEnginePower(Integer.parseInt(enginePower));
 			vehicle.setWidth(Double.parseDouble(width));
 			vehicle.setAvailable(true);
+			vehicle.setDailyPrice(Double.parseDouble(price));
 
 			mainDatabase.addVehicle(vehicle);
 
@@ -83,11 +89,11 @@ public class CtrlSubscribeVehicle
 	 */
 	private boolean checkEntries(String brand, String model,
 			String manufacturingDate, String mileage, String length,
-			String category, String plate, String enginePower, String width)
+			String category, String plate, String enginePower, String width, String price)
 	{
 		if (brand.isEmpty() || model.isEmpty() || manufacturingDate.isEmpty()
 				|| mileage.isEmpty() || length.isEmpty() || category.isEmpty()
-				|| plate.isEmpty() || enginePower.isEmpty() || width.isEmpty())
+				|| plate.isEmpty() || enginePower.isEmpty() || width.isEmpty() || price.isEmpty())
 			return false;
 
 		return true;
@@ -182,6 +188,23 @@ public class CtrlSubscribeVehicle
 		try
 		{
 			if (Double.parseDouble(width) <= 0)
+				return false;
+		} catch (NumberFormatException e1)
+		{
+			return false;
+		}
+
+		return true;
+	}
+	
+	/**
+	 * Verifica se o preço diário recebido como parâmetro é válido.
+	 */
+	private boolean checkPrice(String price)
+	{
+		try
+		{
+			if (Double.parseDouble(price) <= 0)
 				return false;
 		} catch (NumberFormatException e1)
 		{

@@ -79,9 +79,12 @@ public class WindowRentHistory extends ApplicationWindow
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int tableIndex = tblRentHistory.getSelectionIndex();
-				Vehicle vehicle = ctrlRentHistory.getRentVehicle(tableIndex);
-				WindowVehicleDetails windowVehicleDetails = new WindowVehicleDetails(vehicle, false);
-				windowVehicleDetails.open();
+				if(tableIndex >= 0)
+				{
+					Vehicle vehicle = ctrlRentHistory.getRentVehicle(tableIndex);
+					WindowVehicleDetails windowVehicleDetails = new WindowVehicleDetails(vehicle, false);
+					windowVehicleDetails.open();
+				}
 			}
 		});
 		btnDetails.setBounds(268, 237, 75, 25);

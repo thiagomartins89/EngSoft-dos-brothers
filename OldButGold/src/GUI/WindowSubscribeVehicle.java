@@ -35,6 +35,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 	private Database subscribeVehicleDatabase;
 	private Combo comboVehicleCategory;
 	private CtrlSubscribeVehicle ctrlSubscribeVehicle;
+	private Text txtPrice;
 
 	/**
 	 * Create the application window.
@@ -167,6 +168,13 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 		Label lblM_1 = new Label(grpSubscribeVehicle, SWT.NONE);
 		lblM_1.setBounds(376, 106, 11, 15);
 		lblM_1.setText("m");
+		
+		txtPrice = new Text(grpSubscribeVehicle, SWT.BORDER);
+		txtPrice.setBounds(294, 130, 76, 21);
+		
+		Label lblPrice = new Label(grpSubscribeVehicle, SWT.NONE);
+		lblPrice.setText("Pre\u00E7o/dia: R$");
+		lblPrice.setBounds(218, 133, 70, 15);
 
 		btnSubscribe.addSelectionListener(new SelectionAdapter()
 		{
@@ -182,7 +190,7 @@ public class WindowSubscribeVehicle extends ApplicationWindow
 						comboVehicleCategory.getText(),
 						txtVehiclePlate.getText(),
 						txtVehicleEnginePower.getText(),
-						txtVehicleWidth.getText());
+						txtVehicleWidth.getText(), txtPrice.getText());
 
 				JOptionPane.showMessageDialog(null, returnMessage);
 			}
